@@ -14,7 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import SearchIcon from "@mui/icons-material/Search";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
-import product from "../images/product.png";
+import product from "../assets/images/product.png";
 import { NavLink } from "react-router-dom";
 
 const pages = ["Products", "Community", "Jobs", "About"];
@@ -209,7 +209,7 @@ const Header = () => {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title='Open settings'>
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt='A' src={require("../images/v.jpeg")} />
+                  <Avatar alt='A' src={require("../assets/images/v.jpeg")} />
                 </IconButton>
               </Tooltip>
               <Menu

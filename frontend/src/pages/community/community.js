@@ -1,7 +1,7 @@
 import React from "react";
 
-import Header from "../screens/header";
-const Community = () => {
+import Header from "../../components/header";
+export const Community = () => {
   return (
     <div>
       <Header />
@@ -9,5 +9,3 @@ const Community = () => {
     </div>
   );
 };
-
-export default Community;

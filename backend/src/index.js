@@ -1,7 +1,13 @@
 const express = require("express");
 const cors = require("cors");
+require("./db/mongoose");
+
+const userRouter = require("./routes/user");
+
+const port = 4000 || process.env.PORT;
 const app = express();
-const port = 4000;
+app.use(express.json());
 app.use(cors());
-app.get("/signup", (req, res) => res.send("Hello World!"));
+app.use(userRouter);
+
 app.listen(port, () => console.log(`backend listening on port ${port}!`));

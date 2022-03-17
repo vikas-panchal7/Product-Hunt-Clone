@@ -1,7 +1,7 @@
 import React from "react";
+import Header from "../../components/header";
 
-import Header from "../screens/header";
-const About = () => {
+export const About = () => {
   return (
     <div>
       <Header />
@@ -9,5 +9,3 @@ const About = () => {
     </div>
   );
 };
-
-export default About;

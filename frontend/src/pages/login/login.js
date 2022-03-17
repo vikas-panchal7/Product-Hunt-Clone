@@ -3,20 +3,29 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
+import LinkButton from "@mui/material/Link";
+import { Link } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
-import Header from "../screens/header";
+import Header from "../../components/header";
+import GoogleLogin from "react-google-login";
 
 const theme = createTheme();
 
-const Login = () => {
+export const Login = () => {
   const [emailvalid, setemailvalid] = React.useState(true);
   const [passwordvalid, setpasswordvalid] = React.useState(true);
+
+  const handleFailure = (result) => {
+    alert(result);
+  };
+  const handleLogin = (data) => {
+    console.log(data);
+  };
   const emailchangeHandler = (event) => {
     const regex = /[^\s@]+@[^\s@]+\.[^\s@]+/;
     const value = event.currentTarget.value.trim();
@@ -45,6 +54,7 @@ const Login = () => {
         <ThemeProvider theme={theme}>
           <Container component='main' maxWidth='xs'>
             <CssBaseline />
+
             <Box
               sx={{
                 marginTop: 8,
@@ -57,6 +67,13 @@ const Login = () => {
               <Typography component='h1' variant='h5'>
                 Login
               </Typography>
+              <GoogleLogin
+                clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                buttonText='Log In With Google'
+                onSuccess={handleLogin}
+                onFailure={handleFailure}
+                cookiePolicy={"single_host_origin"}
+              ></GoogleLogin>
               <Box
                 component='form'
                 onSubmit={handleSubmit}
@@ -103,14 +120,14 @@ const Login = () => {
                 </Button>
                 <Grid container>
                   <Grid item xs>
-                    <Link href='#' variant='body2'>
+                    <Link to='#' variant='body2'>
                       Forgot password?
                     </Link>
                   </Grid>
                   <Grid item>
-                    <Link href='/SignUp' variant='body2'>
+                    <LinkButton component={Link} to='/SignUp' variant='body2'>
                       {"Don't have an account? Sign Up"}
-                    </Link>
+                    </LinkButton>
                   </Grid>
                 </Grid>
               </Box>
@@ -121,5 +138,3 @@ const Login = () => {
     </React.Fragment>
   );
 };
-
-export default Login;

@@ -1,15 +1,14 @@
 import React from "react";
 
-import Header from "../screens/header";
-const Home = () => {
+import Header from "../../components/header";
+
+export const Products = () => {
   return (
     <div>
       <Header />
       <div style={{ marginTop: 80 }}>
-        <h1>Hello Home Page</h1>
+        <h1>Products</h1>
       </div>
     </div>
   );
 };
-
-export default Home;

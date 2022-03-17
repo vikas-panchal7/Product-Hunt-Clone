@@ -1,7 +1,7 @@
 import React from "react";
 
-import Header from "../screens/header";
-const Jobs = () => {
+import Header from "../../components/header";
+export const Jobs = () => {
   return (
     <div>
       <Header />
@@ -9,5 +9,3 @@ const Jobs = () => {
     </div>
   );
 };
-
-export default Jobs;

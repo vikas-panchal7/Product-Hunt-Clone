@@ -3,18 +3,19 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
+import LinkButton from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Link } from "react-router-dom";
 
-import Header from "../screens/header";
+import Header from "../../components/header";
 
 const theme = createTheme();
 
-const SignUp = () => {
+export const SignUp = () => {
   const [emailvalid, setemailvalid] = React.useState(true);
   const [passwordvalid, setpasswordvalid] = React.useState(true);
   const emailchangeHandler = (event) => {
@@ -123,9 +124,9 @@ const SignUp = () => {
                 </Button>
                 <Grid container justifyContent='flex-end'>
                   <Grid item>
-                    <Link href='/Login' variant='body2'>
+                    <LinkButton component={Link} to='/Login' variant='body2'>
                       Already have an account? Sign in
-                    </Link>
+                    </LinkButton>
                   </Grid>
                 </Grid>
               </Box>
@@ -136,5 +137,3 @@ const SignUp = () => {
     </React.Fragment>
   );
 };
-
-export default SignUp;

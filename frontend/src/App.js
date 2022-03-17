@@ -1,15 +1,15 @@
 import React from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
-
-import Home from "./components/home";
-import NotFound from "./screens/notfound";
-import Products from "./components/products";
-import Community from "./components/community";
-import Jobs from "./components/jobs";
-import About from "./components/about";
-import Login from "./components/login";
-import SignUp from "./components/signup";
-
+import {
+  Home,
+  Products,
+  About,
+  Community,
+  Login,
+  NotFound,
+  Jobs,
+  SignUp,
+} from "./pages/index";
 const App = () => {
   return (
     <div>
