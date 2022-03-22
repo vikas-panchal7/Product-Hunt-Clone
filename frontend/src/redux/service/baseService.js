@@ -1,8 +1,11 @@
 import axios from "axios";
-
-export const baseUrl = "http://localhost:4000";
-
 const baseService = axios.create({
-  baseURL: baseUrl,
+  baseURL: "http://localhost:4000",
+  withCredentials: false,
+  headers: {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+  },
 });
+
 export default baseService;

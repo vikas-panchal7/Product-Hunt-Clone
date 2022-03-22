@@ -1,15 +1,22 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const validator = require("validator");
+const jwt = require("jsonwebtoken");
 const userSchema = new mongoose.Schema(
   {
-    fname: { type: String, trim: true, required: true },
-    lname: { type: String, trim: true, required: true },
+    firstName: { type: String, trim: true, required: true },
+    lastName: { type: String, trim: true, required: true },
     email: {
       type: String,
       unique: true,
       required: true,
       trim: true,
       lowercase: true,
+      validate(value) {
+        if (!validator.isEmail(value)) {
+          throw new Error("Email is Invalid");
+        }
+      },
     },
     password: {
       type: String,
@@ -22,17 +29,38 @@ const userSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+//for hiding some details
+
+userSchema.methods.toJSON = function () {
+  const user = this;
+  const userObject = user.toObject();
+
+  delete userObject.password;
+  delete userObject.firstName;
+  delete userObject.lastName;
+  delete userObject.createdAt;
+  delete userObject.updatedAt;
+
+  return userObject;
+};
+
+// for generating auth token
+userSchema.methods.generateAuthtoken = async function () {
+  const user = this;
+  const token = jwt.sign({ _id: user._id.toString() }, "nodejs");
+  return token;
+};
 
 // for login credentails check
 userSchema.statics.findByCredentails = async (email, password) => {
   const user = await User.findOne({ email });
 
   if (!user) {
-    throw new Error("Unable to login");
+    throw new Error("Incorrect Email or Password");
   }
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) {
-    throw new Error("Unable to Login");
+    throw new Error("Incorrect Email or Password");
   }
   return user;
 };

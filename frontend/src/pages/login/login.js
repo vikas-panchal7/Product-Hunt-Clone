@@ -10,47 +10,79 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import axios from "axios";
-import Header from "../../components/header";
 import GoogleLogin from "react-google-login";
+
+import { useNavigate } from "react-router-dom";
+import { login } from "../../redux/actions/userActions";
+import { useDispatch, useSelector } from "react-redux";
+import Header from "../../components/header";
+import Bar from "../../components/snackbar";
 
 const theme = createTheme();
 
 export const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const userLogin = useSelector((state) => state.userLogin);
+  const { loading, error, userInfo } = userLogin;
+
   const [emailvalid, setemailvalid] = React.useState(true);
   const [passwordvalid, setpasswordvalid] = React.useState(true);
+  const [user, setUser] = React.useState({
+    email: "",
+    password: "",
+  });
+  const [message, setMessage] = React.useState(false);
 
-  const handleFailure = (result) => {
-    alert(result);
+  React.useEffect(() => {
+    if (userInfo) {
+      navigate("/");
+    }
+  }, [userInfo, navigate]);
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setUser({
+      ...user,
+      [name]: value,
+    });
   };
-  const handleLogin = (data) => {
-    console.log(data);
-  };
+
   const emailchangeHandler = (event) => {
     const regex = /[^\s@]+@[^\s@]+\.[^\s@]+/;
     const value = event.currentTarget.value.trim();
     !regex.test(value) ? setemailvalid(false) : setemailvalid(true);
   };
+
   const passwordchangeHandler = (event) => {
     const value = event.currentTarget.value.trim();
     value.length < 8 ? setpasswordvalid(false) : setpasswordvalid(true);
   };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    axios.get("http://localhost:4000/signup").then((res) => {
-      console.log(res);
-    });
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    const { email, password } = user;
+    if (email === "" && password === "") {
+      setMessage(true);
+    } else {
+      dispatch(login({ ...user }));
+    }
   };
 
+  //login with google option
+  const handleFailure = (result) => {
+    alert("something went Wrong");
+  };
+  const handleLogin = (data) => {
+    console.log(data);
+  };
+  ///
   return (
     <React.Fragment>
       <Header />
       <div style={{ marginTop: 80 }}>
+        {message && <Bar message={"Please Provide  Information"} />}
+        {error && <Bar message={error} severity='error' vertical='bottom' />}
         <ThemeProvider theme={theme}>
           <Container component='main' maxWidth='xs'>
             <CssBaseline />
@@ -88,8 +120,9 @@ export const Login = () => {
                   label='Email Address'
                   name='email'
                   autoComplete='email'
-                  autoFocus
+                  value={user.email}
                   onBlur={emailchangeHandler}
+                  onChange={handleChange}
                   error={!emailvalid && true}
                   helperText={!emailvalid && "Please Enter Valid Email !!"}
                 />
@@ -101,8 +134,10 @@ export const Login = () => {
                   label='Password'
                   type='password'
                   id='password'
+                  value={user.password}
                   autoComplete='current-password'
                   onBlur={passwordchangeHandler}
+                  onChange={handleChange}
                   error={!passwordvalid && true}
                   helperText={
                     !passwordvalid &&

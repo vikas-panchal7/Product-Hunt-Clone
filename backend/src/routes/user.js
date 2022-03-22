@@ -7,7 +7,7 @@ router.post("/users/signUp", async (req, res) => {
   const adduser = new User(req.body);
   try {
     await adduser.save();
-    res.status(201).send("Sign Up Sucessfully");
+    res.status(201).send(adduser);
   } catch (error) {
     if (error && error?.code) {
       return res.status(409).send({ error: "Email is Already Exist" });
@@ -23,8 +23,8 @@ router.post("/users/login", async (req, res) => {
       req.body.email,
       req.body.password
     );
-    //  const token = await user.generateAuthtoken();
-    res.status(201).send({ user });
+    const token = await user.generateAuthtoken();
+    res.status(201).send({ user, token });
   } catch (e) {
     res.status(400).send(e.toString());
   }

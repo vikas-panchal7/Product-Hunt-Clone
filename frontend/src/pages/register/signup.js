@@ -9,36 +9,73 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import Header from "../../components/header";
-
+import { register } from "../../redux/actions/userActions";
+import { useDispatch, useSelector } from "react-redux";
+import Bar from "../../components/snackbar";
 const theme = createTheme();
 
 export const SignUp = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const userRegister = useSelector((state) => state.userRegister);
+  const { loading, error, userInfo } = userRegister;
+  const [message, setMessage] = React.useState(false);
   const [emailvalid, setemailvalid] = React.useState(true);
   const [passwordvalid, setpasswordvalid] = React.useState(true);
+  React.useEffect(() => {
+    if (userInfo) {
+      navigate("/login");
+    }
+  }, [userInfo, navigate]);
+  const [user, setUser] = React.useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setUser({
+      ...user,
+      [name]: value,
+    });
+  };
+
   const emailchangeHandler = (event) => {
     const regex = /[^\s@]+@[^\s@]+\.[^\s@]+/;
     const value = event.currentTarget.value.trim();
     !regex.test(value) ? setemailvalid(false) : setemailvalid(true);
   };
+
   const passwordchangeHandler = (event) => {
     const value = event.currentTarget.value.trim();
     value.length < 8 ? setpasswordvalid(false) : setpasswordvalid(true);
   };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    setMessage(false);
+    const { firstName, lastName, email, password } = user;
+    if (
+      firstName === "" &&
+      lastName === "" &&
+      email === "" &&
+      password === ""
+    ) {
+      setMessage(true);
+    } else {
+      dispatch(register({ ...user }));
+    }
   };
 
   return (
     <React.Fragment>
       <Header />
+      {message && <Bar message={"Please Provide  Information"} />}
+      {error && <Bar message={error} severity='error' vertical='bottom' />}
       <div style={{ marginTop: 80 }}>
         <ThemeProvider theme={theme}>
           <Container component='main' maxWidth='xs'>
@@ -64,13 +101,15 @@ export const SignUp = () => {
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6}>
                     <TextField
-                      autoComplete='given-name'
-                      name='firstName'
                       required
                       fullWidth
                       id='firstName'
                       label='First Name'
+                      name='firstName'
+                      value={user.firstName}
+                      autoComplete='given-name'
                       autoFocus
+                      onChange={handleChange}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
@@ -80,7 +119,9 @@ export const SignUp = () => {
                       id='lastName'
                       label='Last Name'
                       name='lastName'
+                      value={user.lastName}
                       autoComplete='family-name'
+                      onChange={handleChange}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -90,10 +131,12 @@ export const SignUp = () => {
                       id='email'
                       label='Email Address'
                       name='email'
+                      value={user.email}
                       autoComplete='email'
                       onBlur={emailchangeHandler}
                       error={!emailvalid && true}
                       helperText={!emailvalid && "Please Enter Valid Email !!"}
+                      onChange={handleChange}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -105,12 +148,14 @@ export const SignUp = () => {
                       type='password'
                       id='password'
                       autoComplete='new-password'
+                      value={user.password}
                       onBlur={passwordchangeHandler}
                       error={!passwordvalid && true}
                       helperText={
                         !passwordvalid &&
                         "Password Must be Minimum eight characters long"
                       }
+                      onChange={handleChange}
                     />
                   </Grid>
                 </Grid>

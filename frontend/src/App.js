@@ -10,6 +10,7 @@ import {
   Jobs,
   SignUp,
 } from "./pages/index";
+import AddProduct from "./pages/product/addproduct";
 const App = () => {
   return (
     <div>
@@ -21,6 +22,7 @@ const App = () => {
         <Route path='/About' element={<About />} />
         <Route path='/Login' element={<Login />} />
         <Route path='/SignUp' element={<SignUp />} />
+        <Route path='/add' element={<AddProduct />} />
         <Route path='/404' element={<NotFound />} />
         <Route path='*' element={<Navigate replace to='/404' />} />
       </Routes>
