@@ -302,7 +302,7 @@ export const Products = () => {
           <AddProduct />
           <Divider textAlign='left'>
             <b>New Products</b>
-          </Divider>
+          </Divider>  
           {products}
         </Grid>
       </Grid>

@@ -1,0 +1,84 @@
+const mongoose = require("mongoose");
+const validator = require("validator");
+
+const likeSchema = mongoose.Schema(
+  {
+    name: { type: String, required: true },
+    like: { type: Boolean, required: true, default: true },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+const commentSchema = mongoose.Schema(
+  {
+    name: { type: String, required: true },
+    comment: { type: String, require: true },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+const productSchema = new mongoose.Schema(
+  {
+    name: { type: String, trim: true, required: true },
+    tagline: { type: String, trim: true, required: true },
+    description: { type: String, required: true },
+    img_url: {
+      type: String,
+      trim: true,
+      required: true,
+      validate(value) {
+        if (!validator.isURL(value)) {
+          throw new Error("Please Provide Valid Url");
+        }
+      },
+    },
+    video_url: {
+      type: String,
+      trim: true,
+      required: true,
+      validate(value) {
+        if (!validator.isURL(value)) {
+          throw new Error("Please Provide Valid Url");
+        }
+      },
+    },
+    type_of_product: {
+      type: String,
+      enum: {
+        values: ["Upcoming", "Launched"],
+        message: "{VALUE} is not valid !",
+      },
+    },
+    category_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "Category",
+    },
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
+    likes: [likeSchema],
+    comment: [commentSchema],
+  },
+  {
+    timestamps: true,
+  }
+);
+
+const Product = new mongoose.model("Product", productSchema);
+module.exports = Product;
