@@ -1,10 +1,8 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
-
 const likeSchema = mongoose.Schema(
   {
     name: { type: String, required: true },
-    like: { type: Boolean, required: true, default: true },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
@@ -64,12 +62,10 @@ const productSchema = new mongoose.Schema(
     },
     category_id: {
       type: mongoose.Schema.Types.ObjectId,
-      required: true,
       ref: "Category",
     },
     owner: {
       type: mongoose.Schema.Types.ObjectId,
-      required: true,
       ref: "User",
     },
     likes: [likeSchema],
@@ -80,5 +76,5 @@ const productSchema = new mongoose.Schema(
   }
 );
 
-const Product = new mongoose.model("Product", productSchema);
+const Product = mongoose.model("Products", productSchema);
 module.exports = Product;
