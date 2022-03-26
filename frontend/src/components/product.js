@@ -4,6 +4,8 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import ButtonBase from "@mui/material/ButtonBase";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import red from "@mui/material/colors/red";
 
 const Img = styled("img")({
   margin: "auto",
@@ -12,7 +14,6 @@ const Img = styled("img")({
   maxHeight: "100%",
 });
 const Product = (props) => {
-  console.log("b", props);
   return (
     <div>
       <Paper
@@ -50,7 +51,10 @@ const Product = (props) => {
             </Grid>
             <Grid item>
               <Typography variant='subtitle1' component='div'>
-                {props.votes}
+                <p>
+                  <FavoriteIcon style={{ color: "grey" }} />
+                  {props.likes}
+                </p>
               </Typography>
             </Grid>
           </Grid>

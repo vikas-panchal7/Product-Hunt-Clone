@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
+import { ProductsDetails } from "./components/productdetails";
 import {
   Home,
   Products,
@@ -17,6 +18,7 @@ const App = () => {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/products' element={<Products />} />
+        <Route path='/productsd' element={<ProductsDetails />} />
         <Route path='/Community' element={<Community />} />
         <Route path='/Jobs' element={<Jobs />} />
         <Route path='/About' element={<About />} />

@@ -58,13 +58,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    paddingLeft: `calc(1em + ${theme.spacing(2)})`,
     transition: theme.transitions.create("width"),
-    width: "100%",
+    width: "10    0%",
     [theme.breakpoints.up("sm")]: {
       width: "12ch",
       "&:focus": {
-        width: "60ch",
+        width: "50ch",
       },
     },
   },
@@ -173,7 +173,11 @@ const Header = () => {
                 <SearchIcon />
               </SearchIconWrapper>
               <StyledInputBase
-                sx={{ border: "1px solid black", color: "black" }}
+                sx={{
+                  border: "1px solid black",
+                  color: "black",
+                  paddingLeft: 2,
+                }}
                 placeholder='Search…'
                 inputProps={{ "aria-label": "search" }}
               />
