@@ -25,6 +25,7 @@ export const SignUp = () => {
   const [message, setMessage] = React.useState(false);
   const [emailvalid, setemailvalid] = React.useState(true);
   const [passwordvalid, setpasswordvalid] = React.useState(true);
+  console.log("userdata", userInfo);
   React.useEffect(() => {
     if (userInfo) {
       navigate("/login");

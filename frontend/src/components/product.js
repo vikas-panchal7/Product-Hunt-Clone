@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import ButtonBase from "@mui/material/ButtonBase";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import red from "@mui/material/colors/red";
+import { useNavigate } from "react-router-dom";
 
 const Img = styled("img")({
   margin: "auto",
@@ -14,8 +15,12 @@ const Img = styled("img")({
   maxHeight: "100%",
 });
 const Product = (props) => {
+  const navigate = useNavigate();
+  const clickHandler = () => {
+    navigate(`/products/${props.id}`);
+  };
   return (
-    <div>
+    <div onClick={clickHandler}>
       <Paper
         sx={{
           p: 2,
@@ -45,7 +50,7 @@ const Product = (props) => {
                   {props.title}
                 </Typography>
                 <Typography variant='body2' gutterBottom>
-                  {props.description}
+                  {props.tagline}
                 </Typography>
               </Grid>
             </Grid>

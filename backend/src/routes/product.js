@@ -14,7 +14,7 @@ const auth = require("../middleware/auth");
 router.post("/products/", viewProduct);
 
 // view   product by id
-router.post("/products/details/:id", auth, viewProductById);
+router.post("/products/details/:id", viewProductById);
 
 //create product
 router.post("/product/create", auth, createProduct);

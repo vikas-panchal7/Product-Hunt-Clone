@@ -11,7 +11,7 @@ const signUp = async (req, res) => {
     if (error && error?.code) {
       return res.status(409).send({ error: "Email is Already Exist" });
     }
-    res.status(500).send(error.toString());
+    res.status(500).send({ error: error.toString() });
   }
 };
 
