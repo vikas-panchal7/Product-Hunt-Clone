@@ -12,6 +12,7 @@ import {
   SignUp,
 } from "./pages/index";
 import AddProduct from "./pages/product/addproduct";
+import Postproduct from "./pages/product/postproduct";
 const App = () => {
   return (
     <div>
@@ -25,6 +26,7 @@ const App = () => {
         <Route path='/Login' element={<Login />} />
         <Route path='/SignUp' element={<SignUp />} />
         <Route path='/add' element={<AddProduct />} />
+        <Route path='/products/post' element={<Postproduct />} />
         {/* <Route path='/404' element={<NotFound />} />
         <Route path='*' element={<Navigate replace to='/404' />} /> */}
       </Routes>

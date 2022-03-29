@@ -6,15 +6,19 @@ import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import CircularProgress from "@mui/material/CircularProgress";
 import { listProducts } from "../../redux/actions/productActions";
+import { Button } from "@mui/material";
+import { NavLink } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
+import Postproduct from "./postproduct";
 
 export const Products = () => {
   const dispatch = useDispatch();
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
   const productlist = useSelector((state) => state.productList);
   const { loading, products, error } = productlist;
 
-  console.log("lod", loading);
   //console.log("ss", productlist);
   // const [data, setdata] = React.useState([]);
   React.useEffect(() => {
@@ -24,6 +28,7 @@ export const Products = () => {
   return (
     <div style={{ marginTop: 80 }}>
       <Header />
+      <Postproduct />
       <Grid container spacing={2}>
         <Grid item xs={7}>
           <h3>Your Next Favorite Thing</h3>
