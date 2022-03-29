@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
-import { ProductsDetails } from "./components/productdetails";
+import { ProductsDetails } from "../src/pages/product/productdetails";
 import {
   Home,
   Products,
@@ -25,8 +25,8 @@ const App = () => {
         <Route path='/Login' element={<Login />} />
         <Route path='/SignUp' element={<SignUp />} />
         <Route path='/add' element={<AddProduct />} />
-        <Route path='/404' element={<NotFound />} />
-        <Route path='*' element={<Navigate replace to='/404' />} />
+        {/* <Route path='/404' element={<NotFound />} />
+        <Route path='*' element={<Navigate replace to='/404' />} /> */}
       </Routes>
     </div>
   );

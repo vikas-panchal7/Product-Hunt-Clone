@@ -9,6 +9,7 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import CircularProgress from "@mui/material/CircularProgress";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import GoogleLogin from "react-google-login";
 
@@ -32,7 +33,6 @@ export const Login = () => {
     email: "",
     password: "",
   });
-  const [message, setMessage] = React.useState(false);
 
   React.useEffect(() => {
     if (userInfo) {
@@ -62,8 +62,9 @@ export const Login = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const { email, password } = user;
-    if (email === "" && password === "") {
-      setMessage(true);
+    if (email === "" || password === "") {
+      if (email === "") setemailvalid(false);
+      if (password === "") setpasswordvalid(false);
     } else {
       dispatch(login({ ...user }));
     }
@@ -81,8 +82,7 @@ export const Login = () => {
     <React.Fragment>
       <Header />
       <div style={{ marginTop: 80 }}>
-        {message && <Bar message={"Please Provide  Information"} />}
-        {error && <Bar message={error} severity='error' vertical='bottom' />}
+        {error && <Bar message={error} severity='error' />}
         <ThemeProvider theme={theme}>
           <Container component='main' maxWidth='xs'>
             <CssBaseline />
@@ -151,7 +151,8 @@ export const Login = () => {
                   variant='contained'
                   sx={{ mt: 3, mb: 2 }}
                 >
-                  Sign In
+                  {loading && <CircularProgress color='success' />}
+                  {!loading && "Sign In"}
                 </Button>
                 <Grid container>
                   <Grid item xs>

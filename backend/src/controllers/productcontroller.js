@@ -42,7 +42,7 @@ const viewProduct = async (req, res) => {
     if (!product) throw new Error("Product Not Found");
     res.send(product);
   } catch (error) {
-    res.send(error.toString());
+    res.send({ error: "Something Went Wrong" });
   }
 };
 

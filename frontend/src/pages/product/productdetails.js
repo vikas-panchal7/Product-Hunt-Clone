@@ -1,15 +1,16 @@
 import * as React from "react";
-import Header from "./header";
-import Product from "./product";
+import Header from "../../components/header";
+import Product from "../../components/product";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import Paper from "@mui/material/Paper";
-import { Comments } from "./comment";
+import CircularProgress from "@mui/material/CircularProgress";
 import { styled } from "@mui/material/styles";
 
+import { Comments } from "../../components/comment";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { listProductDetails } from "../redux/actions/productActions";
+import { listProductDetails } from "../../redux/actions/productActions";
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#f7f6f2",
   ...theme.typography.body2,
@@ -20,15 +21,16 @@ export const ProductsDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const productDetails = useSelector((state) => state.productDetails);
-  const { loding, details, error } = productDetails;
+  const { loading, details, error } = productDetails;
   const productlist = useSelector((state) => state.productList);
-  const { loding: loader, products, error: loadererror } = productlist;
+  const { loading: loader, products, error: loadererror } = productlist;
   React.useEffect(() => {
     dispatch(listProductDetails(id));
   }, [dispatch, id]);
 
   return (
     <div style={{ marginTop: 80 }}>
+      {loading && <CircularProgress />}
       <Header />
       <Grid container spacing={2}>
         <Grid item xs={7}>
@@ -58,6 +60,7 @@ export const ProductsDetails = () => {
           <Divider textAlign='left'>
             <b>Similar Products</b>
           </Divider>
+          {loading && <CircularProgress />}
           {products.map((product) => (
             <Product
               id={product._id}

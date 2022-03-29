@@ -5,6 +5,7 @@ import {
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
+  USER_LOGOUT,
 } from "../../constants/userconstants";
 import baseService from "../service/baseService";
 
@@ -54,4 +55,9 @@ export const login = (userdata) => async (dispatch) => {
           : error.response.data,
     });
   }
+};
+
+export const logout = () => (dispatch) => {
+  localStorage.removeItem("userInfo");
+  dispatch({ type: USER_LOGOUT });
 };

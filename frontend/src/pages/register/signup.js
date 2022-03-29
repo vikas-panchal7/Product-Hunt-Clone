@@ -8,9 +8,9 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import CircularProgress from "@mui/material/CircularProgress";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link, useNavigate } from "react-router-dom";
-
 import Header from "../../components/header";
 import { register } from "../../redux/actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,10 +22,10 @@ export const SignUp = () => {
   const navigate = useNavigate();
   const userRegister = useSelector((state) => state.userRegister);
   const { loading, error, userInfo } = userRegister;
-  const [message, setMessage] = React.useState(false);
   const [emailvalid, setemailvalid] = React.useState(true);
   const [passwordvalid, setpasswordvalid] = React.useState(true);
-  console.log("userdata", userInfo);
+  const [firstnamevalid, setfirstnamevalid] = React.useState(true);
+  const [lastnamevalid, setlastnamevalid] = React.useState(true);
   React.useEffect(() => {
     if (userInfo) {
       navigate("/login");
@@ -58,15 +58,17 @@ export const SignUp = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setMessage(false);
     const { firstName, lastName, email, password } = user;
     if (
-      firstName === "" &&
-      lastName === "" &&
-      email === "" &&
+      firstName === "" ||
+      lastName === "" ||
+      email === "" ||
       password === ""
     ) {
-      setMessage(true);
+      if (firstName === "") setfirstnamevalid(false);
+      if (lastName === "") setlastnamevalid(false);
+      if (email === "") setemailvalid(false);
+      if (password === "") setpasswordvalid(false);
     } else {
       dispatch(register({ ...user }));
     }
@@ -75,8 +77,7 @@ export const SignUp = () => {
   return (
     <React.Fragment>
       <Header />
-      {message && <Bar message={"Please Provide  Information"} />}
-      {error && <Bar message={error} severity='error' vertical='bottom' />}
+      {error && <Bar message={error} severity='error' />}
       <div style={{ marginTop: 80 }}>
         <ThemeProvider theme={theme}>
           <Container component='main' maxWidth='xs'>
@@ -96,8 +97,8 @@ export const SignUp = () => {
               <Box
                 component='form'
                 noValidate
-                onSubmit={handleSubmit}
                 sx={{ mt: 3 }}
+                onSubmit={handleSubmit}
               >
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6}>
@@ -110,6 +111,12 @@ export const SignUp = () => {
                       value={user.firstName}
                       autoComplete='given-name'
                       autoFocus
+                      onBlur={(event) => {
+                        event.currentTarget.value.trim() !== "" &&
+                          setfirstnamevalid(true);
+                      }}
+                      error={!firstnamevalid}
+                      helperText={!firstnamevalid && "Please Provide FirstName"}
                       onChange={handleChange}
                     />
                   </Grid>
@@ -122,6 +129,12 @@ export const SignUp = () => {
                       name='lastName'
                       value={user.lastName}
                       autoComplete='family-name'
+                      onBlur={(event) => {
+                        event.currentTarget.value.trim() !== "" &&
+                          setlastnamevalid(true);
+                      }}
+                      error={!lastnamevalid}
+                      helperText={!lastnamevalid && "Please Provide FirstName"}
                       onChange={handleChange}
                     />
                   </Grid>
@@ -166,7 +179,8 @@ export const SignUp = () => {
                   variant='contained'
                   sx={{ mt: 3, mb: 2 }}
                 >
-                  Sign Up
+                  {loading && <CircularProgress color='success' />}
+                  {!loading && "Sign Up"}
                 </Button>
                 <Grid container justifyContent='flex-end'>
                   <Grid item>

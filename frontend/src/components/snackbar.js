@@ -9,7 +9,7 @@ const Bar = (props) => {
     open: true,
     vertical: props.vertical ? props.vertical : "top",
     horizontal: "center",
-    severity: "warning",
+    severity: props.severity ? props.severity : "warning",
   });
 
   const { vertical, horizontal, open, severity } = state;

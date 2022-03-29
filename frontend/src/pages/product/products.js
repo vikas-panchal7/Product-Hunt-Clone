@@ -43,6 +43,7 @@ export const Products = () => {
           <Divider textAlign='left'>
             <b>New Products</b>
           </Divider>
+          {loading && <CircularProgress />}
           {products.map((product) => (
             <Product
               id={product._id}

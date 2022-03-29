@@ -16,16 +16,12 @@ import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import product from "../assets/images/product.png";
 import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
+import { logout } from "../redux/actions/userActions";
 const pages = ["Products", "Community", "Jobs", "About"];
-const settings = [
-  "Profile",
-  "My Hunts",
-  "My Collections",
-  "My Topics",
-  "Account",
-  "Logout",
-];
+const settings = ["Profile", "MyHunts", "MyCollections", "MyTopics", "Account"];
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -73,7 +69,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const Header = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [islogin, setislogin] = React.useState(false);
+  const dispatch = useDispatch();
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -88,10 +86,14 @@ const Header = () => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = (event) => {
+    console.log("adsas0", event.target.innerText);
     setAnchorElUser(null);
   };
 
+  const handlelogout = () => {
+    dispatch(logout());
+  };
   return (
     <AppBar position='fixed' style={{ background: "#ffffff" }}>
       <Container maxWidth='xl'>
@@ -183,7 +185,7 @@ const Header = () => {
               />
             </Search>
           </Box>
-          {!islogin && (
+          {!userInfo && (
             <Box sx={{ flexGrow: 0.2, display: "flex", flexDirection: "row" }}>
               <Box sx={{ flexGrow: 0.1 }}>
                 <Button
@@ -209,7 +211,7 @@ const Header = () => {
               </Box>
             </Box>
           )}
-          {islogin && (
+          {userInfo && (
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title='Open settings'>
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -233,10 +235,18 @@ const Header = () => {
                 onClose={handleCloseUserMenu}
               >
                 {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <MenuItem
+                    key={setting}
+                    component={Link}
+                    to={"/" + setting}
+                    //onClick={handleCloseUserMenu}
+                  >
                     <Typography textAlign='center'>{setting}</Typography>
                   </MenuItem>
                 ))}
+                <MenuItem key='Logout' onClick={handlelogout}>
+                  <Typography textAlign='center'>Logout</Typography>
+                </MenuItem>
               </Menu>
             </Box>
           )}
