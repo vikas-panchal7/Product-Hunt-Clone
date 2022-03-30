@@ -1,13 +1,10 @@
 const Product = require("../models/product");
-const ProductType = require("../models/producttype");
 
 // @desc     Create a new product
 // @route   /product/create
 const createProduct = async (req, res) => {
-  const category = await ProductType.findById(req.body.category_id);
   const addproduct = new Product({ ...req.body, owner: req.user._id });
   try {
-    if (!category) throw new Error("Category Not Found");
     await addproduct.save();
     res.status(201).send(addproduct);
   } catch (error) {
@@ -82,21 +79,8 @@ const likeProduct = async (req, res) => {
   }
 };
 
-//@desc  Create Product Category
-//@route  /product/category/create
-const createProductcategory = async (req, res) => {
-  const category = new ProductType(req.body);
-  try {
-    await category.save();
-    res.status(201).send(category);
-  } catch (error) {
-    res.status(500).send(error.toString());
-  }
-};
-
 module.exports = {
   createProduct,
-  createProductcategory,
   commentProduct,
   likeProduct,
   viewProduct,

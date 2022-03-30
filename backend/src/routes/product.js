@@ -25,7 +25,4 @@ router.post("/product/comment/:id", auth, commentProduct);
 //like Product
 router.post("/product/like/:id", auth, likeProduct);
 
-//create product category
-router.post("/product/category/create", auth, createProductcategory);
-
 module.exports = router;

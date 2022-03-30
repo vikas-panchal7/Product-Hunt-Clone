@@ -28,7 +28,12 @@ export const Products = () => {
   return (
     <div style={{ marginTop: 80 }}>
       <Header />
-      <Postproduct />
+      {userInfo && (
+        <div align='right'>
+          <Postproduct />
+        </div>
+      )}
+
       <Grid container spacing={2}>
         <Grid item xs={7}>
           <h3>Your Next Favorite Thing</h3>

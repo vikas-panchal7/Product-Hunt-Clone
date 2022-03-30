@@ -60,9 +60,9 @@ const productSchema = new mongoose.Schema(
         message: "{VALUE} is not valid !",
       },
     },
-    category_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Category",
+    category_type: {
+      type: String,
+      required: true,
     },
     owner: {
       type: mongoose.Schema.Types.ObjectId,
