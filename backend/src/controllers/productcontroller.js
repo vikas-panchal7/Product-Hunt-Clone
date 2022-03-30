@@ -4,6 +4,7 @@ const Product = require("../models/product");
 // @route   /product/create
 const createProduct = async (req, res) => {
   const addproduct = new Product({ ...req.body, owner: req.user._id });
+  //console.log("aa", req.body);
   try {
     await addproduct.save();
     res.status(201).send(addproduct);

@@ -16,12 +16,16 @@ import Select from "@mui/material/Select";
 //import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import CloseIcon from "@mui/icons-material/Close";
+import { createProduct } from "../../redux/actions/productActions";
+import { useDispatch, useSelector } from "react-redux";
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#f7f6f2",
   ...theme.typography.body2,
   padding: theme.spacing(1),
 }));
 const Postproduct = () => {
+  const formData = new FormData();
+  const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
   // const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
@@ -33,6 +37,55 @@ const Postproduct = () => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const [productdetail, setproductdetail] = React.useState({
+    name: "",
+    tagline: "",
+    description: "",
+    type: "",
+    category: "",
+    videourl: "",
+    img1: "",
+    img2: "",
+  });
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setproductdetail({
+      ...productdetail,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const { name, tagline, description, type, category, videourl, img1, img2 } =
+      productdetail;
+    if (
+      name === "" ||
+      tagline === "" ||
+      description === "" ||
+      type === "" ||
+      category === "" ||
+      videourl === "" ||
+      img1 === "" ||
+      img2 === ""
+    ) {
+      console.log("Please provide all data");
+    } else {
+      formData.append("name", name);
+      formData.append("tagline", tagline);
+      formData.append("description", description);
+      formData.append("type", type);
+      formData.append("category", category);
+      formData.append("videourl", videourl);
+      formData.append("img1", img1);
+      formData.append("img2", img2);
+      console.log("cs", productdetail);
+      dispatch(createProduct(formData));
+      console.log("fhdfv", formData);
+    }
+  };
   return (
     <div>
       <Button
@@ -41,7 +94,7 @@ const Postproduct = () => {
           my: 2,
           color: "black",
           display: "block",
-          justifyContent: "right",
+          alignSelf: "right",
         }}
       >
         POST PRODUCT
@@ -65,7 +118,6 @@ const Postproduct = () => {
         //maxWidth={"md"}
         //fullScreen={fullScreen}
         open={open}
-        TransitionComponent='grow'
         onClose={handleClose}
         aria-labelledby='responsive-dialog-title'
       >
@@ -77,7 +129,7 @@ const Postproduct = () => {
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            <Box component='form' sx={{ mt: 3 }}>
+            <Box component='form' onSubmit={handleSubmit} sx={{ mt: 3 }}>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <TextField
@@ -88,8 +140,10 @@ const Postproduct = () => {
                     id='name'
                     label='Product Name'
                     name='name'
+                    value={productdetail.name}
                     autoComplete='given-name'
                     placeholder='Name of a Product'
+                    onChange={handleChange}
                     autoFocus
                   />
                 </Grid>
@@ -102,7 +156,9 @@ const Postproduct = () => {
                     id='tagline'
                     label='Tagline'
                     name='tagline'
+                    value={productdetail.tagline}
                     autoComplete='given-name'
+                    onChange={handleChange}
                     placeholder='Concise and Descriptive Tagline For a Product'
                   />
                 </Grid>
@@ -117,6 +173,8 @@ const Postproduct = () => {
                     id='description'
                     label='Description'
                     name='description'
+                    value={productdetail.description}
+                    onChange={handleChange}
                     placeholder='Impressive Description For a Product'
                   />
                 </Grid>
@@ -128,8 +186,10 @@ const Postproduct = () => {
                     <Select
                       labelId='demo-simple-select-label'
                       id='producttype'
+                      name='type'
                       label='Select Product Type'
-                      defaultValue=''
+                      onChange={handleChange}
+                      value={productdetail.type ?? ""}
                     >
                       <MenuItem value={"Launched"}>Launched</MenuItem>
                       <MenuItem value={"Upcoming"}>Upcoming</MenuItem>
@@ -144,8 +204,10 @@ const Postproduct = () => {
                     <Select
                       labelId='demo-simple-select-lab'
                       id='productcategory'
+                      name='category'
                       label='Select Product Category'
-                      defaultValue=''
+                      onChange={handleChange}
+                      value={productdetail.category ?? ""}
                     >
                       <MenuItem value='Tech'>Tech</MenuItem>
                       <MenuItem value='Productivity'>Productivity</MenuItem>
@@ -171,6 +233,8 @@ const Postproduct = () => {
                     id='videourl'
                     label='Url'
                     name='videourl'
+                    value={productdetail.videourl}
+                    onChange={handleChange}
                     placeholder='Provide Video Url For Product'
                   />
                 </Grid>
@@ -178,9 +242,11 @@ const Postproduct = () => {
                   <FormControl fullWidth size='small' color='warning'>
                     <label>Select Img</label>
                     <input
+                      onChange={handleChange}
                       color='primary'
                       accept='image/*'
                       type='file'
+                      name='img1'
                       id='img1'
                     />
                   </FormControl>
@@ -189,9 +255,11 @@ const Postproduct = () => {
                   <FormControl fullWidth size='small' color='warning'>
                     <label>Select Img</label>
                     <input
+                      onChange={handleChange}
                       color='primary'
                       accept='image/*'
                       type='file'
+                      name='img2'
                       id='img2'
                     />
                   </FormControl>

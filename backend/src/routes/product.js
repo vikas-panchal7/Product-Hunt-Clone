@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+var multer = require("multer");
+var upload = multer();
 const {
   createProduct,
   createProductcategory,
@@ -17,7 +19,7 @@ router.post("/products/", viewProduct);
 router.post("/products/details/:id", viewProductById);
 
 //create product
-router.post("/product/create", auth, createProduct);
+router.post("/product/create", auth,upload.none(), createProduct);
 
 //comment Product
 router.post("/product/comment/:id", auth, commentProduct);

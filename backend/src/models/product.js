@@ -33,15 +33,16 @@ const productSchema = new mongoose.Schema(
     name: { type: String, trim: true, required: true },
     tagline: { type: String, trim: true, required: true },
     description: { type: String, required: true },
-    img_url: {
+    type: {
       type: String,
-      trim: true,
-      required: true,
-      validate(value) {
-        if (!validator.isURL(value)) {
-          throw new Error("Please Provide Valid Url");
-        }
+      enum: {
+        values: ["Upcoming", "Launched"],
+        message: "{VALUE} is not valid !",
       },
+    },
+    category: {
+      type: String,
+      required: true,
     },
     video_url: {
       type: String,
@@ -53,15 +54,14 @@ const productSchema = new mongoose.Schema(
         }
       },
     },
-    type_of_product: {
+    img1: {
       type: String,
-      enum: {
-        values: ["Upcoming", "Launched"],
-        message: "{VALUE} is not valid !",
-      },
+      trim: true,
+      required: true,
     },
-    category_type: {
+    img2: {
       type: String,
+      trim: true,
       required: true,
     },
     owner: {
