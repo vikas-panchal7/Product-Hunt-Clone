@@ -17,6 +17,9 @@ import {
   PRODUCT_CREATE_REVIEW_REQUEST,
   PRODUCT_CREATE_REVIEW_SUCCESS,
   PRODUCT_CREATE_REVIEW_FAIL,
+  PRODUCT_CREATE_LIKE_REQUEST,
+  PRODUCT_CREATE_LIKE_SUCCESS,
+  PRODUCT_CREATE_LIKE_FAIL,
   PRODUCT_TOP_REQUEST,
   PRODUCT_TOP_SUCCESS,
   PRODUCT_TOP_FAIL,
@@ -43,6 +46,7 @@ export const listProducts = () => async (dispatch) => {
 
 export const listProductDetails = (id) => async (dispatch) => {
   try {
+    console.log(`/products/details/${id}`);
     dispatch({ type: PRODUCT_DETAILS_REQUEST });
     const { data } = await baseService.post(`/products/details/${id}`);
 
@@ -60,6 +64,37 @@ export const listProductDetails = (id) => async (dispatch) => {
   }
 };
 
+// export const createProductLike = (id) => async (dispatch, getState) => {
+//   try {
+//     dispatch({
+//       type: PRODUCT_CREATE_LIKE_REQUEST,
+//     });
+
+//     const {
+//       userLogin: { userInfo },
+//     } = getState();
+
+//     const config = {
+//       headers: {
+//         "Content-Type": "application/json",
+//         Authorization: `Bearer ${userInfo.token}`,
+//       },
+//     };
+
+//     await baseService.post(`/product/like/${id}`, config);
+
+//     dispatch({
+//       type: PRODUCT_CREATE_LIKE_SUCCESS,
+//     });
+//   } catch (error) {
+//     dispatch({
+//       type: PRODUCT_CREATE_LIKE_FAIL,
+//       payload: error.response.data.error
+//         ? error.response.data.error
+//         : error.response.data,
+//     });
+//   }
+// };
 export const createProduct = (formdata) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -76,7 +111,6 @@ export const createProduct = (formdata) => async (dispatch, getState) => {
         "Content-Type": "multipart/form-data",
       },
     };
-    console.log("caloing api");
     const { data } = await baseService.post(
       `/product/create`,
       formdata,

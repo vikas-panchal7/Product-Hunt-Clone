@@ -5,9 +5,8 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import ButtonBase from "@mui/material/ButtonBase";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import red from "@mui/material/colors/red";
 import { useNavigate } from "react-router-dom";
-
+import { useSelector, useDispatch } from "react-redux";
 const Img = styled("img")({
   margin: "auto",
   display: "block",
@@ -16,7 +15,12 @@ const Img = styled("img")({
 });
 const Product = (props) => {
   const navigate = useNavigate();
-  const clickHandler = () => {
+  const dispatch = useDispatch();
+  const handlelike = (event) => {
+    event.stopPropagation();
+  };
+  const clickHandler = (event) => {
+    console.log(event);
     navigate(`/products/${props.id}`);
   };
   return (
@@ -30,7 +34,7 @@ const Product = (props) => {
           backgroundColor: (theme) =>
             theme.palette.mode === "dark" ? "#1A2027" : "#fff",
           "&:hover": {
-            background: "#fff9e6",
+            background: "#E8E8E8",
           },
         }}
       >
@@ -38,8 +42,8 @@ const Product = (props) => {
           <Grid item>
             <ButtonBase sx={{ width: 50, height: 50 }}>
               <Img
-                alt='A'
-                src='https://media1.giphy.com/media/YWUpVw86AtIbe/200.webp?cid=ecf05e47psf69u1n7odvqtp154u7m86u0fzu7s8d0uaobq9e&rid=200.webp&ct=g'
+                alt={`http://localhost:4000/${props.img}`}
+                src={`http://localhost:4000/${props.img}`}
               />
             </ButtonBase>
           </Grid>
@@ -56,10 +60,10 @@ const Product = (props) => {
             </Grid>
             <Grid item>
               <Typography variant='subtitle1' component='div'>
-                <p>
-                  <FavoriteIcon style={{ color: "grey" }} />
-                  {props.likes}
-                </p>
+                <ButtonBase sx={{ width: 50, height: 50 }} onClick={handlelike}>
+                  <FavoriteIcon style={{ color: "#ff4000", fontSize: 40 }} />
+                </ButtonBase>
+                {props.likes}
               </Typography>
             </Grid>
           </Grid>

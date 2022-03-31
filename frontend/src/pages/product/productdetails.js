@@ -13,8 +13,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { listProductDetails } from "../../redux/actions/productActions";
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#f7f6f2",
+  "&:hover": {
+    background: "#F0F0F0",
+  },
   ...theme.typography.body2,
-  padding: theme.spacing(1),
+  padding: theme.spacing(1.3),
+  width: "93%",
 }));
 
 export const ProductsDetails = () => {
@@ -38,13 +42,15 @@ export const ProductsDetails = () => {
             id={details._id}
             title={details.name}
             tagline={details.tagline}
+            img={details.img}
             url={details.url}
+            likes={details.likes}
           />
-          <Grid item xs>
+          <Grid>
             <Item justifycontent='flex-right'>
               <img
-                src='https://ph-files.imgix.net/c927e6d2-5802-43de-9bc4-8468819f7462.png?auto=format&auto=compress&codec=mozjpeg&cs=strip&w=676&h=380&fit=max&bg=0fff&dpr=1'
-                alt='a'
+                src={`http://localhost:4000/${details.img}`}
+                alt={`http://localhost:4000/${details.img}`}
                 width='100%'
                 height='100%'
               />
@@ -60,13 +66,15 @@ export const ProductsDetails = () => {
           <Divider textAlign='left'>
             <b>Similar Products</b>
           </Divider>
-          {loading && <CircularProgress />}
+          {loader && <CircularProgress />}
           {products.map((product) => (
             <Product
               id={product._id}
               title={product.name}
               tagline={product.tagline}
               url={product.url}
+              img={product.img}
+              likes={product.likes.length}
             />
           ))}
         </Grid>

@@ -44,7 +44,7 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    video_url: {
+    videourl: {
       type: String,
       trim: true,
       required: true,
@@ -54,12 +54,12 @@ const productSchema = new mongoose.Schema(
         }
       },
     },
-    img1: {
+    img: {
       type: String,
       trim: true,
       required: true,
     },
-    img2: {
+    img1: {
       type: String,
       trim: true,
       required: true,

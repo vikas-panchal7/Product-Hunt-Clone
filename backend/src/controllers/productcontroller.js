@@ -3,12 +3,19 @@ const Product = require("../models/product");
 // @desc     Create a new product
 // @route   /product/create
 const createProduct = async (req, res) => {
-  const addproduct = new Product({ ...req.body, owner: req.user._id });
-  //console.log("aa", req.body);
+  console.log("ss", req.files.img1[0].path);
+  console.log(req.body);
+  const addproduct = new Product({
+    ...req.body,
+    img: req.files.img[0].path,
+    img1: req.files.img1[0].path,
+    owner: req.user._id,
+  });
   try {
     await addproduct.save();
     res.status(201).send(addproduct);
   } catch (error) {
+    console.log(error.toString());
     res.status(500).send(error.toString());
   }
 };

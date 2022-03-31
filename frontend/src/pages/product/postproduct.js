@@ -46,7 +46,6 @@ const Postproduct = () => {
     category: "",
     videourl: "",
     img1: "",
-    img2: "",
   });
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -56,10 +55,17 @@ const Postproduct = () => {
     });
   };
 
+  const onSelectImage = (event) => {
+    formData.append("img1", event.target.files[0]);
+  };
+  const onSelectGif = (event) => {
+    formData.append("img", event.target.files[0]);
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const { name, tagline, description, type, category, videourl, img1, img2 } =
+    const { name, tagline, description, type, category, videourl, img1 } =
       productdetail;
     if (
       name === "" ||
@@ -67,9 +73,7 @@ const Postproduct = () => {
       description === "" ||
       type === "" ||
       category === "" ||
-      videourl === "" ||
-      img1 === "" ||
-      img2 === ""
+      videourl === ""
     ) {
       console.log("Please provide all data");
     } else {
@@ -79,11 +83,9 @@ const Postproduct = () => {
       formData.append("type", type);
       formData.append("category", category);
       formData.append("videourl", videourl);
-      formData.append("img1", img1);
-      formData.append("img2", img2);
       console.log("cs", productdetail);
       dispatch(createProduct(formData));
-      console.log("fhdfv", formData);
+      console.log("fhdfv", formData.toString());
     }
   };
   return (
@@ -240,27 +242,27 @@ const Postproduct = () => {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <FormControl fullWidth size='small' color='warning'>
-                    <label>Select Img</label>
+                    <label>Product Gif</label>
                     <input
-                      onChange={handleChange}
+                      onChange={onSelectGif}
                       color='primary'
                       accept='image/*'
                       type='file'
-                      name='img1'
-                      id='img1'
+                      name='img'
+                      id='img'
                     />
                   </FormControl>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <FormControl fullWidth size='small' color='warning'>
-                    <label>Select Img</label>
+                    <label>Products Img</label>
                     <input
-                      onChange={handleChange}
+                      onChange={onSelectImage}
                       color='primary'
                       accept='image/*'
                       type='file'
-                      name='img2'
-                      id='img2'
+                      name='img1'
+                      id='img1'
                     />
                   </FormControl>
                 </Grid>

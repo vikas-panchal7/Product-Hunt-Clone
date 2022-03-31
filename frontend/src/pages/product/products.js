@@ -1,13 +1,11 @@
 import * as React from "react";
 import Header from "../../components/header";
 import Product from "../../components/product";
-import AddProduct from "./addproduct";
+import UpcomingProducts from "./upcomingproducts";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import CircularProgress from "@mui/material/CircularProgress";
 import { listProducts } from "../../redux/actions/productActions";
-import { Button } from "@mui/material";
-import { NavLink } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import Postproduct from "./postproduct";
@@ -43,13 +41,14 @@ export const Products = () => {
               id={product._id}
               title={product.name}
               tagline={product.tagline}
+              img={product.img}
               likes={product.likes.length}
             />
           ))}
         </Grid>
 
         <Grid item xs={5}>
-          <AddProduct />
+          <UpcomingProducts />
           <Divider textAlign='left'>
             <b>New Products</b>
           </Divider>
@@ -59,6 +58,7 @@ export const Products = () => {
               id={product._id}
               title={product.name}
               tagline={product.tagline}
+              img={product.img}
               likes={product.likes.length}
             />
           ))}
