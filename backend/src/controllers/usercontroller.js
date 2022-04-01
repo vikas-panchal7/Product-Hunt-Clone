@@ -26,7 +26,7 @@ const Login = async (req, res) => {
     const token = await user.generateAuthtoken();
     res.status(200).send({ user, token });
   } catch (e) {
-    res.status(400).send(e.toString());
+    res.status(400).send({ error: e.toString() });
   }
 };
 
@@ -41,7 +41,7 @@ const Logout = async (req, res) => {
     const token = await user.generateAuthtoken();
     res.status(201).send({ user, token });
   } catch (e) {
-    res.status(400).send(e.toString());
+    res.status(400).send({ error: e.toString() });
   }
 };
 module.exports = { signUp, Login, Logout };

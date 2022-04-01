@@ -14,9 +14,8 @@ const createProduct = async (req, res) => {
   try {
     await addproduct.save();
     res.status(201).send(addproduct);
-  } catch (error) {
-    console.log(error.toString());
-    res.status(500).send(error.toString());
+  } catch (e) {
+    res.status(500).send({ error: e.toString() });
   }
 };
 
@@ -34,8 +33,8 @@ const commentProduct = async (req, res) => {
     product.comment.push(comment);
     const data = await product.save();
     res.send(data);
-  } catch (error) {
-    res.send(error.toString());
+  } catch (e) {
+    res.send({ error: e.toString() });
   }
 };
 
@@ -46,8 +45,8 @@ const viewProduct = async (req, res) => {
   try {
     if (!product) throw new Error("Product Not Found");
     res.send(product);
-  } catch (error) {
-    res.send({ error: "Something Went Wrong" });
+  } catch (e) {
+    res.send({ error: e.toString() });
   }
 };
 
@@ -58,8 +57,8 @@ const viewProductById = async (req, res) => {
   try {
     if (!product) throw new Error("Product Not Found");
     res.send(product);
-  } catch (error) {
-    res.send(error.toString());
+  } catch (e) {
+    res.send({ error: e.toString() });
   }
 };
 
@@ -82,8 +81,8 @@ const likeProduct = async (req, res) => {
     await product.save();
     const totallikes = product.likes.length;
     res.send({ totallikes });
-  } catch (error) {
-    res.send(error.toString());
+  } catch (e) {
+    res.send({ error: e.toString() });
   }
 };
 

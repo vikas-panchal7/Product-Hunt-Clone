@@ -7,10 +7,14 @@ import Paper from "@mui/material/Paper";
 import CircularProgress from "@mui/material/CircularProgress";
 import { styled } from "@mui/material/styles";
 
-import { Comments } from "../../components/comment";
+//
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+
+//
 import { listProductDetails } from "../../redux/actions/productActions";
+import { Comments } from "../../components/comment";
+
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#f7f6f2",
   "&:hover": {
@@ -18,16 +22,19 @@ const Item = styled(Paper)(({ theme }) => ({
   },
   ...theme.typography.body2,
   padding: theme.spacing(1.3),
-  width: "93%",
+  width: "95%",
 }));
 
 export const ProductsDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, details, error } = productDetails;
+
   const productlist = useSelector((state) => state.productList);
   const { loading: loader, products, error: loadererror } = productlist;
+
   React.useEffect(() => {
     dispatch(listProductDetails(id));
   }, [dispatch, id]);
@@ -39,6 +46,7 @@ export const ProductsDetails = () => {
       <Grid container spacing={2}>
         <Grid item xs={7}>
           <Product
+            key={details._id}
             id={details._id}
             title={details.name}
             tagline={details.tagline}
@@ -49,8 +57,8 @@ export const ProductsDetails = () => {
           <Grid>
             <Item justifycontent='flex-right'>
               <img
-                src={`http://localhost:4000/${details.img}`}
-                alt={`http://localhost:4000/${details.img}`}
+                src={`http://192.168.200.122:5000/${details.img}`}
+                alt='A'
                 width='100%'
                 height='100%'
               />
@@ -69,12 +77,13 @@ export const ProductsDetails = () => {
           {loader && <CircularProgress />}
           {products.map((product) => (
             <Product
+              key={product._id}
               id={product._id}
               title={product.name}
               tagline={product.tagline}
               url={product.url}
               img={product.img}
-              likes={product.likes.length}
+              likes={product.likes}
             />
           ))}
         </Grid>

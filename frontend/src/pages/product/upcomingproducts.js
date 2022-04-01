@@ -8,27 +8,13 @@ const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
   padding: theme.spacing(1),
 }));
-const UpcomingProducts = () => {
+
+export const UpcomingProducts = () => {
   return (
     <div>
       <Item justifycontent='flex-end'>
         <h4>Upcoming Products</h4>
-
-        <Product
-          id='624566b4b47b5502f1241628'
-          title='Slack '
-          tagline='The PowerFul Project Management Tool'
-          img='uploads/avt1648711660649A655.png'
-        />
-        <Product
-          id='624566b4b47b5502f1241628'
-          title='Slack '
-          tagline='The PowerFul Project Management Tool'
-          img='uploads/avt1648711660649A655.png'
-        />
       </Item>
     </div>
   );
 };
-
-export default UpcomingProducts;

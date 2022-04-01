@@ -10,33 +10,40 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import CircularProgress from "@mui/material/CircularProgress";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Link, useNavigate } from "react-router-dom";
-import Header from "../../components/header";
-import { register } from "../../redux/actions/userActions";
+
 import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+
+import Header from "../../components/header";
 import Bar from "../../components/snackbar";
+import { register } from "../../redux/actions/userActions";
+
 const theme = createTheme();
 
 export const SignUp = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userRegister = useSelector((state) => state.userRegister);
-  const { loading, error, userInfo } = userRegister;
+
   const [emailvalid, setemailvalid] = React.useState(true);
   const [passwordvalid, setpasswordvalid] = React.useState(true);
   const [firstnamevalid, setfirstnamevalid] = React.useState(true);
   const [lastnamevalid, setlastnamevalid] = React.useState(true);
-  React.useEffect(() => {
-    if (userInfo) {
-      navigate("/login");
-    }
-  }, [userInfo, navigate]);
   const [user, setUser] = React.useState({
     firstName: "",
     lastName: "",
     email: "",
     password: "",
   });
+
+  const userRegister = useSelector((state) => state.userRegister);
+  const { loading, error, userInfo } = userRegister;
+
+  React.useEffect(() => {
+    if (userInfo) {
+      navigate("/login");
+    }
+  }, [userInfo, navigate]);
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setUser({
@@ -179,7 +186,7 @@ export const SignUp = () => {
                   variant='contained'
                   sx={{ mt: 3, mb: 2 }}
                 >
-                  {loading && <CircularProgress color='success' />}
+                  {loading && <CircularProgress color='warning' />}
                   {!loading && "Sign Up"}
                 </Button>
                 <Grid container justifyContent='flex-end'>

@@ -6,5 +6,20 @@ import { NotFound } from "./error/notfound";
 import { Home } from "./home/home";
 import { Jobs } from "./jobs/jobs";
 import { Products } from "./product/products";
+import { Postproduct } from "./product/postproduct";
+import { ProductsDetails } from "./product/productdetails";
+import { UpcomingProducts } from "./product/upcomingproducts";
 
-export { Login, SignUp, About, Community, Home, Jobs, NotFound, Products };
+export {
+  Login,
+  SignUp,
+  About,
+  Community,
+  Home,
+  Jobs,
+  NotFound,
+  Products,
+  Postproduct,
+  ProductsDetails,
+  UpcomingProducts,
+};

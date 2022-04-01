@@ -1,6 +1,5 @@
 import React from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
-import { ProductsDetails } from "../src/pages/product/productdetails";
 import {
   Home,
   Products,
@@ -10,14 +9,15 @@ import {
   NotFound,
   Jobs,
   SignUp,
+  Postproduct,
+  ProductsDetails,
 } from "./pages/index";
-import Postproduct from "./pages/product/postproduct";
 const App = () => {
   return (
     <div>
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/products' element={<Products />} />
+        <Route path='/Products' element={<Products />} />
         <Route path='/products/:id' element={<ProductsDetails />} />
         <Route path='/Community' element={<Community />} />
         <Route path='/Jobs' element={<Jobs />} />

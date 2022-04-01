@@ -5,8 +5,10 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import ButtonBase from "@mui/material/ButtonBase";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+
 const Img = styled("img")({
   margin: "auto",
   display: "block",
@@ -16,9 +18,11 @@ const Img = styled("img")({
 const Product = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const handlelike = (event) => {
     event.stopPropagation();
   };
+
   const clickHandler = (event) => {
     console.log(event);
     navigate(`/products/${props.id}`);
@@ -29,7 +33,7 @@ const Product = (props) => {
         sx={{
           p: 2,
           margin: "4px",
-          maxWidth: 600,
+          maxWidth: "93%",
           flexGrow: 1,
           backgroundColor: (theme) =>
             theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -41,10 +45,7 @@ const Product = (props) => {
         <Grid container spacing={2}>
           <Grid item>
             <ButtonBase sx={{ width: 50, height: 50 }}>
-              <Img
-                alt={`http://localhost:4000/${props.img}`}
-                src={`http://localhost:4000/${props.img}`}
-              />
+              <Img alt='A' src={`http://192.168.200.122:5000/${props.img}`} />
             </ButtonBase>
           </Grid>
           <Grid item xs={8} sm container>

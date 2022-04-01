@@ -16,16 +16,22 @@ import Select from "@mui/material/Select";
 //import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import CloseIcon from "@mui/icons-material/Close";
-import { createProduct } from "../../redux/actions/productActions";
+
+//
 import { useDispatch, useSelector } from "react-redux";
+
+//
+import { createProduct } from "../../redux/actions/productActions";
+
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#f7f6f2",
   ...theme.typography.body2,
   padding: theme.spacing(1),
 }));
-const Postproduct = () => {
-  const formData = new FormData();
+
+export const Postproduct = () => {
   const dispatch = useDispatch();
+  const formData = new FormData();
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
   // const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
@@ -282,5 +288,3 @@ const Postproduct = () => {
     </div>
   );
 };
-
-export default Postproduct;

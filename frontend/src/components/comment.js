@@ -77,7 +77,7 @@ export const Comments = () => {
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
                 luctus ut est sed faucibus. Duis bibendum ac ex vehicula
                 laoreet. Suspendisse congue vulputate lobortis. Pellentesque at
-                interdum tortor..{" "}
+                interdum tortor..
               </p>
               <p style={{ textAlign: "left", color: "gray" }}>Reply</p>
             </Grid>

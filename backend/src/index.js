@@ -6,7 +6,7 @@ require("./db/mongoose");
 const userRouter = require("./routes/user");
 const productRouter = require("./routes/product");
 
-const port = 4000 || process.env.PORT;
+const port = 5000 || process.env.PORT;
 const app = express();
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 app.use(express.json());

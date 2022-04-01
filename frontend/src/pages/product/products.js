@@ -1,24 +1,23 @@
 import * as React from "react";
-import Header from "../../components/header";
-import Product from "../../components/product";
-import UpcomingProducts from "./upcomingproducts";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import CircularProgress from "@mui/material/CircularProgress";
-import { listProducts } from "../../redux/actions/productActions";
 
 import { useDispatch, useSelector } from "react-redux";
-import Postproduct from "./postproduct";
+
+import Header from "../../components/header";
+import Product from "../../components/product";
+import { Postproduct, UpcomingProducts } from "../index";
+import { listProducts } from "../../redux/actions/productActions";
 
 export const Products = () => {
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
+
   const { userInfo } = userLogin;
   const productlist = useSelector((state) => state.productList);
   const { loading, products, error } = productlist;
 
-  //console.log("ss", productlist);
-  // const [data, setdata] = React.useState([]);
   React.useEffect(() => {
     dispatch(listProducts());
   }, [dispatch]);
@@ -38,6 +37,8 @@ export const Products = () => {
           {loading && <CircularProgress />}
           {products.map((product) => (
             <Product
+              key={product._id}
+              key={product._id}
               id={product._id}
               title={product.name}
               tagline={product.tagline}
@@ -55,6 +56,7 @@ export const Products = () => {
           {loading && <CircularProgress />}
           {products.map((product) => (
             <Product
+              key={product._id}
               id={product._id}
               title={product.name}
               tagline={product.tagline}

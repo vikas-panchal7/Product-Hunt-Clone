@@ -25,6 +25,7 @@ import {
   PRODUCT_TOP_FAIL,
 } from "../../constants/productconstants";
 import baseService from "../service/baseService";
+
 export const listProducts = () => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_LIST_REQUEST });
@@ -46,7 +47,6 @@ export const listProducts = () => async (dispatch) => {
 
 export const listProductDetails = (id) => async (dispatch) => {
   try {
-    console.log(`/products/details/${id}`);
     dispatch({ type: PRODUCT_DETAILS_REQUEST });
     const { data } = await baseService.post(`/products/details/${id}`);
 

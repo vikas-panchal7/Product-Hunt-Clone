@@ -14,12 +14,14 @@ import MenuItem from "@mui/material/MenuItem";
 import SearchIcon from "@mui/icons-material/Search";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
+
 import product from "../assets/images/product.png";
 import { NavLink } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import { logout } from "../redux/actions/userActions";
+
 const pages = ["Products", "Community", "Jobs", "About"];
 const settings = ["Profile", "MyHunts", "MyCollections", "MyTopics", "Account"];
 
@@ -67,11 +69,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const Header = () => {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -82,7 +85,6 @@ const Header = () => {
 
   const handleCloseNavMenu = (event) => {
     // const value = event.currentTarget.value;
-
     setAnchorElNav(null);
   };
 

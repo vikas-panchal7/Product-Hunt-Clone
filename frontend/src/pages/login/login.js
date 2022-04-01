@@ -13,9 +13,12 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import GoogleLogin from "react-google-login";
 
+//
 import { useNavigate } from "react-router-dom";
-import { login } from "../../redux/actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
+
+//
+import { login } from "../../redux/actions/userActions";
 import Header from "../../components/header";
 import Bar from "../../components/snackbar";
 
@@ -151,12 +154,12 @@ export const Login = () => {
                   variant='contained'
                   sx={{ mt: 3, mb: 2 }}
                 >
-                  {loading && <CircularProgress color='success' />}
+                  {loading && <CircularProgress color='warning' />}
                   {!loading && "Sign In"}
                 </Button>
                 <Grid container>
                   <Grid item xs>
-                    <Link to='#' variant='body2'>
+                    <Link to='' variant='body2'>
                       Forgot password?
                     </Link>
                   </Grid>
