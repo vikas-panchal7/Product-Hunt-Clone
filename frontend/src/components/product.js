@@ -9,6 +9,8 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
+import { createProductLike } from "../redux/actions/productActions";
+
 const Img = styled("img")({
   margin: "auto",
   display: "block",
@@ -21,11 +23,12 @@ const Product = (props) => {
 
   const handlelike = (event) => {
     event.stopPropagation();
+    dispatch(createProductLike(props.id));
   };
 
   const clickHandler = (event) => {
     console.log(event);
-    navigate(`/products/${props.id}`);
+    navigate(`/product/details/${props.id}`);
   };
   return (
     <div onClick={clickHandler}>
@@ -45,7 +48,7 @@ const Product = (props) => {
         <Grid container spacing={2}>
           <Grid item>
             <ButtonBase sx={{ width: 50, height: 50 }}>
-              <Img alt='A' src={`http://192.168.200.122:5000/${props.img}`} />
+              {/* <Img alt='A' src={`http://192.168.200.122:5000/${props.img}`} /> */}
             </ButtonBase>
           </Grid>
           <Grid item xs={8} sm container>
@@ -54,7 +57,7 @@ const Product = (props) => {
                 <Typography gutterBottom variant='subtitle1' component='div'>
                   {props.title}
                 </Typography>
-                <Typography variant='body2' gutterBottom>
+                <Typography variant='body2' component='div' gutterBottom>
                   {props.tagline}
                 </Typography>
               </Grid>
@@ -62,7 +65,7 @@ const Product = (props) => {
             <Grid item>
               <Typography variant='subtitle1' component='div'>
                 <ButtonBase sx={{ width: 50, height: 50 }} onClick={handlelike}>
-                  <FavoriteIcon style={{ color: "#ff4000", fontSize: 40 }} />
+                  <FavoriteIcon style={{ color: "#ff4000", fontSize: 30 }} />
                 </ButtonBase>
                 {props.likes}
               </Typography>

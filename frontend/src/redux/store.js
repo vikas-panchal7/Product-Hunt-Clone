@@ -7,6 +7,7 @@ import {
   productListReducer,
   productDetailsReducer,
   productCreateReducer,
+  productCreateLikeReducer,
 } from "./reducers/productReducer";
 
 const reducer = combineReducers({
@@ -15,6 +16,7 @@ const reducer = combineReducers({
   productList: productListReducer,
   productDetails: productDetailsReducer,
   productCreate: productCreateReducer,
+  productLike: productCreateLikeReducer,
 });
 
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));

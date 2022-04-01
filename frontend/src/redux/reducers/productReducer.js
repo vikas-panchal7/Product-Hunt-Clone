@@ -20,10 +20,28 @@ import {
   PRODUCT_CREATE_REVIEW_SUCCESS,
   PRODUCT_CREATE_REVIEW_FAIL,
   PRODUCT_CREATE_REVIEW_RESET,
+  PRODUCT_CREATE_LIKE_REQUEST,
+  PRODUCT_CREATE_LIKE_SUCCESS,
+  PRODUCT_CREATE_LIKE_FAIL,
   PRODUCT_TOP_REQUEST,
   PRODUCT_TOP_SUCCESS,
   PRODUCT_TOP_FAIL,
 } from "../../constants/productconstants";
+
+export const productCreateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case PRODUCT_CREATE_REQUEST:
+      return { loading: true };
+    case PRODUCT_CREATE_SUCCESS:
+      return { loading: false, success: true, product: action.payload };
+    case PRODUCT_CREATE_FAIL:
+      return { loading: false, error: action.payload };
+    case PRODUCT_CREATE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
 
 export const productListReducer = (state = { products: [] }, action) => {
   switch (action.type) {
@@ -54,6 +72,19 @@ export const productDetailsReducer = (state = { details: [] }, action) => {
   }
 };
 
+export const productCreateLikeReducer = (state = {}, action) => {
+  switch (action.type) {
+    case PRODUCT_CREATE_LIKE_REQUEST:
+      return { loading: true };
+    case PRODUCT_CREATE_LIKE_SUCCESS:
+      return { loading: false, success: true, likes: action.payload };
+    case PRODUCT_CREATE_LIKE_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
 export const productDeleteReducer = (state = {}, action) => {
   switch (action.type) {
     case PRODUCT_DELETE_REQUEST:
@@ -62,21 +93,6 @@ export const productDeleteReducer = (state = {}, action) => {
       return { loading: false, success: true };
     case PRODUCT_DELETE_FAIL:
       return { loading: false, error: action.payload };
-    default:
-      return state;
-  }
-};
-
-export const productCreateReducer = (state = {}, action) => {
-  switch (action.type) {
-    case PRODUCT_CREATE_REQUEST:
-      return { loading: true };
-    case PRODUCT_CREATE_SUCCESS:
-      return { loading: false, success: true, product: action.payload };
-    case PRODUCT_CREATE_FAIL:
-      return { loading: false, error: action.payload };
-    case PRODUCT_CREATE_RESET:
-      return {};
     default:
       return state;
   }

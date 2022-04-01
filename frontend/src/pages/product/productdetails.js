@@ -28,16 +28,15 @@ const Item = styled(Paper)(({ theme }) => ({
 export const ProductsDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-
-  const productDetails = useSelector((state) => state.productDetails);
-  const { loading, details, error } = productDetails;
-
-  const productlist = useSelector((state) => state.productList);
-  const { loading: loader, products, error: loadererror } = productlist;
-
   React.useEffect(() => {
     dispatch(listProductDetails(id));
   }, [dispatch, id]);
+
+  const productDetails = useSelector((state) => state.productDetails);
+  const { loading, details, error } = productDetails;
+  console.log("vh", productDetails);
+  const productlist = useSelector((state) => state.productList);
+  const { loading: loader, products, error: loadererror } = productlist;
 
   return (
     <div style={{ marginTop: 80 }}>
@@ -52,12 +51,12 @@ export const ProductsDetails = () => {
             tagline={details.tagline}
             img={details.img}
             url={details.url}
-            likes={details.likes}
+            likes={details.likes.length}
           />
           <Grid>
             <Item justifycontent='flex-right'>
               <img
-                src={`http://192.168.200.122:5000/${details.img}`}
+                src={`http://192.168.200.122:5000/${details.img1}`}
                 alt='A'
                 width='100%'
                 height='100%'
@@ -83,7 +82,7 @@ export const ProductsDetails = () => {
               tagline={product.tagline}
               url={product.url}
               img={product.img}
-              likes={product.likes}
+              likes={product.likes.length}
             />
           ))}
         </Grid>

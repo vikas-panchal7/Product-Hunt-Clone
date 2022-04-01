@@ -64,37 +64,38 @@ export const listProductDetails = (id) => async (dispatch) => {
   }
 };
 
-// export const createProductLike = (id) => async (dispatch, getState) => {
-//   try {
-//     dispatch({
-//       type: PRODUCT_CREATE_LIKE_REQUEST,
-//     });
+export const createProductLike = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: PRODUCT_CREATE_LIKE_REQUEST,
+    });
+    const {
+      userLogin: { userInfo },
+    } = getState();
 
-//     const {
-//       userLogin: { userInfo },
-//     } = getState();
+    console.log("ahjs", userInfo);
 
-//     const config = {
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: `Bearer ${userInfo.token}`,
-//       },
-//     };
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    //console.log("data", config);
+    const { data } = await baseService.post(`/product/like/${id}`,{} ,config);
 
-//     await baseService.post(`/product/like/${id}`, config);
-
-//     dispatch({
-//       type: PRODUCT_CREATE_LIKE_SUCCESS,
-//     });
-//   } catch (error) {
-//     dispatch({
-//       type: PRODUCT_CREATE_LIKE_FAIL,
-//       payload: error.response.data.error
-//         ? error.response.data.error
-//         : error.response.data,
-//     });
-//   }
-// };
+    dispatch({
+      type: PRODUCT_CREATE_LIKE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_CREATE_LIKE_FAIL,
+      payload: error.response.data.error
+        ? error.response.data.error
+        : error.response.data,
+    });
+  }
+};
 export const createProduct = (formdata) => async (dispatch, getState) => {
   try {
     dispatch({
