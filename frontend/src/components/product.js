@@ -18,6 +18,8 @@ const Img = styled("img")({
   maxHeight: "100%",
 });
 const Product = (props) => {
+  const productLike = useSelector((state) => state.productLike);
+  React.useEffect(() => {}, [productLike]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -27,7 +29,6 @@ const Product = (props) => {
   };
 
   const clickHandler = (event) => {
-    console.log(event);
     navigate(`/product/details/${props.id}`);
   };
   return (
@@ -48,13 +49,18 @@ const Product = (props) => {
         <Grid container spacing={2}>
           <Grid item>
             <ButtonBase sx={{ width: 50, height: 50 }}>
-              {/* <Img alt='A' src={`http://192.168.200.122:5000/${props.img}`} /> */}
+              <Img alt='A' src={`http://192.168.200.122:5000/${props.img}`} />
             </ButtonBase>
           </Grid>
           <Grid item xs={8} sm container>
             <Grid item xs container direction='column' spacing={2}>
               <Grid item xs>
-                <Typography gutterBottom variant='subtitle1' component='div'>
+                <Typography
+                  gutterBottom
+                  variant='subtitle1'
+                  component='div'
+                  color={"CaptionText "}
+                >
                   {props.title}
                 </Typography>
                 <Typography variant='body2' component='div' gutterBottom>

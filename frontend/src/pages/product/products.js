@@ -9,6 +9,7 @@ import Header from "../../components/header";
 import Product from "../../components/product";
 import { Postproduct, UpcomingProducts } from "../index";
 import { listProducts } from "../../redux/actions/productActions";
+import Bar from "../../components/snackbar";
 
 export const Products = () => {
   const dispatch = useDispatch();
@@ -17,10 +18,13 @@ export const Products = () => {
   const { userInfo } = userLogin;
   const productlist = useSelector((state) => state.productList);
   const { loading, products, error } = productlist;
+  const productCreate = useSelector((state) => state.productCreate);
+
+ 
 
   React.useEffect(() => {
     dispatch(listProducts());
-  }, [dispatch]);
+  }, [dispatch, productCreate]);
 
   return (
     <div style={{ marginTop: 80 }}>
@@ -30,14 +34,13 @@ export const Products = () => {
           <Postproduct />
         </div>
       )}
-
+      {error && <Bar message={error} severity='warning' />}
       <Grid container spacing={2}>
         <Grid item xs={7}>
           <h3>Your Next Favorite Thing</h3>
           {loading && <CircularProgress />}
           {products.map((product) => (
             <Product
-              key={product._id}
               key={product._id}
               id={product._id}
               title={product.name}

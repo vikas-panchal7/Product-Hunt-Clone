@@ -34,7 +34,6 @@ export const ProductsDetails = () => {
 
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, details, error } = productDetails;
-  console.log("vh", productDetails);
   const productlist = useSelector((state) => state.productList);
   const { loading: loader, products, error: loadererror } = productlist;
 
@@ -51,7 +50,7 @@ export const ProductsDetails = () => {
             tagline={details.tagline}
             img={details.img}
             url={details.url}
-            likes={details.likes.length}
+            likes={details.likes?.length || 0}
           />
           <Grid>
             <Item justifycontent='flex-right'>
@@ -63,18 +62,18 @@ export const ProductsDetails = () => {
               />
             </Item>
           </Grid>
-          <Comments />
+          <Comments id={details._id} comments={details.comment} />
         </Grid>
         <Grid item xs={5}>
           <Item justifycontent='flex-right'>
-            <p>Description</p>
+            <b>Description</b>
             <p>{details.description}</p>
           </Item>
           <Divider textAlign='left'>
             <b>Similar Products</b>
           </Divider>
           {loader && <CircularProgress />}
-          {products.map((product) => (
+          {products?.map((product) => (
             <Product
               key={product._id}
               id={product._id}
@@ -82,7 +81,7 @@ export const ProductsDetails = () => {
               tagline={product.tagline}
               url={product.url}
               img={product.img}
-              likes={product.likes.length}
+              likes={product.likes.length || 0}
             />
           ))}
         </Grid>

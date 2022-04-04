@@ -8,6 +8,7 @@ import {
   productDetailsReducer,
   productCreateReducer,
   productCreateLikeReducer,
+  productCommentCreateReducer,
 } from "./reducers/productReducer";
 
 const reducer = combineReducers({
@@ -17,6 +18,7 @@ const reducer = combineReducers({
   productDetails: productDetailsReducer,
   productCreate: productCreateReducer,
   productLike: productCreateLikeReducer,
+  productComment: productCommentCreateReducer,
 });
 
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));

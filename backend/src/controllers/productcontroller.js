@@ -3,8 +3,6 @@ const Product = require("../models/product");
 // @desc     Create a new product
 // @route   /product/create
 const createProduct = async (req, res) => {
-  console.log("ss", req.files.img1[0].path);
-  console.log(req.body);
   const addproduct = new Product({
     ...req.body,
     img: req.files.img[0].path,
@@ -32,7 +30,7 @@ const commentProduct = async (req, res) => {
     if (!product) throw new Error("Product Not Found");
     product.comment.push(comment);
     const data = await product.save();
-    res.send(data);
+    res.send(comment);
   } catch (e) {
     res.send({ error: e.toString() });
   }
@@ -43,7 +41,7 @@ const commentProduct = async (req, res) => {
 const viewProduct = async (req, res) => {
   const product = await Product.find();
   try {
-    if (!product) throw new Error("Product Not Found");
+    // if (!product) throw new Error("Product Not Found");
     res.send(product);
   } catch (e) {
     res.send({ error: e.toString() });
@@ -80,7 +78,7 @@ const likeProduct = async (req, res) => {
     if (data != -1) product.likes.splice(data, 1);
     await product.save();
     const totallikes = product.likes.length;
-    res.send({ totallikes });
+    res.send({ product });
   } catch (e) {
     res.send({ error: e.toString() });
   }

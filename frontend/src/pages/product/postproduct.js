@@ -22,6 +22,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 //
 import { createProduct } from "../../redux/actions/productActions";
+import Bar from "../../components/snackbar";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#f7f6f2",
@@ -34,6 +35,17 @@ export const Postproduct = () => {
   const formData = new FormData();
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
+  const data = useSelector((state) => state.productCreate);
+  const { loading, success, product, error } = data;
+  const [productdetail, setproductdetail] = React.useState({
+    name: "",
+    tagline: "",
+    description: "",
+    type: "",
+    category: "",
+    videourl: "",
+    img1: "",
+  });
   // const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
 
   const handleClickOpen = () => {
@@ -44,15 +56,6 @@ export const Postproduct = () => {
     setOpen(false);
   };
 
-  const [productdetail, setproductdetail] = React.useState({
-    name: "",
-    tagline: "",
-    description: "",
-    type: "",
-    category: "",
-    videourl: "",
-    img1: "",
-  });
   const handleChange = (event) => {
     const { name, value } = event.target;
     setproductdetail({
@@ -91,7 +94,7 @@ export const Postproduct = () => {
       formData.append("videourl", videourl);
       console.log("cs", productdetail);
       dispatch(createProduct(formData));
-      console.log("fhdfv", formData.toString());
+      setOpen(false);
     }
   };
   return (
@@ -131,6 +134,7 @@ export const Postproduct = () => {
       >
         <DialogTitle id='responsive-dialog-title' align='center'>
           {"👋  Tell us More About Your Product"}
+          {error && <Bar message={error} severity='warning' />}
           <Button onClick={handleClose}>
             <CloseIcon align='left'></CloseIcon>
           </Button>
@@ -149,6 +153,9 @@ export const Postproduct = () => {
                     label='Product Name'
                     name='name'
                     value={productdetail.name}
+                    inputProps={{
+                      maxLength: 70,
+                    }}
                     autoComplete='given-name'
                     placeholder='Name of a Product'
                     onChange={handleChange}
@@ -165,6 +172,9 @@ export const Postproduct = () => {
                     label='Tagline'
                     name='tagline'
                     value={productdetail.tagline}
+                    inputProps={{
+                      maxLength: 100,
+                    }}
                     autoComplete='given-name'
                     onChange={handleChange}
                     placeholder='Concise and Descriptive Tagline For a Product'
@@ -178,6 +188,9 @@ export const Postproduct = () => {
                     fullWidth
                     multiline
                     maxRows={3}
+                    inputProps={{
+                      maxLength: 300,
+                    }}
                     id='description'
                     label='Description'
                     name='description'

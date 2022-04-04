@@ -14,9 +14,9 @@ import {
   PRODUCT_UPDATE_REQUEST,
   PRODUCT_UPDATE_SUCCESS,
   PRODUCT_UPDATE_FAIL,
-  PRODUCT_CREATE_REVIEW_REQUEST,
-  PRODUCT_CREATE_REVIEW_SUCCESS,
-  PRODUCT_CREATE_REVIEW_FAIL,
+  PRODUCT_CREATE_COMMENT_REQUEST,
+  PRODUCT_CREATE_COMMENT_SUCCESS,
+  PRODUCT_CREATE_COMMENT_FAIL,
   PRODUCT_CREATE_LIKE_REQUEST,
   PRODUCT_CREATE_LIKE_SUCCESS,
   PRODUCT_CREATE_LIKE_FAIL,
@@ -81,11 +81,11 @@ export const createProductLike = (id) => async (dispatch, getState) => {
       },
     };
     //console.log("data", config);
-    const { data } = await baseService.post(`/product/like/${id}`,{} ,config);
-
+    const { data } = await baseService.post(`/product/like/${id}`, {}, config);
+    //console.log("dd", data.product);
     dispatch({
       type: PRODUCT_CREATE_LIKE_SUCCESS,
-      payload: data,
+      payload: data.product,
     });
   } catch (error) {
     dispatch({
@@ -199,37 +199,37 @@ export const updateProduct = (product) => async (dispatch, getState) => {
   }
 };
 
-export const createProductReview =
-  (productId, review) => async (dispatch, getState) => {
+export const createProductComment =
+  (productId, comment) => async (dispatch, getState) => {
     try {
       dispatch({
-        type: PRODUCT_CREATE_REVIEW_REQUEST,
+        type: PRODUCT_CREATE_COMMENT_REQUEST,
       });
-
+      console.log(productId, comment);
       const {
         userLogin: { userInfo },
       } = getState();
 
       const config = {
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${userInfo.token}`,
         },
       };
 
-      await baseService.post(
-        `/api/products/${productId}/reviews`,
-        review,
+      const { data } = await baseService.post(
+        `/product/comment/${productId}`,
+        comment,
         config
       );
-
+      console.log(data);
       dispatch({
-        type: PRODUCT_CREATE_REVIEW_SUCCESS,
+        type: PRODUCT_CREATE_COMMENT_SUCCESS,
       });
     } catch (error) {
+      console.log(error);
       dispatch({
-        type: PRODUCT_CREATE_REVIEW_FAIL,
-        payload: error.response.data.error
+        type: PRODUCT_CREATE_COMMENT_FAIL,
+        payload: error.response.data
           ? error.response.data.error
           : error.response.data,
       });
