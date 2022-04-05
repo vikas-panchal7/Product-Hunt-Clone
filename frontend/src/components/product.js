@@ -7,10 +7,9 @@ import ButtonBase from "@mui/material/ButtonBase";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { createProductLike } from "../redux/actions/productActions";
-
 const Img = styled("img")({
   margin: "auto",
   display: "block",
@@ -18,8 +17,6 @@ const Img = styled("img")({
   maxHeight: "100%",
 });
 const Product = (props) => {
-  const productLike = useSelector((state) => state.productLike);
-  React.useEffect(() => {}, [productLike]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 

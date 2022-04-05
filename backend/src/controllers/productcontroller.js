@@ -20,13 +20,13 @@ const createProduct = async (req, res) => {
 //@desc  Comment on product
 //@route  /product/comment/:id
 const commentProduct = async (req, res) => {
-  const product = await Product.findById(req.params.id);
   const comment = {
     name: req.user.firstName,
     comment: req.body.comment,
     user: req.user._id,
   };
   try {
+    const product = await Product.findById(req.params.id);
     if (!product) throw new Error("Product Not Found");
     product.comment.push(comment);
     const data = await product.save();
@@ -63,13 +63,13 @@ const viewProductById = async (req, res) => {
 //@desc  like on product
 //@route  /product/like/:id
 const likeProduct = async (req, res) => {
-  const product = await Product.findById(req.params.id);
   const like = {
     name: req.user.firstName,
     comment: req.body.comment,
     user: req.user._id,
   };
   try {
+    const product = await Product.findById(req.params.id);
     if (!product) throw new Error("Product Not Found");
     const data = product.likes.findIndex(
       (item) => item.user == req.user._id.toString()
@@ -84,10 +84,24 @@ const likeProduct = async (req, res) => {
   }
 };
 
+//@desc  like on product
+//@route  /product/like/:id]
+const getlikeProduct = async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    if (!product) throw new Error("Product Not Found");
+    const totallikes = product.likes.length;
+    res.send({ totallikes });
+  } catch (e) {
+    res.send({ error: e.toString() });
+  }
+};
+
 module.exports = {
   createProduct,
   commentProduct,
   likeProduct,
   viewProduct,
   viewProductById,
+  getlikeProduct,
 };

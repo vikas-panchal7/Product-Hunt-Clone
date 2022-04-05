@@ -9,6 +9,7 @@ const {
   likeProduct,
   viewProduct,
   viewProductById,
+  getlikeProduct,
 } = require("../controllers/productcontroller");
 const auth = require("../middleware/auth");
 
@@ -52,5 +53,8 @@ router.post("/product/comment/:id", auth, commentProduct);
 
 //like Product
 router.post("/product/like/:id", auth, likeProduct);
+
+//getlikes of Product
+router.post("/product/getlike/:id", getlikeProduct);
 
 module.exports = router;

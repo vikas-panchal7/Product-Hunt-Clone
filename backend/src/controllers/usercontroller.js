@@ -5,12 +5,11 @@ const User = require("../models/users");
 const signUp = async (req, res) => {
   const adduser = new User(req.body);
   try {
+    const product = await User.find({ email: req.body.email });
+    if (!product) throw new Error("Email is Already Exist");
     await adduser.save();
     res.status(201).send(adduser);
-  } catch (error) {
-    if (error && error?.code) {
-      return res.status(409).send({ error: "Email is Already Exist" });
-    }
+  } catch (e) {
     res.status(500).send({ error: "Please Provide  All Information" });
   }
 };

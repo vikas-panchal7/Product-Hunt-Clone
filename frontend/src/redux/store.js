@@ -9,6 +9,7 @@ import {
   productCreateReducer,
   productCreateLikeReducer,
   productCommentCreateReducer,
+  productGetLikeReducer,
 } from "./reducers/productReducer";
 
 const reducer = combineReducers({
@@ -19,8 +20,20 @@ const reducer = combineReducers({
   productCreate: productCreateReducer,
   productLike: productCreateLikeReducer,
   productComment: productCommentCreateReducer,
+  productgetLikes: productGetLikeReducer,
 });
 
-const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));
+const userInfoFromStorage = localStorage.getItem("userInfo")
+  ? JSON.parse(localStorage.getItem("userInfo"))
+  : null;
+
+const intialState = {
+  userLogin: { userInfo: userInfoFromStorage },
+};
+const store = createStore(
+  reducer,
+  intialState,
+  composeWithDevTools(applyMiddleware(thunk))
+);
 
 export default store;

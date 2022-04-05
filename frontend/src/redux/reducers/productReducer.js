@@ -23,6 +23,9 @@ import {
   PRODUCT_CREATE_LIKE_REQUEST,
   PRODUCT_CREATE_LIKE_SUCCESS,
   PRODUCT_CREATE_LIKE_FAIL,
+  PRODUCT_GET_LIKE_SUCCESS,
+  PRODUCT_GET_LIKE_REQUEST,
+  PRODUCT_GET_LIKE_FAIL,
   PRODUCT_TOP_REQUEST,
   PRODUCT_TOP_SUCCESS,
   PRODUCT_TOP_FAIL,
@@ -52,24 +55,19 @@ export const productListReducer = (state = { products: [] }, action) => {
         loading: false,
         products: action.payload,
       };
-    // case PRODUCT_CREATE_LIKE_SUCCESS:
-    //   console.log(action.payload);
-    //   const products = [...state.products];
-    //   const ff = products.filter((el) => {
-    //     if (el._id == action.payload._id) {
-    //       console.log("1", el.likes);
-    //       console.log("2", action.payload.likes);
-    //       el.likes = [...action.payload.likes];
-    //     }
-    //     return el;
-    //   });
+    case PRODUCT_CREATE_LIKE_SUCCESS:
+      const products = [...state.products];
+      const ff = products.filter((el) => {
+        if (el._id === action.payload._id) {
+          el.likes = [...action.payload.likes];
+        }
+        return el;
+      });
 
-    //   console.log(ff);
-
-    //   return {
-    //     loading: false,
-    //     products: ff,
-    //   };
+      return {
+        loading: false,
+        products: ff,
+      };
     case PRODUCT_LIST_FAIL:
       return { loading: false, error: action.payload };
     default:
@@ -94,12 +92,29 @@ export const productCreateLikeReducer = (state = {}, action) => {
   switch (action.type) {
     case PRODUCT_CREATE_LIKE_REQUEST:
       return { loading: true };
-    case PRODUCT_CREATE_LIKE_SUCCESS:
+    // case PRODUCT_CREATE_LIKE_SUCCESS:
+    //   console.log("reducerrr", action.payload);
+    //   return {
+    //     loading: false,
+    //     likes: action.payload,
+    //   };
+    case PRODUCT_CREATE_LIKE_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const productGetLikeReducer = (state = {}, action) => {
+  switch (action.type) {
+    case PRODUCT_GET_LIKE_REQUEST:
+      return { loading: true };
+    case PRODUCT_GET_LIKE_SUCCESS:
       return {
         loading: false,
-        product: action.payload,
+        likes: action.payload,
       };
-    case PRODUCT_CREATE_LIKE_FAIL:
+    case PRODUCT_GET_LIKE_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

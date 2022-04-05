@@ -1,4 +1,5 @@
 import React from "react";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ReactDOM from "react-dom";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
@@ -20,10 +21,18 @@ export const Comments = (props) => {
   const [comment, setcomment] = React.useState("");
   const dispatch = useDispatch();
 
+  const [commentlist, setcommentlist] = React.useState([]);
+
+  React.useEffect(() => {
+    setcommentlist(props.comments?.reverse());
+  }, [props]);
   const handleComment = (event) => {
     event.preventDefault();
     if (comment !== "") {
       dispatch(createProductComment(props.id, comment));
+      setcomment("");
+    } else {
+      setcommentvalid(false);
     }
   };
   return (
@@ -43,17 +52,15 @@ export const Comments = (props) => {
           fullWidth
           color='warning'
           size='small'
+          defaultValue=''
+          value={comment}
           placeholder='What Do Yo Think About This Product'
           InputProps={{ style: { fontSize: 13 } }}
-          autoFocus
-          // onBlur={(event) => {
-          //   event.currentTarget.value.trim() !== "" && setcommentvalid(true);
-          // }}
-          // error={!commentvalid}
-          // helperText={!commentvalid && "Please Provide Valid Comment"}
+          error={!commentvalid}
+          helperText={!commentvalid && "Please Provide Valid Comment"}
           onChange={(event) => {
-            event.currentTarget.value.trim() !== "" &&
-              setcomment(event.currentTarget.value);
+            event.currentTarget.value.trim() !== "" && setcommentvalid(true);
+            setcomment(event.currentTarget.value);
           }}
         />
         &nbsp;&nbsp;
@@ -62,90 +69,68 @@ export const Comments = (props) => {
         </Button>
       </Box>
       <Paper style={{ padding: "40px 20px" }}>
-        {console.log("comments", props.comments)}
-        <Grid
-          container
-          wrap='nowrap'
-          spacing={2}
-          sx={{ flexDirection: "column", borderLeft: "1px solid grey" }}
-        >
-          <Grid item>
-            <Avatar alt='Remy Sharp' src={imgLink} />
-          </Grid>
-          <Grid justifyContent='left' item xs zeroMinWidth>
-            <h4 style={{ margin: 0, textAlign: "left" }}>{"name"}</h4>
-            <p style={{ textAlign: "left" }}>{"comment"}</p>
-            <p style={{ textAlign: "left", color: "gray" }}>
-              posted 1 minute ago
-            </p>{" "}
-            <Grid
-              justifyContent='left'
-              item
-              xs
-              zeroMinWidth
-              sx={{
-                paddingLeft: 10,
-                borderLeft: "1px solid",
-              }}
-            >
-              <Grid item>
-                <Avatar alt='Remy Sharp' src={imgLink} />
-              </Grid>
-              <h4 style={{ margin: 0, textAlign: "left" }}>Michel Michel</h4>
-              <p style={{ textAlign: "left" }}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
-                luctus ut est sed faucibus. Duis bibendum ac ex vehicula
-                laoreet. Suspendisse congue vulputate lobortis. Pellentesque at
-                interdum tortor..
-              </p>
+        {commentlist?.map((item) => (
+          <Grid
+            key={item._id}
+            container
+            wrap='nowrap'
+            spacing={2}
+            sx={{ flexDirection: "column", borderLeft: "1px solid grey" }}
+          >
+            <Grid item>
+              <Avatar />
+            </Grid>
+            <Grid justifyContent='left' item xs zeroMinWidth>
+              <h4 style={{ margin: 0, textAlign: "left" }}>{item?.name}</h4>
+              <p style={{ margin: 5, textAlign: "left" }}>{item?.comment}</p>
               <p style={{ textAlign: "left", color: "gray" }}>Reply</p>
-            </Grid>
-            <Grid
-              justifyContent='left'
-              item
-              xs
-              zeroMinWidth
-              sx={{
-                paddingLeft: 10,
-                borderLeft: "1px solid",
-              }}
-            >
-              <Grid item>
-                <Avatar alt='Remy Sharp' src={imgLink} />
+              <Grid
+                justifyContent='left'
+                item
+                xs
+                zeroMinWidth
+                sx={{
+                  paddingLeft: 10,
+                  borderLeft: "1px solid",
+                }}
+              >
+                <Grid item>
+                  <Avatar alt='Remy Sharp' src={imgLink} />
+                </Grid>
+                <h4 style={{ margin: 0, textAlign: "left" }}>Michel Michel</h4>
+                <p style={{ textAlign: "left" }}>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Aenean luctus ut est sed faucibus. Duis bibendum ac ex
+                  vehicula laoreet. Suspendisse congue vulputate lobortis.
+                  Pellentesque at interdum tortor..
+                </p>
+                <p style={{ textAlign: "left", color: "gray" }}>Reply</p>
               </Grid>
-              <h4 style={{ margin: 0, textAlign: "left" }}>Michel Michel</h4>
-              <p style={{ textAlign: "left" }}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
-                luctus ut est sed faucibus. Duis bibendum ac ex vehicula
-                laoreet. Suspendisse congue vulputate lobortis. Pellentesque at
-                interdum tortor..{" "}
-              </p>
-              <p style={{ textAlign: "left", color: "gray" }}>
-                posted 1 minute ago
-              </p>
+              <Grid
+                justifyContent='left'
+                item
+                xs
+                zeroMinWidth
+                sx={{
+                  paddingLeft: 10,
+                  borderLeft: "1px solid",
+                }}
+              >
+                <Grid item>
+                  <Avatar />
+                </Grid>
+                <h4 style={{ margin: 0, textAlign: "left" }}>Michel Michel</h4>
+                <p style={{ textAlign: "left" }}>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Aenean luctus ut est sed faucibus. Duis bibendum ac ex
+                  vehicula laoreet. Suspendisse congue vulputate lobortis.
+                  Pellentesque at interdum tortor..{" "}
+                </p>
+                <p style={{ textAlign: "left", color: "gray" }}>Reply</p>
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-        {/* <Divider variant='fullWidth' style={{ margin: "30px 0" }} />
-        <Grid container wrap='nowrap' spacing={2}>
-          <Grid item>
-            <Avatar alt='Remy Sharp' src={imgLink} />
-          </Grid>
-          <Grid justifyContent='left' item xs zeroMinWidth>
-            <h4 style={{ margin: 0, textAlign: "left" }}>Michel Michel</h4>
-            <p style={{ textAlign: "left" }}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
-              luctus ut est sed faucibus. Duis bibendum ac ex vehicula laoreet.
-              Suspendisse congue vulputate lobortis. Pellentesque at interdum
-              tortor. Quisque arcu quam, malesuada vel mauris et, posuere
-              sagittis ipsum.{" "}
-            </p>
-            <p style={{ textAlign: "left", color: "gray" }}>
-              posted 1 minute ago
-            </p>
-          </Grid>
-        </Grid>
-        <Divider variant='fullWidth' style={{ margin: "30px 0" }} /> */}
+        ))}
       </Paper>
     </div>
   );

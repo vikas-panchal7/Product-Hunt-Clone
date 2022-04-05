@@ -28,15 +28,16 @@ const Item = styled(Paper)(({ theme }) => ({
 export const ProductsDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  React.useEffect(() => {
-    dispatch(listProductDetails(id));
-  }, [dispatch, id]);
 
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, details, error } = productDetails;
   const productlist = useSelector((state) => state.productList);
   const { loading: loader, products, error: loadererror } = productlist;
+  const createComment = useSelector((state) => state.productComment);
 
+  React.useEffect(() => {
+    dispatch(listProductDetails(id));
+  }, [dispatch, id, createComment]);
   return (
     <div style={{ marginTop: 80 }}>
       {loading && <CircularProgress />}

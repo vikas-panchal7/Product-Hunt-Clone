@@ -20,6 +20,9 @@ import {
   PRODUCT_CREATE_LIKE_REQUEST,
   PRODUCT_CREATE_LIKE_SUCCESS,
   PRODUCT_CREATE_LIKE_FAIL,
+  PRODUCT_GET_LIKE_SUCCESS,
+  PRODUCT_GET_LIKE_REQUEST,
+  PRODUCT_GET_LIKE_FAIL,
   PRODUCT_TOP_REQUEST,
   PRODUCT_TOP_SUCCESS,
   PRODUCT_TOP_FAIL,
@@ -73,8 +76,6 @@ export const createProductLike = (id) => async (dispatch, getState) => {
       userLogin: { userInfo },
     } = getState();
 
-    console.log("ahjs", userInfo);
-
     const config = {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,
@@ -96,6 +97,27 @@ export const createProductLike = (id) => async (dispatch, getState) => {
     });
   }
 };
+
+export const getProductLike = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: PRODUCT_GET_LIKE_REQUEST,
+    });
+    const { data } = await baseService.post(`/product/getlike/${id}`);
+    dispatch({
+      type: PRODUCT_GET_LIKE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_GET_LIKE_FAIL,
+      payload: error.response.data.error
+        ? error.response.data.error
+        : error.response.data,
+    });
+  }
+};
+
 export const createProduct = (formdata) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -218,7 +240,7 @@ export const createProductComment =
 
       const { data } = await baseService.post(
         `/product/comment/${productId}`,
-        comment,
+        { comment },
         config
       );
       console.log(data);

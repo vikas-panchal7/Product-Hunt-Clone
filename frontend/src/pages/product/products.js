@@ -20,12 +20,14 @@ export const Products = () => {
   const { loading, products, error } = productlist;
   const productCreate = useSelector((state) => state.productCreate);
 
- 
-
+  const [productarr, setProductarr] = React.useState([]);
   React.useEffect(() => {
     dispatch(listProducts());
   }, [dispatch, productCreate]);
 
+  React.useEffect(() => {
+    setProductarr(products);
+  }, [products]);
   return (
     <div style={{ marginTop: 80 }}>
       <Header />
@@ -39,7 +41,7 @@ export const Products = () => {
         <Grid item xs={7}>
           <h3>Your Next Favorite Thing</h3>
           {loading && <CircularProgress />}
-          {products.map((product) => (
+          {productarr.map((product) => (
             <Product
               key={product._id}
               id={product._id}
@@ -57,7 +59,7 @@ export const Products = () => {
             <b>New Products</b>
           </Divider>
           {loading && <CircularProgress />}
-          {products.map((product) => (
+          {productarr.map((product) => (
             <Product
               key={product._id}
               id={product._id}
