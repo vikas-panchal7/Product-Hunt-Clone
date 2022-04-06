@@ -7,9 +7,10 @@ import ButtonBase from "@mui/material/ButtonBase";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { createProductLike } from "../redux/actions/productActions";
+import Footer from "./footer";
 const Img = styled("img")({
   margin: "auto",
   display: "block",
@@ -19,10 +20,15 @@ const Img = styled("img")({
 const Product = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
   const handlelike = (event) => {
     event.stopPropagation();
-    dispatch(createProductLike(props.id));
+    if (userInfo) {
+      dispatch(createProductLike(props.id));
+    } else {
+      navigate("/login");
+    }
   };
 
   const clickHandler = (event) => {

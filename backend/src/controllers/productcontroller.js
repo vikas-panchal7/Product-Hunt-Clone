@@ -39,10 +39,14 @@ const commentProduct = async (req, res) => {
 //@desc  view  product
 //@route  /products/
 const viewProduct = async (req, res) => {
-  const product = await Product.find();
   try {
+    const count = await Product.find().count();
+    const product = await Product.find()
+      .limit(parseInt(req.query.limit))
+      .skip(parseInt(req.query.skip))
+      .sort({ _id: parseInt(req.query.sort) });
     // if (!product) throw new Error("Product Not Found");
-    res.send(product);
+    res.send({ product, count });
   } catch (e) {
     res.send({ error: e.toString() });
   }

@@ -10,8 +10,10 @@ import Product from "../../components/product";
 import { Postproduct, UpcomingProducts } from "../index";
 import { listProducts } from "../../redux/actions/productActions";
 import Bar from "../../components/snackbar";
+import Footer from "../../components/footer";
 
 export const Products = () => {
+  const limit = 2;
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
 
@@ -51,6 +53,7 @@ export const Products = () => {
               likes={product.likes.length}
             />
           ))}
+          <Footer limit={limit} />
         </Grid>
 
         <Grid item xs={5}>
@@ -59,9 +62,9 @@ export const Products = () => {
             <b>New Products</b>
           </Divider>
           {loading && <CircularProgress />}
-          {productarr.map((product) => (
+          {productarr.map((product, index) => (
             <Product
-              key={product._id}
+              key={product._id + index}
               id={product._id}
               title={product.name}
               tagline={product.tagline}

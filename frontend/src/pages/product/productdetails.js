@@ -34,10 +34,11 @@ export const ProductsDetails = () => {
   const productlist = useSelector((state) => state.productList);
   const { loading: loader, products, error: loadererror } = productlist;
   const createComment = useSelector((state) => state.productComment);
+  const productLike = useSelector((state) => state.productLike);
 
   React.useEffect(() => {
     dispatch(listProductDetails(id));
-  }, [dispatch, id, createComment]);
+  }, [dispatch, id, createComment, productLike]);
   return (
     <div style={{ marginTop: 80 }}>
       {loading && <CircularProgress />}

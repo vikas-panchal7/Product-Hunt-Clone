@@ -1,24 +1,27 @@
 import React from "react";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import ReactDOM from "react-dom";
-import InputAdornment from "@mui/material/InputAdornment";
-import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
-import SearchIcon from "@mui/icons-material/Search";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import Paper from "@mui/material/Paper";
 import { Avatar } from "@mui/material";
 import { borderLeft, Box } from "@mui/system";
 import { Button } from "@mui/material";
+
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 import { createProductComment } from "../redux/actions/productActions";
 const imgLink =
   "https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260";
 
 export const Comments = (props) => {
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
   const [commentvalid, setcommentvalid] = React.useState(true);
   const [comment, setcomment] = React.useState("");
+
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [commentlist, setcommentlist] = React.useState([]);
@@ -26,9 +29,13 @@ export const Comments = (props) => {
   React.useEffect(() => {
     setcommentlist(props.comments?.reverse());
   }, [props]);
+
   const handleComment = (event) => {
     event.preventDefault();
-    if (comment !== "") {
+    if (!userInfo) {
+      navigate("/login");
+    }
+    if (comment !== "" && userInfo) {
       dispatch(createProductComment(props.id, comment));
       setcomment("");
     } else {
@@ -129,6 +136,8 @@ export const Comments = (props) => {
                 <p style={{ textAlign: "left", color: "gray" }}>Reply</p>
               </Grid>
             </Grid>
+
+            <Divider />
           </Grid>
         ))}
       </Paper>

@@ -46,14 +46,18 @@ export const productCreateReducer = (state = {}, action) => {
   }
 };
 
-export const productListReducer = (state = { products: [] }, action) => {
+export const productListReducer = (
+  state = { products: [], count: 0 },
+  action
+) => {
   switch (action.type) {
     case PRODUCT_LIST_REQUEST:
       return { loading: true, products: [] };
     case PRODUCT_LIST_SUCCESS:
       return {
         loading: false,
-        products: action.payload,
+        products: action.payload.product,
+        count: action.payload.count,
       };
     case PRODUCT_CREATE_LIKE_SUCCESS:
       const products = [...state.products];
@@ -67,6 +71,7 @@ export const productListReducer = (state = { products: [] }, action) => {
       return {
         loading: false,
         products: ff,
+        count: state.count,
       };
     case PRODUCT_LIST_FAIL:
       return { loading: false, error: action.payload };

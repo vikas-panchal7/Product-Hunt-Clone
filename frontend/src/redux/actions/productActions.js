@@ -29,10 +29,12 @@ import {
 } from "../../constants/productconstants";
 import baseService from "../service/baseService";
 
-export const listProducts = () => async (dispatch) => {
+export const listProducts = (props) => async (dispatch) => {
+  console.log("props", props);
   try {
     dispatch({ type: PRODUCT_LIST_REQUEST });
     const { data } = await baseService.post("/products");
+    console.log(data);
 
     dispatch({
       type: PRODUCT_LIST_SUCCESS,
@@ -91,7 +93,7 @@ export const createProductLike = (id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: PRODUCT_CREATE_LIKE_FAIL,
-      payload: error.response.data.error
+      payload: error.response.data
         ? error.response.data.error
         : error.response.data,
     });
@@ -227,7 +229,7 @@ export const createProductComment =
       dispatch({
         type: PRODUCT_CREATE_COMMENT_REQUEST,
       });
-      console.log(productId, comment);
+
       const {
         userLogin: { userInfo },
       } = getState();
@@ -243,7 +245,6 @@ export const createProductComment =
         { comment },
         config
       );
-      console.log(data);
       dispatch({
         type: PRODUCT_CREATE_COMMENT_SUCCESS,
       });
