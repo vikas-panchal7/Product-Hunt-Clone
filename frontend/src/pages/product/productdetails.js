@@ -68,7 +68,9 @@ export const ProductsDetails = () => {
         </Grid>
         <Grid item xs={5}>
           <Item justifycontent='flex-right'>
-            <b>Description</b>
+            <Divider textAlign='left'>
+              <b>Description</b>
+            </Divider>
             <p>{details.description}</p>
           </Item>
           <Divider textAlign='left'>

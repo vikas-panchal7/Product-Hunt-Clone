@@ -26,16 +26,22 @@ import {
   PRODUCT_TOP_REQUEST,
   PRODUCT_TOP_SUCCESS,
   PRODUCT_TOP_FAIL,
+  PRODUCT_UPCOMING_FAIL,
+  PRODUCT_UPCOMING_REQUEST,
+  PRODUCT_UPCOMING_SUCCESS,
 } from "../../constants/productconstants";
 import baseService from "../service/baseService";
 
 export const listProducts = (props) => async (dispatch) => {
-  console.log("props", props);
+  const limit = props?.limit;
+  const skip = props?.skip;
+  const sort = props?.sort;
+  const search = props?.search;
   try {
     dispatch({ type: PRODUCT_LIST_REQUEST });
-    const { data } = await baseService.post("/products");
-    console.log(data);
-
+    const { data } = await baseService.post(
+      `/products?limit=${limit || 4}&skip=${skip || 0}&sort=${sort || 1}`
+    );
     dispatch({
       type: PRODUCT_LIST_SUCCESS,
       payload: data,
@@ -272,6 +278,33 @@ export const listTopProducts = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: PRODUCT_TOP_FAIL,
+      payload: error.response.data.error
+        ? error.response.data.error
+        : error.response.data,
+    });
+  }
+};
+
+export const upcomingProducts = (props) => async (dispatch) => {
+  const limit = props?.limit;
+  const skip = props?.skip;
+  const sort = props?.sort;
+  try {
+    dispatch({ type: PRODUCT_UPCOMING_REQUEST });
+
+    const { data } = await baseService.post(
+      `/products/upcomings?limit=${limit || 5}&skip=${skip || 0}&sort=${
+        sort || 1
+      }`
+    );
+
+    dispatch({
+      type: PRODUCT_UPCOMING_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_UPCOMING_FAIL,
       payload: error.response.data.error
         ? error.response.data.error
         : error.response.data,

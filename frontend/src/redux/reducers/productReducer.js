@@ -29,6 +29,9 @@ import {
   PRODUCT_TOP_REQUEST,
   PRODUCT_TOP_SUCCESS,
   PRODUCT_TOP_FAIL,
+  PRODUCT_UPCOMING_FAIL,
+  PRODUCT_UPCOMING_REQUEST,
+  PRODUCT_UPCOMING_SUCCESS, 
 } from "../../constants/productconstants";
 
 export const productCreateReducer = (state = {}, action) => {
@@ -176,6 +179,19 @@ export const productTopRatedReducer = (state = { products: [] }, action) => {
     case PRODUCT_TOP_SUCCESS:
       return { loading: false, products: action.payload };
     case PRODUCT_TOP_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const upcomingProductReducer = (state = { products: [] }, action) => {
+  switch (action.type) {
+    case PRODUCT_UPCOMING_REQUEST:
+      return { loading: true, products: [] };
+    case PRODUCT_UPCOMING_SUCCESS:
+      return { loading: false, products: action.payload };
+    case PRODUCT_UPCOMING_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

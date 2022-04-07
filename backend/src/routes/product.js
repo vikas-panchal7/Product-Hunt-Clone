@@ -10,11 +10,15 @@ const {
   viewProduct,
   viewProductById,
   getlikeProduct,
+  viewUpcomingProduct,
 } = require("../controllers/productcontroller");
 const auth = require("../middleware/auth");
 
 // view  all products
 router.post("/products/", viewProduct);
+
+// view  upcoming products
+router.post("/products/upcomings", viewUpcomingProduct);
 
 // view   product by id
 router.post("/products/details/:id", viewProductById);

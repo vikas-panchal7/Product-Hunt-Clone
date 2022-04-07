@@ -36,6 +36,21 @@ const commentProduct = async (req, res) => {
   }
 };
 
+//@desc  view  upcomings products
+//@route  /products/
+const viewUpcomingProduct = async (req, res) => {
+  try {
+    const product = await Product.find({ type: "Upcoming" })
+      .limit(parseInt(req.query.limit))
+      .skip(parseInt(req.query.skip))
+      .sort({ _id: parseInt(req.query.sort) });
+    // if (!product) throw new Error("Product Not Found");
+    res.send(product);
+  } catch (e) {
+    res.send({ error: e.toString() });
+  }
+};
+
 //@desc  view  product
 //@route  /products/
 const viewProduct = async (req, res) => {
@@ -52,8 +67,8 @@ const viewProduct = async (req, res) => {
   }
 };
 
-//@desc  view  product
-//@route  /products/
+//@desc  view  product details
+//@route /products/details/:id
 const viewProductById = async (req, res) => {
   const product = await Product.findById(req.params.id);
   try {
@@ -108,4 +123,5 @@ module.exports = {
   viewProduct,
   viewProductById,
   getlikeProduct,
+  viewUpcomingProduct,
 };

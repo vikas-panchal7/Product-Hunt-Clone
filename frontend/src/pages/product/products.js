@@ -2,6 +2,11 @@ import * as React from "react";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -10,10 +15,11 @@ import Product from "../../components/product";
 import { Postproduct, UpcomingProducts } from "../index";
 import { listProducts } from "../../redux/actions/productActions";
 import Bar from "../../components/snackbar";
-import Footer from "../../components/footer";
+import Paginate from "../../components/pagination";
+import { color } from "@mui/system";
 
 export const Products = () => {
-  const limit = 2;
+  const limit = 4;
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
 
@@ -30,6 +36,14 @@ export const Products = () => {
   React.useEffect(() => {
     setProductarr(products);
   }, [products]);
+
+  const [sort, setsort] = React.useState(-1);
+
+  const handleChange = (event) => {
+    setsort(event.target.value);
+    dispatch(listProducts({ sort }));
+  };
+
   return (
     <div style={{ marginTop: 80 }}>
       <Header />
@@ -41,7 +55,30 @@ export const Products = () => {
       {error && <Bar message={error} severity='warning' />}
       <Grid container spacing={2}>
         <Grid item xs={7}>
-          <h3>Your Next Favorite Thing</h3>
+          <Box
+            sx={{ minWidth: 80 }}
+            display={"flex"}
+            flexDirection={"row"}
+            justifyContent={"space-between"}
+          >
+            <Divider textAlign='right'>
+              <b>Your Next Favourite Things</b>
+            </Divider>
+            <FormControl variant='standard' size='small'>
+              <Select
+                labelId='demo-simple-select-label'
+                id='demo-simple-select'
+                value={sort}
+                defaultValue={sort}
+                onChange={handleChange}
+                disableUnderline
+              >
+                <MenuItem value={-1}>Featured</MenuItem>
+                <MenuItem value={1}>Newest</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+
           {loading && <CircularProgress />}
           {productarr.map((product) => (
             <Product
@@ -53,7 +90,7 @@ export const Products = () => {
               likes={product.likes.length}
             />
           ))}
-          <Footer limit={limit} />
+          <Paginate limit={limit} />
         </Grid>
 
         <Grid item xs={5}>

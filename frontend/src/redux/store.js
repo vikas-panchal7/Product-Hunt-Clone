@@ -10,6 +10,7 @@ import {
   productCreateLikeReducer,
   productCommentCreateReducer,
   productGetLikeReducer,
+  upcomingProductReducer,
 } from "./reducers/productReducer";
 
 const reducer = combineReducers({
@@ -21,6 +22,7 @@ const reducer = combineReducers({
   productLike: productCreateLikeReducer,
   productComment: productCommentCreateReducer,
   productgetLikes: productGetLikeReducer,
+  productUpcominglist: upcomingProductReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")

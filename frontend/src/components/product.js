@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { createProductLike } from "../redux/actions/productActions";
-import Footer from "./footer";
 const Img = styled("img")({
   margin: "auto",
   display: "block",
