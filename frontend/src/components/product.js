@@ -24,7 +24,7 @@ const Product = (props) => {
   const handlelike = (event) => {
     event.stopPropagation();
     if (userInfo) {
-      dispatch(createProductLike(props.id));
+      dispatch(createProductLike({ id: props.id, type: props.liketype }));
     } else {
       navigate("/login");
     }

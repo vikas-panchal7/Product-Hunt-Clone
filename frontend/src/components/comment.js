@@ -20,6 +20,7 @@ export const Comments = (props) => {
 
   const [commentvalid, setcommentvalid] = React.useState(true);
   const [comment, setcomment] = React.useState("");
+  const [error, Seterror] = React.useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -30,6 +31,18 @@ export const Comments = (props) => {
     setcommentlist(props.comments?.reverse());
   }, [props]);
 
+  const handleChange = (event) => {
+    console.log(event.currentTarget.value);
+    const comment = document.getElementById(event.currentTarget.value).value;
+    console.log(comment);
+    if (document.getElementById(event.currentTarget.value).value == "") {
+      Seterror(true);
+    }
+    document.getElementById(event.currentTarget.value).value = "";
+    console.log(document.getElementById(event.currentTarget.value));
+    document.getElementById(event.currentTarget.value).placeholder =
+      "Please Enter Valid comment!";
+  };
   const handleComment = (event) => {
     event.preventDefault();
     if (!userInfo) {
@@ -42,6 +55,7 @@ export const Comments = (props) => {
       setcommentvalid(false);
     }
   };
+
   return (
     <div style={{ padding: 14 }} className='App'>
       <h1>Comments</h1>
@@ -90,14 +104,40 @@ export const Comments = (props) => {
             <Grid justifyContent='left' item xs zeroMinWidth>
               <h4 style={{ margin: 0, textAlign: "left" }}>{item?.name}</h4>
               <p style={{ margin: 5, textAlign: "left" }}>{item?.comment}</p>
-              <p style={{ textAlign: "left", color: "gray" }}>Reply</p>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  padding: "10px",
+                }}
+              >
+                <TextField
+                  color='warning'
+                  id={item?._id}
+                  size='small'
+                  defaultValue=''
+                  placeholder='Reply'
+                  InputProps={{ style: { fontSize: 12 } }}
+                />
+                &nbsp;&nbsp;
+                <Button
+                  value={item?._id}
+                  variant='text'
+                  size='small'
+                  type='submit'
+                  color='warning'
+                  onClick={handleChange}
+                >
+                  Reply
+                </Button>
+              </Box>
               <Grid
                 justifyContent='left'
                 item
                 xs
                 zeroMinWidth
                 sx={{
-                  paddingLeft: 10,
+                  paddingLeft: 5,
                   borderLeft: "1px solid",
                 }}
               >
@@ -119,7 +159,7 @@ export const Comments = (props) => {
                 xs
                 zeroMinWidth
                 sx={{
-                  paddingLeft: 10,
+                  paddingLeft: 5,
                   borderLeft: "1px solid",
                 }}
               >

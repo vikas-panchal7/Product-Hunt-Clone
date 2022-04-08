@@ -18,31 +18,39 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export const UpcomingProducts = () => {
+  let limit = 2;
+  const type = "upcoming";
   const dispatch = useDispatch();
   const productUpcominglist = useSelector((state) => state.productUpcominglist);
-  const { loading, products, error } = productUpcominglist;
+  const productLike = useSelector((state) => state.productLike);
+  const { loading, products, error, page } = productUpcominglist;
   const [productarr, setProductarr] = React.useState([]);
-  const [page, setpage] = React.useState(1);
+  let pages = page;
 
   React.useEffect(() => {
-    dispatch(upcomingProducts());
+    dispatch(upcomingProducts({ limit, pages }));
   }, [dispatch]);
 
   React.useEffect(() => {
     setProductarr(products);
   }, [products]);
   const handlepage = (event) => {
-    if (event.currentTarget.value == -1 && page != 0) {
-      setpage(Math.round(page + parseInt(event.currentTarget.value)));
+    if (pages === 1 && event.currentTarget.value == -1) {
+      this.disabled = true;
     }
-    if (event.currentTarget.value == 1 && page >= 0) {
-      setpage(Math.round(page + parseInt(event.currentTarget.value)));
+    if (event.currentTarget.value == -1 && pages > 1) {
+      pages = pages - 1;
     }
-    let limit = 2;
-    const skip = limit * (page - 1);
-    console.log(page, limit);
+    if (event.currentTarget.value == 1 && pages >= 1) {
+      if (productarr.length <= 1) {
+        return (this.disabled = true);
+      }
+      console.log("pages in");
+      pages = pages + 1;
+    }
+    const skip = limit * (pages - 1);
     if (page !== 0) {
-      dispatch(upcomingProducts(limit, skip));
+      dispatch(upcomingProducts({ limit, skip, pages }));
     }
   };
 
@@ -61,6 +69,7 @@ export const UpcomingProducts = () => {
             tagline={product.tagline}
             img={product.img}
             likes={product.likes.length}
+            liketype={type}
           />
         ))}
         <Box

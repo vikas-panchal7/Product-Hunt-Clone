@@ -16,10 +16,10 @@ import { Postproduct, UpcomingProducts } from "../index";
 import { listProducts } from "../../redux/actions/productActions";
 import Bar from "../../components/snackbar";
 import Paginate from "../../components/pagination";
-import { color } from "@mui/system";
 
 export const Products = () => {
   const limit = 4;
+  const type = "list";
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
 
@@ -78,7 +78,6 @@ export const Products = () => {
               </Select>
             </FormControl>
           </Box>
-
           {loading && <CircularProgress />}
           {productarr.map((product) => (
             <Product
@@ -88,6 +87,7 @@ export const Products = () => {
               tagline={product.tagline}
               img={product.img}
               likes={product.likes.length}
+              liketype={type}
             />
           ))}
           <Paginate limit={limit} />

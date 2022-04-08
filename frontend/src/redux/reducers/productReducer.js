@@ -2,6 +2,7 @@ import {
   PRODUCT_LIST_REQUEST,
   PRODUCT_LIST_SUCCESS,
   PRODUCT_LIST_FAIL,
+  PRODUCT_LIST_LIKE_SUCCESS,
   PRODUCT_DETAILS_REQUEST,
   PRODUCT_DETAILS_SUCCESS,
   PRODUCT_DETAILS_FAIL,
@@ -31,7 +32,8 @@ import {
   PRODUCT_TOP_FAIL,
   PRODUCT_UPCOMING_FAIL,
   PRODUCT_UPCOMING_REQUEST,
-  PRODUCT_UPCOMING_SUCCESS, 
+  PRODUCT_UPCOMING_LIKE_SUCCESS,
+  PRODUCT_UPCOMING_SUCCESS,
 } from "../../constants/productconstants";
 
 export const productCreateReducer = (state = {}, action) => {
@@ -62,9 +64,9 @@ export const productListReducer = (
         products: action.payload.product,
         count: action.payload.count,
       };
-    case PRODUCT_CREATE_LIKE_SUCCESS:
-      const products = [...state.products];
-      const ff = products.filter((el) => {
+    case PRODUCT_LIST_LIKE_SUCCESS:
+      const product = [...state.products];
+      const ff = product.filter((el) => {
         if (el._id === action.payload._id) {
           el.likes = [...action.payload.likes];
         }
@@ -185,12 +187,33 @@ export const productTopRatedReducer = (state = { products: [] }, action) => {
   }
 };
 
-export const upcomingProductReducer = (state = { products: [] }, action) => {
+export const upcomingProductReducer = (
+  state = { products: [], page: 1 },
+  action
+) => {
   switch (action.type) {
     case PRODUCT_UPCOMING_REQUEST:
       return { loading: true, products: [] };
     case PRODUCT_UPCOMING_SUCCESS:
-      return { loading: false, products: action.payload };
+      return {
+        loading: false,
+        products: action.payload.data,
+        page: action.payload.page,
+      };
+    case PRODUCT_UPCOMING_LIKE_SUCCESS:
+      const product = [...state.products];
+      const ff = product.filter((el) => {
+        if (el._id === action.payload._id) {
+          el.likes = [...action.payload.likes];
+        }
+        return el;
+      });
+
+      return {
+        loading: false,
+        products: ff,
+        page: state.page,
+      };
     case PRODUCT_UPCOMING_FAIL:
       return { loading: false, error: action.payload };
     default:

@@ -1,6 +1,7 @@
 import {
   PRODUCT_LIST_REQUEST,
   PRODUCT_LIST_SUCCESS,
+  PRODUCT_LIST_LIKE_SUCCESS,
   PRODUCT_LIST_FAIL,
   PRODUCT_DETAILS_REQUEST,
   PRODUCT_DETAILS_SUCCESS,
@@ -29,6 +30,7 @@ import {
   PRODUCT_UPCOMING_FAIL,
   PRODUCT_UPCOMING_REQUEST,
   PRODUCT_UPCOMING_SUCCESS,
+  PRODUCT_UPCOMING_LIKE_SUCCESS,
 } from "../../constants/productconstants";
 import baseService from "../service/baseService";
 
@@ -75,36 +77,49 @@ export const listProductDetails = (id) => async (dispatch) => {
   }
 };
 
-export const createProductLike = (id) => async (dispatch, getState) => {
-  try {
-    dispatch({
-      type: PRODUCT_CREATE_LIKE_REQUEST,
-    });
-    const {
-      userLogin: { userInfo },
-    } = getState();
+export const createProductLike =
+  ({ id, type }) =>
+  async (dispatch, getState) => {
+    try {
+      // dispatch({
+      //   type: PRODUCT_CREATE_LIKE_REQUEST,
+      // });
+      const {
+        userLogin: { userInfo },
+      } = getState();
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
-    //console.log("data", config);
-    const { data } = await baseService.post(`/product/like/${id}`, {}, config);
-    //console.log("dd", data.product);
-    dispatch({
-      type: PRODUCT_CREATE_LIKE_SUCCESS,
-      payload: data.product,
-    });
-  } catch (error) {
-    dispatch({
-      type: PRODUCT_CREATE_LIKE_FAIL,
-      payload: error.response.data
-        ? error.response.data.error
-        : error.response.data,
-    });
-  }
-};
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      const { data } = await baseService.post(
+        `/product/like/${id}`,
+        {},
+        config
+      );
+      if (type === "list") {
+        dispatch({
+          type: PRODUCT_LIST_LIKE_SUCCESS,
+          payload: data.product,
+        });
+      }
+      if (type === "upcoming") {
+        dispatch({
+          type: PRODUCT_UPCOMING_LIKE_SUCCESS,
+          payload: data.product,
+        });
+      }
+    } catch (error) {
+      dispatch({
+        type: PRODUCT_CREATE_LIKE_FAIL,
+        payload: error.response.data
+          ? error.response.data.error
+          : error.response.data,
+      });
+    }
+  };
 
 export const getProductLike = (id) => async (dispatch) => {
   try {
@@ -289,6 +304,7 @@ export const upcomingProducts = (props) => async (dispatch) => {
   const limit = props?.limit;
   const skip = props?.skip;
   const sort = props?.sort;
+  const page = props?.pages;
   try {
     dispatch({ type: PRODUCT_UPCOMING_REQUEST });
 
@@ -300,7 +316,7 @@ export const upcomingProducts = (props) => async (dispatch) => {
 
     dispatch({
       type: PRODUCT_UPCOMING_SUCCESS,
-      payload: data,
+      payload: { data, page },
     });
   } catch (error) {
     dispatch({
