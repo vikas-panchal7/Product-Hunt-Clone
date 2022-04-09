@@ -64,6 +64,7 @@ export const ProductsDetails = () => {
               />
             </Item>
           </Grid>
+          {loading && <CircularProgress />}
           <Comments id={details._id} comments={details.comment} />
         </Grid>
         <Grid item xs={5}>

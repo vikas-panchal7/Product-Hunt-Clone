@@ -245,7 +245,8 @@ export const updateProduct = (product) => async (dispatch, getState) => {
 };
 
 export const createProductComment =
-  (productId, comment) => async (dispatch, getState) => {
+  ({ id, comment, commentid }) =>
+  async (dispatch, getState) => {
     try {
       dispatch({
         type: PRODUCT_CREATE_COMMENT_REQUEST,
@@ -262,8 +263,8 @@ export const createProductComment =
       };
 
       const { data } = await baseService.post(
-        `/product/comment/${productId}`,
-        { comment },
+        `/product/comment/${id}`,
+        { comment, commentid },
         config
       );
       dispatch({

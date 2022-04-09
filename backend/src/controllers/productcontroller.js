@@ -1,3 +1,4 @@
+const { default: mongoose } = require("mongoose");
 const Product = require("../models/product");
 
 // @desc     Create a new product
@@ -27,10 +28,19 @@ const commentProduct = async (req, res) => {
   };
   try {
     const product = await Product.findById(req.params.id);
+
     if (!product) throw new Error("Product Not Found");
-    product.comment.push(comment);
-    const data = await product.save();
-    res.send(comment);
+    if (req.body.commentid) {
+      const data = product.comment.findIndex(
+        (x) => x.id === req.body.commentid
+      );
+      await product.comment[data].reply.push(comment);
+      console.log("inside if");
+    } else {
+      product.comment.push(comment);
+    }
+    const data1 = await product.save();
+    res.send(data1);
   } catch (e) {
     res.send({ error: e.toString() });
   }
@@ -70,7 +80,14 @@ const viewProduct = async (req, res) => {
 //@desc  view  product details
 //@route /products/details/:id
 const viewProductById = async (req, res) => {
-  const product = await Product.findById(req.params.id);
+  // const product = await Product.findById(req.params.id).then(result => {
+  //       result.comment.sort((a, b) => a.createdAt > b.createdAt ? -1 : 1);
+  //       return result;
+  const product = await Product.findById(req.params.id).then((result) => {
+    result.comment.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1));
+    return result;
+  });
+
   try {
     if (!product) throw new Error("Product Not Found");
     res.send(product);
@@ -78,6 +95,18 @@ const viewProductById = async (req, res) => {
     res.send({ error: e.toString() });
   }
 };
+//   const product = await Product.aggregateOne([
+//     { $unwind: "$comment" },
+//     {
+//       $match: {
+//         _id: mongoose.Types.ObjectId(req.params.id),
+//       },
+//     },
+//     {
+//       $sort: { "comment.createdAt": -1 },
+//     },
+//     { $group: { _id: "$_id", answers: { $push: "$comment" } } },
+//   ]);
 
 //@desc  like on product
 //@route  /product/like/:id

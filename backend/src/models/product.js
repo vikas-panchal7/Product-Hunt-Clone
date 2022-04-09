@@ -23,6 +23,17 @@ const commentSchema = mongoose.Schema(
       required: true,
       ref: "User",
     },
+    reply: [
+      {
+        name: { type: String, required: true },
+        comment: { type: String, require: true },
+        user: {
+          type: mongoose.Schema.Types.ObjectId,
+          required: true,
+          ref: "User",
+        },
+      },
+    ],
   },
   {
     timestamps: true,

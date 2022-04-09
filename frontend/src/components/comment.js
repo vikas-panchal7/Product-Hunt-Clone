@@ -15,12 +15,13 @@ const imgLink =
   "https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260";
 
 export const Comments = (props) => {
+  let ns = [];
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
   const [commentvalid, setcommentvalid] = React.useState(true);
   const [comment, setcomment] = React.useState("");
-  const [error, Seterror] = React.useState(false);
+  const textInput = React.useRef(null);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -28,20 +29,19 @@ export const Comments = (props) => {
   const [commentlist, setcommentlist] = React.useState([]);
 
   React.useEffect(() => {
-    setcommentlist(props.comments?.reverse());
+    setcommentlist(props.comments);
   }, [props]);
 
-  const handleChange = (event) => {
-    console.log(event.currentTarget.value);
+  const handleClick = (event) => {
     const comment = document.getElementById(event.currentTarget.value).value;
-    console.log(comment);
-    if (document.getElementById(event.currentTarget.value).value == "") {
-      Seterror(true);
+    const commentid = event.currentTarget.value;
+    if (comment === "") {
+      document.getElementById(event.currentTarget.value).placeholder =
+        "Please Enter Valid comment!";
+    } else {
+      dispatch(createProductComment({ id: props.id, comment, commentid }));
+      document.getElementById(event.currentTarget.value).value = "";
     }
-    document.getElementById(event.currentTarget.value).value = "";
-    console.log(document.getElementById(event.currentTarget.value));
-    document.getElementById(event.currentTarget.value).placeholder =
-      "Please Enter Valid comment!";
   };
   const handleComment = (event) => {
     event.preventDefault();
@@ -49,7 +49,7 @@ export const Comments = (props) => {
       navigate("/login");
     }
     if (comment !== "" && userInfo) {
-      dispatch(createProductComment(props.id, comment));
+      dispatch(createProductComment({ id: props.id, comment }));
       setcomment("");
     } else {
       setcommentvalid(false);
@@ -113,6 +113,7 @@ export const Comments = (props) => {
               >
                 <TextField
                   color='warning'
+                  ref={textInput}
                   id={item?._id}
                   size='small'
                   defaultValue=''
@@ -126,55 +127,29 @@ export const Comments = (props) => {
                   size='small'
                   type='submit'
                   color='warning'
-                  onClick={handleChange}
+                  onClick={handleClick}
                 >
                   Reply
                 </Button>
               </Box>
-              <Grid
-                justifyContent='left'
-                item
-                xs
-                zeroMinWidth
-                sx={{
-                  paddingLeft: 5,
-                  borderLeft: "1px solid",
-                }}
-              >
-                <Grid item>
-                  <Avatar alt='Remy Sharp' src={imgLink} />
+              {item?.reply?.map((rep) => (
+                <Grid
+                  justifyContent='left'
+                  item
+                  xs
+                  zeroMinWidth
+                  sx={{
+                    paddingLeft: 5,
+                    borderLeft: "1px solid",
+                  }}
+                >
+                  <Grid item>
+                    <Avatar />
+                  </Grid>
+                  <h4 style={{ margin: 0, textAlign: "left" }}>{rep?.name}</h4>
+                  <p style={{ textAlign: "left" }}>{rep?.comment}</p>
                 </Grid>
-                <h4 style={{ margin: 0, textAlign: "left" }}>Michel Michel</h4>
-                <p style={{ textAlign: "left" }}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Aenean luctus ut est sed faucibus. Duis bibendum ac ex
-                  vehicula laoreet. Suspendisse congue vulputate lobortis.
-                  Pellentesque at interdum tortor..
-                </p>
-                <p style={{ textAlign: "left", color: "gray" }}>Reply</p>
-              </Grid>
-              <Grid
-                justifyContent='left'
-                item
-                xs
-                zeroMinWidth
-                sx={{
-                  paddingLeft: 5,
-                  borderLeft: "1px solid",
-                }}
-              >
-                <Grid item>
-                  <Avatar />
-                </Grid>
-                <h4 style={{ margin: 0, textAlign: "left" }}>Michel Michel</h4>
-                <p style={{ textAlign: "left" }}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Aenean luctus ut est sed faucibus. Duis bibendum ac ex
-                  vehicula laoreet. Suspendisse congue vulputate lobortis.
-                  Pellentesque at interdum tortor..{" "}
-                </p>
-                <p style={{ textAlign: "left", color: "gray" }}>Reply</p>
-              </Grid>
+              ))}
             </Grid>
 
             <Divider />
