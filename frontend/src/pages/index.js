@@ -9,7 +9,7 @@ import { Products } from "./product/products";
 import { Postproduct } from "./product/postproduct";
 import { ProductsDetails } from "./product/productdetails";
 import { UpcomingProducts } from "./product/upcomingproducts";
-
+import { Profile } from "./user/profile";
 export {
   Login,
   SignUp,
@@ -22,4 +22,5 @@ export {
   Postproduct,
   ProductsDetails,
   UpcomingProducts,
+  Profile,
 };
