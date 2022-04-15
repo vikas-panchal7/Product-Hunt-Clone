@@ -24,7 +24,11 @@ const userSchema = new mongoose.Schema(
       trim: true,
       minlength: [8, "Enter Min 8 character passowrd"],
     },
+    avtar: {
+      type: String,
+    },
   },
+
   {
     timestamps: true,
   }
@@ -36,7 +40,6 @@ userSchema.methods.toJSON = function () {
   const userObject = user.toObject();
 
   delete userObject.password;
-  delete userObject.lastName;
   delete userObject.createdAt;
   delete userObject.updatedAt;
 

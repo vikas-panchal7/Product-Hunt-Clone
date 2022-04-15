@@ -17,7 +17,7 @@ import InputBase from "@mui/material/InputBase";
 
 import product from "../assets/images/product.png";
 import { NavLink } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import { logout } from "../redux/actions/userActions";
@@ -70,6 +70,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const Header = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
@@ -89,12 +90,13 @@ const Header = () => {
   };
 
   const handleCloseUserMenu = (event) => {
-    console.log("adsas0", event.target.innerText);
     setAnchorElUser(null);
   };
 
   const handlelogout = () => {
+    var result = window.confirm("Do You Want to Logout ?");
     dispatch(logout());
+    navigate("/");
   };
   return (
     <AppBar position='fixed' style={{ background: "#ffffff" }}>

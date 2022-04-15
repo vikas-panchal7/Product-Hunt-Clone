@@ -23,6 +23,7 @@ const Login = async (req, res) => {
       req.body.password
     );
     const token = await user.generateAuthtoken();
+
     res.status(200).send({ user, token });
   } catch (e) {
     res.status(400).send({ error: e.toString() });
@@ -43,4 +44,36 @@ const Logout = async (req, res) => {
     res.status(400).send({ error: e.toString() });
   }
 };
-module.exports = { signUp, Login, Logout };
+
+const Profile = async (req, res) => {
+  try {
+    const filter = { _id: req.user._id };
+    const img = req.file?.path;
+    let update = {};
+    if (img) {
+      update = {
+        ...req.body,
+        avtar: img,
+      };
+    } else {
+      update = { ...req.body };
+    }
+
+    const user = await User.findByIdAndUpdate(filter, update, { new: true });
+    console.log(user);
+    res.status(200).send(user);
+  } catch (e) {
+    res.status(400).send({ error: e.toString() });
+  }
+};
+
+const userInfos = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    console.log(user);
+    res.status(200).send(user);
+  } catch (e) {
+    res.status(400).send({ error: e.toString() });
+  }
+};
+module.exports = { signUp, Login, Logout, Profile, userInfos };
