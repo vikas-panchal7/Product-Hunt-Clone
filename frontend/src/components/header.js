@@ -20,7 +20,7 @@ import { NavLink } from "react-router-dom";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import { logout } from "../redux/actions/userActions";
+import { getUserDetails, logout } from "../redux/actions/userActions";
 
 const pages = ["Products", "Community", "Jobs", "About"];
 const settings = ["Profile", "MyHunts", "MyCollections", "MyTopics", "Account"];
@@ -71,8 +71,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  React.useEffect(() => {
+    dispatch(getUserDetails());
+  }, []);
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+  const userDetails = useSelector((state) => state.userDetails);
+  const { user } = userDetails;
+  console.log("user headr", user);
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -227,11 +233,14 @@ const Header = () => {
               </Box>
             </Box>
           )}
-          {userInfo && (
+          {userInfo && user && (
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title='Open settings'>
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt='A' src={require("../assets/images/v.jpeg")} />
+                  <Avatar
+                    alt={userInfo.user?.firstName}
+                    src={`http://192.168.200.122:5000/${user?.avtar}`}
+                  />
                 </IconButton>
               </Tooltip>
               <Menu

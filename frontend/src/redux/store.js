@@ -39,8 +39,17 @@ const userInfoFromStorage = localStorage.getItem("userInfo")
 const intialState = {
   userLogin: { userInfo: userInfoFromStorage },
 };
+
+const rootReducer = (state, action) => {
+  if (action.type === "USER_LOGOUT") {
+    return reducer(undefined, action);
+  }
+
+  return reducer(state, action);
+};
+
 const store = createStore(
-  reducer,
+  rootReducer,
   intialState,
   composeWithDevTools(applyMiddleware(thunk))
 );

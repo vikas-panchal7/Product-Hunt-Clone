@@ -92,7 +92,6 @@ export const Postproduct = () => {
       formData.append("type", type);
       formData.append("category", category);
       formData.append("videourl", videourl);
-      console.log("cs", productdetail);
       dispatch(createProduct(formData));
       setOpen(false);
     }

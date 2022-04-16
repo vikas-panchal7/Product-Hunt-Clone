@@ -47,6 +47,7 @@ const Logout = async (req, res) => {
 
 const Profile = async (req, res) => {
   try {
+    console.log("SS", req.body);
     const filter = { _id: req.user._id };
     const img = req.file?.path;
     let update = {};
@@ -70,7 +71,6 @@ const Profile = async (req, res) => {
 const userInfos = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
-    console.log(user);
     res.status(200).send(user);
   } catch (e) {
     res.status(400).send({ error: e.toString() });
