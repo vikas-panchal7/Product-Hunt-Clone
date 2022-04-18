@@ -4,6 +4,7 @@ const Job = require("../models/job");
 // @desc     Create a new job
 // @route   /jobs/create
 const createJob = async (req, res) => {
+  console.log(req.body);
   const addjob = new Job({
     ...req.body,
     logo: req.file.path,

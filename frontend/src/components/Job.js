@@ -5,7 +5,7 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import ButtonBase from "@mui/material/ButtonBase";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-
+import Link from "@mui/material/Link";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -51,8 +51,8 @@ const Job = (props) => {
       >
         <Grid container spacing={2}>
           <Grid item>
-            <ButtonBase sx={{ width: 50, height: 50 }}>
-              <Img alt='A' src={`http://192.168.200.122:5000/${props?.img}`} />
+            <ButtonBase sx={{ width: 100, height: 100 }}>
+              <Img alt='A' src={`http://192.168.200.122:5000/${props?.logo}`} />
             </ButtonBase>
           </Grid>
           <Grid item xs={8} sm container>
@@ -70,14 +70,14 @@ const Job = (props) => {
                   component='div'
                   color={"CaptionText "}
                 >
-                  {props?.title} Title
+                  {props?.company}
                 </Typography>
                 <Typography
                   marginTop={"5px"}
                   component='div'
                   color={"CaptionText "}
                 >
-                  {props?.title} <b>Title</b>
+                  <b>{props?.title}</b>
                 </Typography>
                 <Typography
                   marginTop={"5px"}
@@ -90,18 +90,20 @@ const Job = (props) => {
             </Grid>
             <Grid item>
               <Typography variant='subtitle1' component='div'>
-                <Button
-                  variant='outlined'
-                  style={{
-                    marginTop: "10px",
-                    borderRadius: 10,
-                    fontSize: "15px",
-                    color: "#544d4d",
-                  }}
-                  color='warning'
-                >
-                  <b>apply</b>
-                </Button>
+                <Link target='_blank' href={props?.link} underline='none'>
+                  <Button
+                    variant='outlined'
+                    style={{
+                      marginTop: "10px",
+                      borderRadius: 10,
+                      fontSize: "15px",
+                      color: "#544d4d",
+                    }}
+                    color='warning'
+                  >
+                    <b>Apply</b>
+                  </Button>
+                </Link>
               </Typography>
             </Grid>
           </Grid>

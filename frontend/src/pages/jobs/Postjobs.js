@@ -21,8 +21,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useDispatch, useSelector } from "react-redux";
 
 //
-import { createProduct } from "../../redux/actions/productActions";
 import Bar from "../../components/snackbar";
+import { createJobs } from "../../redux/actions/jobsActions";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#f7f6f2",
@@ -35,16 +35,14 @@ export const PostJob = () => {
   const formData = new FormData();
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
-  const data = useSelector((state) => state.productCreate);
-  const { loading, success, product, error } = data;
-  const [productdetail, setproductdetail] = React.useState({
-    name: "",
-    tagline: "",
-    description: "",
-    type: "",
+  const data = useSelector((state) => state.jobCreate);
+  const { loading, success, job, error } = data;
+  const [jobdetail, setjobdetail] = React.useState({
+    companyname: "",
+    companytagline: "",
+    jobtitle: "",
     category: "",
-    videourl: "",
-    img1: "",
+    joblink: "",
   });
   // const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -58,42 +56,47 @@ export const PostJob = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setproductdetail({
-      ...productdetail,
+    setjobdetail({
+      ...jobdetail,
       [name]: value,
     });
   };
 
-  const onSelectImage = (event) => {
-    formData.append("img1", event.target.files[0]);
-  };
-  const onSelectGif = (event) => {
-    formData.append("img", event.target.files[0]);
+  const onSelectLogo = (event) => {
+    formData.append("logo", event.target.files[0]);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const { name, tagline, description, type, category, videourl, img1 } =
-      productdetail;
+    const { companyname, companytagline, jobtitle, category, joblink } =
+      jobdetail;
     if (
-      name === "" ||
-      tagline === "" ||
-      description === "" ||
-      type === "" ||
+      companyname === "" ||
+      companytagline === "" ||
+      jobtitle === "" ||
       category === "" ||
-      videourl === ""
+      joblink === ""
     ) {
       console.log("Please provide all data");
     } else {
-      formData.append("name", name);
-      formData.append("tagline", tagline);
-      formData.append("description", description);
-      formData.append("type", type);
+      formData.append("companyname", companyname);
+      formData.append("companytagline", companytagline);
+      formData.append("jobtitle", jobtitle);
       formData.append("category", category);
-      formData.append("videourl", videourl);
-      dispatch(createProduct(formData));
-      setOpen(false);
+      formData.append("joblink", joblink);
+      dispatch(createJobs(formData));
+
+      if (!error) {
+        setjobdetail({
+          companyname: "",
+          companytagline: "",
+          jobtitle: "",
+          category: "",
+          joblink: "",
+        });
+        setOpen(false);
+      }
     }
   };
   return (
@@ -145,10 +148,10 @@ export const PostJob = () => {
                     fullWidth
                     size='small'
                     color='warning'
-                    id='name'
+                    id='companyname'
                     label='Company Name'
-                    name='name'
-                    value={productdetail.name}
+                    name='companyname'
+                    value={jobdetail.companyname}
                     inputProps={{
                       maxLength: 70,
                     }}
@@ -165,10 +168,10 @@ export const PostJob = () => {
                     fullWidth
                     size='small'
                     color='warning'
-                    id=' tagline'
+                    id='companytagline'
                     label='Company Tagline'
-                    name='tagline'
-                    value={productdetail.tagline}
+                    name='companytagline'
+                    value={jobdetail.companytagline}
                     inputProps={{
                       maxLength: 100,
                     }}
@@ -183,10 +186,10 @@ export const PostJob = () => {
                     size='small'
                     color='warning'
                     fullWidth
-                    id='description'
+                    id='jobtitle'
                     label='Job Title'
-                    name='description'
-                    value={productdetail.description}
+                    name='jobtitle'
+                    value={jobdetail.jobtitle}
                     onChange={handleChange}
                     placeholder='Short & Sweet Job Title'
                   />
@@ -194,15 +197,15 @@ export const PostJob = () => {
                 <Grid item xs={12}>
                   <FormControl fullWidth size='small' color='warning'>
                     <InputLabel id='demo-simple-select-lab'>
-                      Select Product Category*
+                      Select Job Category*
                     </InputLabel>
                     <Select
                       labelId='demo-simple-select-lab'
-                      id='productcategory'
+                      id='category'
                       name='category'
-                      label='Select Product Category'
+                      label='Select Job Category'
                       onChange={handleChange}
-                      value={productdetail.category ?? ""}
+                      value={jobdetail.category ?? ""}
                     >
                       <MenuItem value='Tech'>Tech</MenuItem>
                       <MenuItem value='Productivity'>Productivity</MenuItem>
@@ -225,10 +228,10 @@ export const PostJob = () => {
                     fullWidth
                     multiline
                     maxRows={2}
-                    id='videourl'
+                    id='joblink'
                     label='Job Apply Link'
-                    name='videourl'
-                    value={productdetail.videourl}
+                    name='joblink'
+                    value={jobdetail.joblink}
                     onChange={handleChange}
                     placeholder='Provide Link Apply For Job'
                   />
@@ -237,14 +240,15 @@ export const PostJob = () => {
                   <FormControl fullWidth>
                     <label>Company Logo* </label>
                     <TextField
-                      onChange={onSelectGif}
+                      onChange={onSelectLogo}
                       color='primary'
                       accept='image/*'
                       type='file'
-                      name='img'
-                      id='img'
+                      name='logo'
+                      id='logo'
                       size='small'
                       color='warning'
+                      required
                     />
                   </FormControl>
                 </Grid>

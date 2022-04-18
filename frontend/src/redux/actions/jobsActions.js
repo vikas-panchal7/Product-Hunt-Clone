@@ -7,6 +7,7 @@ import {
   JOBS_LIST_REQUEST,
   JOBS_LIST_SUCCESS,
 } from "../../constants/jobsconstants";
+import baseService from "../../redux/service/baseService";
 
 export const listJobs = (props) => async (dispatch) => {
   const limit = props?.limit;
@@ -15,9 +16,11 @@ export const listJobs = (props) => async (dispatch) => {
   const search = props?.search;
   try {
     dispatch({ type: JOBS_LIST_REQUEST });
-    const { data } = await baseService.post(
+    const { data } = await baseService.get(`/jobs`);
+    /*   const { data } = await baseService.post(
       `/jobs?limit=${limit || 4}&skip=${skip || 0}&sort=${sort || 1}`
-    );
+    ); */
+    console.log("SSS", data);
     dispatch({
       type: JOBS_LIST_SUCCESS,
       payload: data,
@@ -32,7 +35,7 @@ export const listJobs = (props) => async (dispatch) => {
   }
 };
 
-export const createProduct = (formdata) => async (dispatch, getState) => {
+export const createJobs = (formdata) => async (dispatch, getState) => {
   try {
     dispatch({
       type: JOBS_CREATE_REQUEST,
@@ -49,6 +52,7 @@ export const createProduct = (formdata) => async (dispatch, getState) => {
       },
     };
     const { data } = await baseService.post(`/jobs/create`, formdata, config);
+    console.log("res", data);
 
     dispatch({
       type: JOBS_CREATE_SUCCESS,

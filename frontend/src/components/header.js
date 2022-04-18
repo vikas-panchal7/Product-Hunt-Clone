@@ -78,7 +78,6 @@ const Header = () => {
   const { userInfo } = userLogin;
   const userDetails = useSelector((state) => state.userDetails);
   const { user } = userDetails;
-  console.log("user headr", user);
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);

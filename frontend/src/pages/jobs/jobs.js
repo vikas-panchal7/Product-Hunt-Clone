@@ -13,30 +13,32 @@ import { PostJob } from "../index";
 import Header from "../../components/header";
 import Job from "../../components/Job";
 import Paginate from "../../components/pagination";
+import { listJobs } from "../../redux/actions/jobsActions";
+
 export const Jobs = () => {
   const limit = 4;
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
 
   const { userInfo } = userLogin;
-  const productlist = useSelector((state) => state.productList);
-  const { loading, products, error } = productlist;
-  const productCreate = useSelector((state) => state.productCreate);
+  const jobslist = useSelector((state) => state.jobList);
+  const { loading, jobs, error } = jobslist;
+  const jobCreate = useSelector((state) => state.jobCreate);
 
   const [jobsarr, setjobarr] = React.useState([]);
   React.useEffect(() => {
-    dispatch(listProducts());
-  }, [dispatch, productCreate]);
+    dispatch(listJobs());
+  }, [dispatch, jobCreate]);
 
   React.useEffect(() => {
-    setProductarr(products);
-  }, [products]);
+    setjobarr(jobs);
+  }, [jobslist]);
 
   const [sort, setsort] = React.useState(-1);
 
   const handleChange = (event) => {
     setsort(event.target.value);
-    dispatch(listProducts({ sort }));
+    dispatch(listJobs({ sort }));
   };
 
   return (
@@ -59,9 +61,9 @@ export const Jobs = () => {
                 <Select
                   labelId='demo-simple-select-label'
                   id='demo-simple-select'
-                  // value={sort}
-                  // defaultValue={sort}
-                  // onChange={handleChange}
+                  value={sort}
+                  defaultValue={sort}
+                  onChange={handleChange}
                   disableUnderline
                 >
                   <MenuItem value={-1}>Featured</MenuItem>
@@ -70,8 +72,15 @@ export const Jobs = () => {
               </FormControl>
             </Box>
             {loading && <CircularProgress />}
-            {jobsarr.map((jobs, index) => (
-              <Product />
+            {jobsarr?.map((jobs, index) => (
+              <Job
+                key={jobs._id + index}
+                title={jobs.jobtitle}
+                tagline={jobs.companytagline}
+                company={jobs.companyname}
+                logo={jobs.logo}
+                link={jobs.joblink}
+              />
             ))}
             <Paginate limit={limit} />
           </Grid>
