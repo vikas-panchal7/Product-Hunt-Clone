@@ -30,7 +30,7 @@ const Item = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(1),
 }));
 
-export const Postproduct = () => {
+export const PostJob = () => {
   const dispatch = useDispatch();
   const formData = new FormData();
   const [open, setOpen] = React.useState(false);
@@ -107,7 +107,7 @@ export const Postproduct = () => {
           alignSelf: "right",
         }}
       >
-        POST PRODUCT
+        POST JOB
       </Button>
       <Dialog
         sx={{
@@ -124,15 +124,12 @@ export const Postproduct = () => {
             backgroundColor: "#F0F0F0",
           },
         }}
-        //fullWidth={true}
-        //maxWidth={"md"}
-        //fullScreen={fullScreen}
         open={open}
         onClose={handleClose}
         aria-labelledby='responsive-dialog-title'
       >
         <DialogTitle id='responsive-dialog-title' align='center'>
-          {"👋  Tell us More About Your Product"}
+          {"👋  Tell us More About Your Job & Company"}
           {error && <Bar message={error} severity='warning' />}
           <Button onClick={handleClose}>
             <CloseIcon align='left'></CloseIcon>
@@ -149,14 +146,14 @@ export const Postproduct = () => {
                     size='small'
                     color='warning'
                     id='name'
-                    label='Product Name'
+                    label='Company Name'
                     name='name'
                     value={productdetail.name}
                     inputProps={{
                       maxLength: 70,
                     }}
                     autoComplete='given-name'
-                    placeholder='Name of a Product'
+                    placeholder='Name of a Company*'
                     onChange={handleChange}
                     autoFocus
                   />
@@ -168,8 +165,8 @@ export const Postproduct = () => {
                     fullWidth
                     size='small'
                     color='warning'
-                    id='tagline'
-                    label='Tagline'
+                    id=' tagline'
+                    label='Company Tagline'
                     name='tagline'
                     value={productdetail.tagline}
                     inputProps={{
@@ -177,7 +174,7 @@ export const Postproduct = () => {
                     }}
                     autoComplete='given-name'
                     onChange={handleChange}
-                    placeholder='Concise and Descriptive Tagline For a Product'
+                    placeholder='Concise and Descriptive Tagline For a Company'
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -186,41 +183,18 @@ export const Postproduct = () => {
                     size='small'
                     color='warning'
                     fullWidth
-                    multiline
-                    maxRows={3}
-                    inputProps={{
-                      maxLength: 300,
-                    }}
                     id='description'
-                    label='Description'
+                    label='Job Title'
                     name='description'
                     value={productdetail.description}
                     onChange={handleChange}
-                    placeholder='Impressive Description For a Product'
+                    placeholder='Short & Sweet Job Title'
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
-                  <FormControl fullWidth size='small' color='warning'>
-                    <InputLabel id='demo-simple-select-label'>
-                      Select Product Type
-                    </InputLabel>
-                    <Select
-                      labelId='demo-simple-select-label'
-                      id='producttype'
-                      name='type'
-                      label='Select Product Type'
-                      onChange={handleChange}
-                      value={productdetail.type ?? ""}
-                    >
-                      <MenuItem value={"Launched"}>Launched</MenuItem>
-                      <MenuItem value={"Upcoming"}>Upcoming</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12}>
                   <FormControl fullWidth size='small' color='warning'>
                     <InputLabel id='demo-simple-select-lab'>
-                      Select Product Category
+                      Select Product Category*
                     </InputLabel>
                     <Select
                       labelId='demo-simple-select-lab'
@@ -238,8 +212,8 @@ export const Postproduct = () => {
                       <MenuItem value='Gaming'>Finance</MenuItem>
                       <MenuItem value='Development'>Development</MenuItem>
                       <MenuItem value='Photography'>Photography</MenuItem>
-                      <MenuItem value='Dating'>Dating</MenuItem>
                       <MenuItem value='Design'>Design</MenuItem>
+                      <MenuItem value='Design'>Other</MenuItem>
                     </Select>
                   </FormControl>
                 </Grid>
@@ -252,16 +226,16 @@ export const Postproduct = () => {
                     multiline
                     maxRows={2}
                     id='videourl'
-                    label='Url'
+                    label='Job Apply Link'
                     name='videourl'
                     value={productdetail.videourl}
                     onChange={handleChange}
-                    placeholder='Provide Video Url For Product'
+                    placeholder='Provide Link Apply For Job'
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12}>
                   <FormControl fullWidth>
-                    <label>Product Gif</label>
+                    <label>Company Logo* </label>
                     <TextField
                       onChange={onSelectGif}
                       color='primary'
@@ -269,21 +243,6 @@ export const Postproduct = () => {
                       type='file'
                       name='img'
                       id='img'
-                      size='small'
-                      color='warning'
-                    />
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <FormControl fullWidth>
-                    <label>Products Img</label>
-                    <TextField
-                      onChange={onSelectImage}
-                      color='primary'
-                      accept='image/*'
-                      type='file'
-                      name='img1'
-                      id='img1'
                       size='small'
                       color='warning'
                     />

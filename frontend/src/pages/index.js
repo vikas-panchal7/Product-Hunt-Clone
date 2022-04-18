@@ -10,6 +10,7 @@ import { Postproduct } from "./product/postproduct";
 import { ProductsDetails } from "./product/productdetails";
 import { UpcomingProducts } from "./product/upcomingproducts";
 import { Profile } from "./user/profile";
+import { PostJob } from "./jobs/Postjobs";
 export {
   Login,
   SignUp,
@@ -23,4 +24,5 @@ export {
   ProductsDetails,
   UpcomingProducts,
   Profile,
+  PostJob,
 };

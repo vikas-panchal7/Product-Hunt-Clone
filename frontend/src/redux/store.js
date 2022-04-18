@@ -17,6 +17,8 @@ import {
   productGetLikeReducer,
   upcomingProductReducer,
 } from "./reducers/productReducer";
+import { jobsCreateReducer, jobsListReducer } from "./reducers/jobsReducer";
+
 
 const reducer = combineReducers({
   userRegister: userRegisterReducer,
@@ -30,6 +32,8 @@ const reducer = combineReducers({
   productComment: productCommentCreateReducer,
   productgetLikes: productGetLikeReducer,
   productUpcominglist: upcomingProductReducer,
+  jobCreate: jobsCreateReducer,
+  jobList: jobsListReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")
