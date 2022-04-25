@@ -4,12 +4,8 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import ButtonBase from "@mui/material/ButtonBase";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import Link from "@mui/material/Link";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-
-import { createProductLike } from "../redux/actions/productActions";
+import { useSelector } from "react-redux";
 import { Button } from "@mui/material";
 const Img = styled("img")({
   margin: "auto",
@@ -19,23 +15,18 @@ const Img = styled("img")({
 });
 const Job = (props) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-  const handlelike = (event) => {
-    /* event.stopPropagation();
+  const handlelike = (p) => {
     if (userInfo) {
-      dispatch(createProductLike({ id: props.id, type: props.liketype }));
+      window.open(p, "_blank");
     } else {
       navigate("/login");
-    } */
+    }
   };
 
-  const clickHandler = (event) => {
-    /*  navigate(`/product/details/${props.id}`); */
-  };
   return (
-    <div onClick={clickHandler}>
+    <div>
       <Paper
         sx={{
           p: 2,
@@ -66,8 +57,9 @@ const Job = (props) => {
             >
               <Grid item xs>
                 <Typography
-                  marginTop={"-15px"}
+                  marginTop={"-10px"}
                   component='div'
+                  fontSize={"15px"}
                   color={"CaptionText "}
                 >
                   {props?.company}
@@ -81,29 +73,31 @@ const Job = (props) => {
                 </Typography>
                 <Typography
                   marginTop={"5px"}
-                  marginBottom={"-5px"}
+                  marginBottom={"1px"}
                   component='div'
+                  fontSize={"15px"}
                 >
-                  {props?.tagline} Tagline
+                  {props?.tagline}
                 </Typography>
               </Grid>
             </Grid>
             <Grid item>
               <Typography variant='subtitle1' component='div'>
-                <Link target='_blank' href={props?.link} underline='none'>
-                  <Button
-                    variant='outlined'
-                    style={{
-                      marginTop: "10px",
-                      borderRadius: 10,
-                      fontSize: "15px",
-                      color: "#544d4d",
-                    }}
-                    color='warning'
-                  >
-                    <b>Apply</b>
-                  </Button>
-                </Link>
+                <Button
+                  variant='outlined'
+                  style={{
+                    marginTop: "10px",
+                    borderRadius: 10,
+                    fontSize: "15px",
+                    color: "#544d4d",
+                  }}
+                  color='warning'
+                  onClick={(e) => {
+                    handlelike(props.link);
+                  }}
+                >
+                  <b>Apply</b>
+                </Button>
               </Typography>
             </Grid>
           </Grid>

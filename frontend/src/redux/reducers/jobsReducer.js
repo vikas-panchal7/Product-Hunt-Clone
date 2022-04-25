@@ -30,7 +30,7 @@ export const jobsListReducer = (state = { jobs: [], count: 0 }, action) => {
     case JOBS_LIST_SUCCESS:
       return {
         loading: false,
-        jobs: action.payload,
+        jobs: action.payload.jobs,
         count: action.payload.count,
       };
     case JOBS_LIST_FAIL:

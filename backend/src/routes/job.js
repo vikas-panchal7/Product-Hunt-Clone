@@ -32,6 +32,6 @@ const img = multer({
 router.post("/jobs/create", auth, img.single("logo"), createJob);
 
 //for all jobs
-router.get("/jobs", viewjobs);
+router.post("/jobs", viewjobs);
 
 module.exports = router;

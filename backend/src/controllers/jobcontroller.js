@@ -22,8 +22,12 @@ const createJob = async (req, res) => {
 // @route   /jobs
 const viewjobs = async (req, res) => {
   try {
-    const jobs = await Job.find();
-    res.status(201).send(jobs);
+    const count = await Job.find().count();
+    const jobs = await Job.find()
+      .limit(parseInt(req.query.limit))
+      .skip(parseInt(req.query.skip))
+      .sort({ _id: parseInt(req.query.sort) });
+    res.status(201).send({ jobs, count });
   } catch (e) {
     res.status(500).send({ error: e.toString() });
   }
