@@ -34,7 +34,7 @@ export const UpcomingProducts = () => {
   React.useEffect(() => {
     setProductarr(products);
   }, [products]);
-  const handlepage = (event) => {
+  const   handlepage = (event) => {
     if (pages === 1 && event.currentTarget.value == -1) {
       this.disabled = true;
     }

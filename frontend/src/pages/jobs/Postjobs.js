@@ -166,6 +166,7 @@ export const PostJob = () => {
                   <TextField
                     required
                     fullWidth
+                    multiline
                     size='small'
                     color='warning'
                     id='companytagline'
@@ -173,7 +174,7 @@ export const PostJob = () => {
                     name='companytagline'
                     value={jobdetail.companytagline}
                     inputProps={{
-                      maxLength: 100,
+                      maxLength: 150,
                     }}
                     autoComplete='given-name'
                     onChange={handleChange}

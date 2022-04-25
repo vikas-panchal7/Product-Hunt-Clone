@@ -24,7 +24,6 @@ export default function Filters(props) {
     const data = checked.findIndex((item) => item == d);
     if (data === -1) checked.push(d);
     if (data != -1) checked.splice(data, 1);
-    //  console.log("arrray", checked);
     props.onGetData(checked);
   };
   return (

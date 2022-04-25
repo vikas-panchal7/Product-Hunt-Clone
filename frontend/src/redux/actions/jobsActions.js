@@ -13,13 +13,14 @@ export const listJobs = (props) => async (dispatch) => {
   const limit = props?.limit;
   const skip = props?.skip;
   const sort = props?.sort;
-  const search = props?.search;
+  const search = props?.search?.filters;
 
   try {
     dispatch({ type: JOBS_LIST_REQUEST });
     // const { data } = await baseService.get(`/jobs`);
     const { data } = await baseService.post(
-      `/jobs?limit=${limit || 4}&skip=${skip || 0}&sort=${sort || 1}`,search
+      `/jobs?limit=${limit || 4}&skip=${skip || 0}&sort=${sort || 1}`,
+      search
     );
     console.log("SSS", data);
     dispatch({

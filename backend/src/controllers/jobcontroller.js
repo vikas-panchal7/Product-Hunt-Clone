@@ -22,11 +22,20 @@ const createJob = async (req, res) => {
 // @route   /jobs
 const viewjobs = async (req, res) => {
   try {
+    if (req.body) {
+      const serch = await Job.aggregate([
+        {
+          $match: { category: { $in: [...req.body] } },
+        },
+      ]);
+      console.log(serch);
+    }
     const count = await Job.find().count();
     const jobs = await Job.find()
       .limit(parseInt(req.query.limit))
       .skip(parseInt(req.query.skip))
       .sort({ _id: parseInt(req.query.sort) });
+
     res.status(201).send({ jobs, count });
   } catch (e) {
     res.status(500).send({ error: e.toString() });

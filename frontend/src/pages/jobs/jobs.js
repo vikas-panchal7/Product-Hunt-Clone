@@ -20,29 +20,32 @@ import { listJobs } from "../../redux/actions/jobsActions";
 import Filters from "../../components/filter";
 
 export const Jobs = () => {
-  const limit = 4;
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
 
   const { userInfo } = userLogin;
   const jobslist = useSelector((state) => state.jobList);
-  const { loading, jobs, error } = jobslist;
+  const { loading, jobs, error, count } = jobslist;
   const jobCreate = useSelector((state) => state.jobCreate);
-
+  const [sort, setsort] = React.useState(1);
+  const [page, setPage] = React.useState(1);
+  const [skip, setSkip] = React.useState(0);
+  const [search, setSearch] = React.useState({ filter: [] });
+  const [limit, setlimit] = React.useState(4);
   const [jobsarr, setjobarr] = React.useState([]);
+
   React.useEffect(() => {
-    dispatch(listJobs({ limit }));
-  }, [dispatch, jobCreate]);
+    dispatch(listJobs({ limit, skip, sort, search }));
+  }, [dispatch, jobCreate, limit, skip, sort, search]);
 
   React.useEffect(() => {
     setjobarr(jobs);
   }, [jobslist]);
 
-  const [sort, setsort] = React.useState(-1);
-
   const handleChange = (event) => {
+    setSkip(0);
+    setPage(1);
     setsort(event.target.value);
-    dispatch(listJobs({ sort }));
   };
 
   return (
@@ -73,8 +76,8 @@ export const Jobs = () => {
                     onChange={handleChange}
                     disableUnderline
                   >
-                    <MenuItem value={-1}>Featured</MenuItem>
-                    <MenuItem value={1}>Newest</MenuItem>
+                    <MenuItem value={1}>Featured</MenuItem>
+                    <MenuItem value={-1}>Newest</MenuItem>
                   </Select>
                 </FormControl>
               </Box>
@@ -89,9 +92,16 @@ export const Jobs = () => {
                   link={jobs.joblink}
                 />
               ))}
-              <Paginate limit={limit} type={"JOBLIST"} getJobData={()=>{
-                console.log("job")
-              }}/>
+              <Paginate
+                limit={limit}
+                count={count}
+                page={page}
+                getPage={(p) => {
+                  setPage(p.value);
+                  setlimit(p.limit);
+                  setSkip(p.skip);
+                }}
+              />
             </Grid>
 
             <Grid item xs={5}>
@@ -103,12 +113,12 @@ export const Jobs = () => {
               >
                 {userInfo && <PostJob />}
               </Box>
-              <Divider textAlign='left'>
+              <Divider textAlign='center'>
                 <b>Job Filters</b>
               </Divider>
               <Filters
                 onGetData={(val) => {
-                  console.log(val);
+                  setSearch({ filters: val });  
                 }}
               />
             </Grid>

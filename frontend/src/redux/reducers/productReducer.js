@@ -130,7 +130,6 @@ export const productGetLikeReducer = (state = {}, action) => {
       return state;
   }
 };
-
 export const productDeleteReducer = (state = {}, action) => {
   switch (action.type) {
     case PRODUCT_DELETE_REQUEST:

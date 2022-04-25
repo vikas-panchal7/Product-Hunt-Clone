@@ -3,7 +3,7 @@ import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
+
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
@@ -18,30 +18,32 @@ import Bar from "../../components/snackbar";
 import Paginate from "../../components/pagination";
 
 export const Products = () => {
-  const limit = 4;
   const type = "list";
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
 
   const { userInfo } = userLogin;
   const productlist = useSelector((state) => state.productList);
-  const { loading, products, error } = productlist;
+  const { loading, products, error, count } = productlist;
   const productCreate = useSelector((state) => state.productCreate);
 
   const [productarr, setProductarr] = React.useState([]);
+  const [sort, setsort] = React.useState(1);
+  const [page, setPage] = React.useState(1);
+  const [skip, setSkip] = React.useState(0);
+  const [limit, setlimit] = React.useState(4);
   React.useEffect(() => {
-    dispatch(listProducts());
-  }, [dispatch, productCreate]);
+    dispatch(listProducts({ limit, skip, sort }));
+  }, [dispatch, productCreate, limit, skip, sort]);
 
   React.useEffect(() => {
     setProductarr(products);
   }, [products]);
 
-  const [sort, setsort] = React.useState(-1);
-
   const handleChange = (event) => {
+    setSkip(0);
+    setPage(1);
     setsort(event.target.value);
-    dispatch(listProducts({ sort }));
   };
 
   return (
@@ -73,8 +75,8 @@ export const Products = () => {
                 onChange={handleChange}
                 disableUnderline
               >
-                <MenuItem value={-1}>Featured</MenuItem>
-                <MenuItem value={1}>Newest</MenuItem>
+                <MenuItem value={1}>Featured</MenuItem>
+                <MenuItem value={-1}>Newest</MenuItem>
               </Select>
             </FormControl>
           </Box>
@@ -90,7 +92,16 @@ export const Products = () => {
               liketype={type}
             />
           ))}
-          <Paginate limit={limit} />
+          <Paginate
+            limit={limit}
+            count={count}
+            page={page}
+            getPage={(p) => {
+              setPage(p.value);
+              setlimit(p.limit);
+              setSkip(p.skip);
+            }}
+          />
         </Grid>
 
         <Grid item xs={5}>
