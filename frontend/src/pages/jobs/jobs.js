@@ -31,7 +31,7 @@ export const Jobs = () => {
   const [page, setPage] = React.useState(1);
   const [skip, setSkip] = React.useState(0);
   const [search, setSearch] = React.useState({ filter: [] });
-  const [limit, setlimit] = React.useState(4);
+  const [limit, setlimit] = React.useState(2);
   const [jobsarr, setjobarr] = React.useState([]);
 
   React.useEffect(() => {

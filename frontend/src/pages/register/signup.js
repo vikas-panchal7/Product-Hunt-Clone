@@ -38,12 +38,6 @@ export const SignUp = () => {
   const userRegister = useSelector((state) => state.userRegister);
   const { loading, error, userInfo } = userRegister;
 
-  // React.useEffect(() => {
-  //   if (userInfo) {
-  //     navigate("/login");
-  //   }
-  // }, [userInfo, navigate]);
-
   const handleChange = (event) => {
     const { name, value } = event.target;
     setUser({
@@ -74,10 +68,10 @@ export const SignUp = () => {
       email === "" ||
       password === ""
     ) {
-      if (firstName === "") setfirstnamevalid(false);
-      if (lastName === "") setlastnamevalid(false);
-      if (email === "") setemailvalid(false);
-      if (password === "") setpasswordvalid(false);
+      if (firstName === "") return setfirstnamevalid(false);
+      if (lastName === "") return setlastnamevalid(false);
+      if (email === "") return setemailvalid(false);
+      if (password === "") return setpasswordvalid(false);
     } else {
       dispatch(register({ ...user }));
     }

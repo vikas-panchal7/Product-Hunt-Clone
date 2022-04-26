@@ -14,6 +14,8 @@ import {
   Postproduct,
   ProductsDetails,
   Profile,
+  Register,
+  Loggin,
 } from "./pages/index";
 const App = () => {
   return (
@@ -30,7 +32,8 @@ const App = () => {
         <Route path='/Profile' element={<Profile />} />
         <Route path='/Login' element={<Login />} />
         <Route path='/SignUp' element={<SignUp />} />
-        <Route path='/filters' element={<Filters />} />
+        <Route path='/register' element={<Register />} />
+        <Route path='/loggin' element={<Loggin />} />
 
         <Route path='/404' element={<NotFound />} />
         <Route path='*' element={<Navigate replace to='/404' />} />

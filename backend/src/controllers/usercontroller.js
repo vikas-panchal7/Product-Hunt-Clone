@@ -5,12 +5,12 @@ const User = require("../models/users");
 const signUp = async (req, res) => {
   const adduser = new User(req.body);
   try {
-    const product = await User.find({ email: req.body.email });
-    if (!product) throw new Error("Email is Already Exist");
+    const product = await User.findOne({ email: req.body.email });
+    if (product) throw new Error("Email is Already Exist");
     await adduser.save();
     res.status(201).send(adduser);
   } catch (e) {
-    res.status(500).send({ error: "Please Provide  All Information" });
+    res.status(500).send({ error: e.message });
   }
 };
 
@@ -18,14 +18,23 @@ const signUp = async (req, res) => {
 // @route   /users/login
 const Login = async (req, res) => {
   try {
+    if (req.body.googleId) {
+      let user = await User.findOne({ email: req.body.email });
+      if (!user) {
+        user = new User(req.body);
+        await user.save();
+      }
+      const token = await user.generateAuthtoken();
+      return res.status(200).send({ user, token });
+    }
     const user = await User.findByCredentails(
       req.body.email,
       req.body.password
     );
     const token = await user.generateAuthtoken();
-
     res.status(200).send({ user, token });
   } catch (e) {
+    console.error(e);
     res.status(400).send({ error: e.toString() });
   }
 };
@@ -47,7 +56,6 @@ const Logout = async (req, res) => {
 
 const Profile = async (req, res) => {
   try {
-    console.log("SS", req.body);
     const filter = { _id: req.user._id };
     const img = req.file?.path;
     let update = {};

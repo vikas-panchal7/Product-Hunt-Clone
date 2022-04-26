@@ -11,6 +11,8 @@ import { ProductsDetails } from "./product/productdetails";
 import { UpcomingProducts } from "./product/upcomingproducts";
 import { Profile } from "./user/profile";
 import { PostJob } from "./jobs/Postjobs";
+import { Register } from "./register/register";
+import { Loggin } from "./login/login1";
 export {
   Login,
   SignUp,
@@ -25,4 +27,6 @@ export {
   UpcomingProducts,
   Profile,
   PostJob,
+  Register,
+  Loggin,
 };

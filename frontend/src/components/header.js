@@ -213,7 +213,7 @@ const Header = () => {
                   variant='contained'
                   size='small'
                   component={NavLink}
-                  to={"/Login"}
+                  to={"/loggin"}
                   color='warning'
                 >
                   Login
@@ -224,7 +224,7 @@ const Header = () => {
                   variant='contained'
                   size='small'
                   component={NavLink}
-                  to={"/SignUp"}
+                  to={"/register"}
                   color='success'
                 >
                   SignUp

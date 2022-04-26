@@ -58,8 +58,10 @@ export const Login = () => {
   };
 
   const passwordchangeHandler = (event) => {
+    const regex =
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
     const value = event.currentTarget.value.trim();
-    value.length < 8 ? setpasswordvalid(false) : setpasswordvalid(true);
+    !regex.test(value) ? setpasswordvalid(false) : setpasswordvalid(true);
   };
 
   const handleSubmit = (event) => {
@@ -144,7 +146,7 @@ export const Login = () => {
                   error={!passwordvalid && true}
                   helperText={
                     !passwordvalid &&
-                    "Password Must be Minimum eight characters long"
+                    "Password Must Contain Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character"
                   }
                 />
 

@@ -10,7 +10,7 @@ const Bar = (props) => {
   const [state, setState] = React.useState({
     open: true,
     vertical: props.vertical ? props.vertical : "top",
-    horizontal: "center",
+    horizontal: props.horizontal ? props.horizontal : "center",
     severity: props.severity ? props.severity : "warning",
   });
 
@@ -28,8 +28,8 @@ const Bar = (props) => {
     <div>
       <Snackbar
         sx={{
-          minWidth: 400,
-          height: "28%",
+          minWidth: 450,
+          height: "5%",
         }}
         anchorOrigin={{ vertical, horizontal }}
         open={open}

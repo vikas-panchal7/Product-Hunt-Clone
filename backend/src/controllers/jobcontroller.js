@@ -28,10 +28,12 @@ const viewjobs = async (req, res) => {
         {
           $match: { category: { $in: [...req.body] } },
         },
-        // { $skip: skip },
-        // { $limit: limit },
+        { $sort: { _id: parseInt(sort) } },
+        { $skip: parseInt(skip) },
+        { $limit: parseInt(limit) },
       ]);
-      return res.status(201).send({ jobs, count: jobs.length });
+      //console.log(jobs);
+      return res.status(201).send({ jobs, count: 5 });
     }
     const count = await Job.find().count();
     const jobs = await Job.find()
