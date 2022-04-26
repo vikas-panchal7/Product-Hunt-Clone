@@ -22,13 +22,16 @@ const createJob = async (req, res) => {
 // @route   /jobs
 const viewjobs = async (req, res) => {
   try {
-    if (req.body) {
-      const serch = await Job.aggregate([
+    const { skip, limit, sort } = req.query;
+    if (Object.keys(req.body).length !== 0) {
+      const jobs = await Job.aggregate([
         {
           $match: { category: { $in: [...req.body] } },
         },
+        // { $skip: skip },
+        // { $limit: limit },
       ]);
-      console.log(serch);
+      return res.status(201).send({ jobs, count: jobs.length });
     }
     const count = await Job.find().count();
     const jobs = await Job.find()

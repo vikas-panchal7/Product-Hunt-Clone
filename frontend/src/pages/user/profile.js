@@ -90,126 +90,131 @@ export const Profile = () => {
     <>
       <Header />
       <div style={{ marginTop: 80 }}>
-        <Item>
-          {loading && <CircularProgress />}
-          <Grid container spacing={5}>
-            {user && (
-              <Grid item xs={5}>
-                <div align='center'>
-                  <h3>Edit Your Details</h3>
-                  <Box
-                    component='form'
-                    onSubmit={handleSubmit}
-                    noValidate
-                    sx={{ mt: 3 }}
+        {loading && <CircularProgress />}
+        <Grid item>
+          <div align='center'>
+            <h3>Your Details</h3>
+            <Avatar
+              alt={user?.firstName}
+              src={`http://192.168.200.122:5000/${user?.avtar}`}
+              sx={{
+                width: 150,
+                height: 150,
+                marginRight: "10px",
+              }}
+              style={{
+                border: "2px solid  #DC5425",
+              }}
+            />
+            &nbsp; &nbsp;
+            <Grid item xs={12}>
+              <Stack>
+                <label htmlFor='contained-button-file'>
+                  <Input
+                    accept='image/*'
+                    id='contained-button-file'
+                    type='file'
+                    onChange={onSelectImage}
+                  />
+                  <Button
+                    variant='outlined'
+                    color='warning'
+                    size='small'
+                    component='span'
                   >
-                    <Grid item xs={12}>
-                      <TextField
-                        required
-                        id='firstName'
-                        label='First Name'
-                        name='firstName'
-                        defaultValue={user.firstName || ""}
-                        autoComplete='given-name'
-                        size='small'
-                        color='warning'
-                        margin='dense'
-                        onBlur={(event) => {
-                          event.currentTarget.value.trim() !== "" &&
-                            setfirstnamevalid(true);
-                        }}
-                        error={!firstnamevalid}
-                        helperText={
-                          !firstnamevalid && "Please Provide FirstName"
-                        }
-                        onChange={handleChange}
-                      />
-                    </Grid>
-                    &nbsp;
-                    <Grid item xs={12}>
-                      <TextField
-                        required
-                        id='lastName'
-                        label='Last Name'
-                        name='lastName'
-                        size='small'
-                        color='warning'
-                        defaultValue={user.lastName || ""}
-                        autoComplete='family-name'
-                        margin='dense'
-                        onBlur={(event) => {
-                          event.currentTarget.value.trim() !== "" &&
-                            setlastnamevalid(true);
-                        }}
-                        error={!lastnamevalid}
-                        helperText={!lastnamevalid && "Please Provide LastName"}
-                        onChange={handleChange}
-                      />
-                    </Grid>
-                    &nbsp;
-                    <Grid item xs={12}>
-                      <Stack>
-                        <label htmlFor='contained-button-file'>
-                          <Input
-                            accept='image/*'
-                            id='contained-button-file'
-                            type='file'
-                            onChange={onSelectImage}
-                          />
-                          <Button
-                            variant='outlined'
-                            size='small'
-                            component='span'
-                          >
-                            Avtar
-                          </Button>
-                        </label>
-                      </Stack>
-                    </Grid>
-                    <Button
-                      type='submit'
-                      variant='contained'
-                      sx={{ mt: 3, mb: 2 }}
-                    >
-                      Save
-                    </Button>
-                  </Box>
-                </div>
-              </Grid>
-            )}
-
-            <Grid item xs={5} borderLeft={"2px solid grey"}>
-              <div align='center'>
-                <h3>Your Details</h3>
-                <Avatar
-                  alt={user?.firstName}
-                  src={`http://192.168.200.122:5000/${user?.avtar}`}
-                  sx={{
-                    width: 150,
-                    height: 150,
-                    marginRight: "10px",
-                  }}
-                  style={{
-                    border: "2px solid  #91ed45",
-                  }}
-                />
-                &nbsp; &nbsp;
-                <Typography
-                  variant='h5'
-                  component='div'
-                  style={{ color: "#f77f3e" }}
-                  fontWeight='5rem'
-                >
-                  {user?.firstName}&nbsp;
-                  {user?.lastName}
-                </Typography>
-                <Typography variant='h6' style={{ color: "#f77f3e" }}>
-                  Email:{user?.email}
-                </Typography>
-              </div>
+                    upload Image
+                  </Button>
+                </label>
+              </Stack>
             </Grid>
+            &nbsp;&nbsp;
+            <Typography
+              variant='h5'
+              component='div'
+              style={{ color: "#33322f" }}
+              fontWeight='5rem'
+            >
+              {user?.firstName}&nbsp;
+              {user?.lastName}
+            </Typography>
+            <Typography style={{ color: "#a6a097" }}>{user?.email}</Typography>
+          </div>
+        </Grid>
+
+        {user && (
+          <Grid item xs={12}>
+            <div align='center'>
+              <h3>Edit Your Details</h3>
+              <Box
+                component='form'
+                onSubmit={handleSubmit}
+                noValidate
+                sx={{ mt: 3 }}
+              >
+                <Grid
+                  item
+                  xs={6}
+                  display='flex'
+                  flexDirection={"row"}
+                  justifyContent={"space-between"}
+                >
+                  <Grid item sm={6}>
+                    <TextField
+                      fullWidth
+                      required
+                      id='firstName'
+                      label='First Name'
+                      name='firstName'
+                      defaultValue={user.firstName || ""}
+                      autoComplete='given-name'
+                      size='small'
+                      color='warning'
+                      margin='dense'
+                      onBlur={(event) => {
+                        event.currentTarget.value.trim() !== "" &&
+                          setfirstnamevalid(true);
+                      }}
+                      error={!firstnamevalid}
+                      helperText={!firstnamevalid && "Please Provide FirstName"}
+                      onChange={handleChange}
+                    />
+                  </Grid>
+                  &nbsp;
+                  <Grid item sm={6}>
+                    <TextField
+                      fullWidth
+                      required
+                      id='lastName'
+                      label='Last Name'
+                      name='lastName'
+                      size='small'
+                      color='warning'
+                      defaultValue={user.lastName || ""}
+                      autoComplete='family-name'
+                      margin='dense'
+                      onBlur={(event) => {
+                        event.currentTarget.value.trim() !== "" &&
+                          setlastnamevalid(true);
+                      }}
+                      error={!lastnamevalid}
+                      helperText={!lastnamevalid && "Please Provide LastName"}
+                      onChange={handleChange}
+                    />
+                  </Grid>
+                  &nbsp;
+                </Grid>
+                <Button
+                  type='submit'
+                  color='warning'
+                  variant='contained'
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Update Profile
+                </Button>
+              </Box>
+            </div>
           </Grid>
-        </Item>
+        )}
       </div>
     </>
   );

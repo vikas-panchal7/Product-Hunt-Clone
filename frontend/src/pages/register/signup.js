@@ -38,11 +38,11 @@ export const SignUp = () => {
   const userRegister = useSelector((state) => state.userRegister);
   const { loading, error, userInfo } = userRegister;
 
-  React.useEffect(() => {
-    if (userInfo) {
-      navigate("/login");
-    }
-  }, [userInfo, navigate]);
+  // React.useEffect(() => {
+  //   if (userInfo) {
+  //     navigate("/login");
+  //   }
+  // }, [userInfo, navigate]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -59,8 +59,10 @@ export const SignUp = () => {
   };
 
   const passwordchangeHandler = (event) => {
+    const regex =
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
     const value = event.currentTarget.value.trim();
-    value.length < 8 ? setpasswordvalid(false) : setpasswordvalid(true);
+    !regex.test(value) ? setpasswordvalid(false) : setpasswordvalid(true);
   };
 
   const handleSubmit = (event) => {
@@ -174,7 +176,7 @@ export const SignUp = () => {
                       error={!passwordvalid && true}
                       helperText={
                         !passwordvalid &&
-                        "Password Must be Minimum eight characters long"
+                        "Password Must Contain Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character"
                       }
                       onChange={handleChange}
                     />

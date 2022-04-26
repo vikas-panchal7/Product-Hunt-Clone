@@ -45,6 +45,7 @@ export const Jobs = () => {
   const handleChange = (event) => {
     setSkip(0);
     setPage(1);
+    setlimit(4);
     setsort(event.target.value);
   };
 
@@ -118,7 +119,10 @@ export const Jobs = () => {
               </Divider>
               <Filters
                 onGetData={(val) => {
-                  setSearch({ filters: val });  
+                  setPage(1);
+                  setlimit(2);
+                  setSkip(0);
+                  setSearch({ filters: val });
                 }}
               />
             </Grid>
