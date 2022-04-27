@@ -3,8 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import LinkButton from "@mui/material/Link";
 import CircularProgress from "@mui/material/CircularProgress";
 import Paper from "@mui/material/Paper";
@@ -41,11 +39,6 @@ function Copyright(props) {
 const theme = createTheme();
 
 export const Register = () => {
-  // React.useEffect(() => {
-  //   if (userInfo) {
-  //     navigate("/login");
-  //   }
-  // }, [userInfo, navigate]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -63,6 +56,11 @@ export const Register = () => {
   const userRegister = useSelector((state) => state.userRegister);
   const { loading, error, userInfo } = userRegister;
 
+  React.useEffect(() => {
+    if (userInfo) {
+      navigate("/login");
+    }
+  }, [userInfo, navigate]);
   const handleChange = (event) => {
     const { name, value } = event.target;
     setUser({

@@ -81,7 +81,7 @@ export const Loggin = () => {
 
   //login with google option
   const handleFailure = (result) => {
-    alert("something went Wrong");
+    return;
   };
   const handleLogin = (data) => {
     console.log(data.profileObj);
@@ -121,6 +121,15 @@ export const Loggin = () => {
               alignItems: "center",
             }}
           >
+            {error && (
+              <Bar
+                message={error}
+                severity='error'
+                vertical='top'
+                horizontal='right'
+              />
+            )}
+
             <Avatar sx={{ m: 1, bgcolor: "warning.main" }}></Avatar>
             <Typography component='h1' variant='h5'>
               Login

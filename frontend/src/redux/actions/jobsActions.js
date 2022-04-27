@@ -22,7 +22,6 @@ export const listJobs = (props) => async (dispatch) => {
       `/jobs?limit=${limit || 4}&skip=${skip || 0}&sort=${sort || 1}`,
       search
     );
-    console.log("SSS", data);
     dispatch({
       type: JOBS_LIST_SUCCESS,
       payload: data,
@@ -54,7 +53,6 @@ export const createJobs = (formdata) => async (dispatch, getState) => {
       },
     };
     const { data } = await baseService.post(`/jobs/create`, formdata, config);
-    console.log("res", data);
 
     dispatch({
       type: JOBS_CREATE_SUCCESS,

@@ -1,20 +1,24 @@
 const { default: mongoose } = require("mongoose");
 const Product = require("../models/product");
+const validator = require("validator");
 
 // @desc     Create a new product
 // @route   /product/create
 const createProduct = async (req, res) => {
-  const addproduct = new Product({
-    ...req.body,
-    img: req.files.img[0].path,
-    img1: req.files.img1[0].path,
-    owner: req.user._id,
-  });
   try {
+    if (!validator.isURL(req.body.videourl)) {
+      throw new Error("Please Provide Valid URL");
+    }
+    const addproduct = new Product({
+      ...req.body,
+      img: req.files?.img[0].path,
+      img1: req.files?.img1[0].path,
+      owner: req.user._id,
+    });
     await addproduct.save();
     res.status(201).send(addproduct);
   } catch (e) {
-    res.status(500).send({ error: e.toString() });
+    res.status(500).send({ error: e.message });
   }
 };
 
@@ -25,6 +29,7 @@ const commentProduct = async (req, res) => {
     name: req.user.firstName,
     comment: req.body.comment,
     user: req.user._id,
+    avtar: req.user.avtar,
   };
   try {
     const product = await Product.findById(req.params.id);
@@ -35,7 +40,6 @@ const commentProduct = async (req, res) => {
         (x) => x.id === req.body.commentid
       );
       await product.comment[data].reply.push(comment);
-      console.log("inside if");
     } else {
       product.comment.push(comment);
     }
@@ -80,12 +84,21 @@ const viewProduct = async (req, res) => {
 //@desc  view  product details
 //@route /products/details/:id
 const viewProductById = async (req, res) => {
-  // const product = await Product.findById(req.params.id).then(result => {
-  //       result.comment.sort((a, b) => a.createdAt > b.createdAt ? -1 : 1);
-  //       return result;
-  const product = await Product.findById(req.params.id).then((result) => {
-    result.comment.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1));
-    return result;
+  // const product = await Product.findById(req.params.id).then((result) => {
+  //   result.comment.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1));
+  //   return result;
+  // });
+  const product = await Product.findById(req.params.id).populate({
+    path: "comment",
+    populate: {
+      path: "user",
+    },
+    populate: {
+      path: "reply",
+      populate: {
+        path: "user",
+      },
+    },
   });
 
   try {

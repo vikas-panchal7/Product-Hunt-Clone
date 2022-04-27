@@ -37,6 +37,13 @@ export const PostJob = () => {
   const theme = useTheme();
   const data = useSelector((state) => state.jobCreate);
   const { loading, success, job, error } = data;
+
+  const [namevalid, setnamevalid] = React.useState(true);
+  const [taglinevalid, settaglinevalid] = React.useState(true);
+  const [titlevalid, settitlevalid] = React.useState(true);
+  const [categoryvalid, setcategoryvalid] = React.useState(true);
+  const [linkvalid, setlinkvalid] = React.useState(true);
+  const [imgvalid, setimgvalid] = React.useState(true);
   const [jobdetail, setjobdetail] = React.useState({
     companyname: "",
     companytagline: "",
@@ -63,7 +70,12 @@ export const PostJob = () => {
   };
 
   const onSelectLogo = (event) => {
-    formData.append("logo", event.target.files[0]);
+    if (event.target.files[0].type.match(/\/(jpe?g|png|gif|bmp)$/i)) {
+      setimgvalid(true);
+      formData.append("logo", event.target.files[0]);
+    } else {
+      setimgvalid(false);
+    }
   };
 
   const handleSubmit = (event) => {
@@ -76,9 +88,14 @@ export const PostJob = () => {
       companytagline === "" ||
       jobtitle === "" ||
       category === "" ||
-      joblink === ""
+      joblink === "" ||
+      !imgvalid
     ) {
-      console.log("Please provide all data");
+      if (companyname === "") return setnamevalid(false);
+      if (companytagline === "") return settaglinevalid(false);
+      if (jobtitle === "") return settitlevalid(false);
+      if (category === "") return setcategoryvalid(false);
+      if (joblink === "") return setlinkvalid(false);
     } else {
       formData.append("companyname", companyname);
       formData.append("companytagline", companytagline);
@@ -87,16 +104,13 @@ export const PostJob = () => {
       formData.append("joblink", joblink);
       dispatch(createJobs(formData));
 
-      if (!error) {
-        setjobdetail({
-          companyname: "",
-          companytagline: "",
-          jobtitle: "",
-          category: "",
-          joblink: "",
-        });
-        setOpen(false);
-      }
+      setjobdetail({
+        companyname: "",
+        companytagline: "",
+        jobtitle: "",
+        category: "",
+        joblink: "",
+      });
     }
   };
   return (
@@ -134,6 +148,9 @@ export const PostJob = () => {
         <DialogTitle id='responsive-dialog-title' align='center'>
           {"👋  Tell us More About Your Job & Company"}
           {error && <Bar message={error} severity='warning' />}
+          {success && (
+            <Bar message={"Job Created  Successfully "} severity='success' />
+          )}
           <Button onClick={handleClose}>
             <CloseIcon align='left'></CloseIcon>
           </Button>
@@ -144,7 +161,6 @@ export const PostJob = () => {
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <TextField
-                    required
                     fullWidth
                     size='small'
                     color='warning'
@@ -159,12 +175,19 @@ export const PostJob = () => {
                     placeholder='Name of a Company*'
                     onChange={handleChange}
                     autoFocus
+                    onBlur={(event) => {
+                      event.currentTarget.value.trim() !== "" &&
+                        setnamevalid(true);
+                    }}
+                    error={!namevalid}
+                    helperText={
+                      !namevalid && "Please Provide Name of a Company"
+                    }
                   />
                 </Grid>
 
                 <Grid item xs={12}>
                   <TextField
-                    required
                     fullWidth
                     multiline
                     size='small'
@@ -179,11 +202,16 @@ export const PostJob = () => {
                     autoComplete='given-name'
                     onChange={handleChange}
                     placeholder='Concise and Descriptive Tagline For a Company'
+                    onBlur={(event) => {
+                      event.currentTarget.value.trim() !== "" &&
+                        settaglinevalid(true);
+                    }}
+                    error={!taglinevalid}
+                    helperText={!taglinevalid && "Please Provide Tagline"}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    required
                     size='small'
                     color='warning'
                     fullWidth
@@ -193,6 +221,12 @@ export const PostJob = () => {
                     value={jobdetail.jobtitle}
                     onChange={handleChange}
                     placeholder='Short & Sweet Job Title'
+                    onBlur={(event) => {
+                      event.currentTarget.value.trim() !== "" &&
+                        settitlevalid(true);
+                    }}
+                    error={!titlevalid}
+                    helperText={!titlevalid && "Please Provide Job Title"}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -207,6 +241,12 @@ export const PostJob = () => {
                       label='Select Job Category'
                       onChange={handleChange}
                       value={jobdetail.category ?? ""}
+                      onBlur={(event) => {
+                        event.currentTarget.value !== "" &&
+                          setcategoryvalid(true);
+                      }}
+                      error={!categoryvalid}
+                      helperText={!categoryvalid && "Please Provide Tagline"}
                     >
                       <MenuItem value='Tech'>Tech</MenuItem>
                       <MenuItem value='Productivity'>Productivity</MenuItem>
@@ -223,7 +263,6 @@ export const PostJob = () => {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    required
                     size='small'
                     color='warning'
                     fullWidth
@@ -235,12 +274,19 @@ export const PostJob = () => {
                     value={jobdetail.joblink}
                     onChange={handleChange}
                     placeholder='Provide Link Apply For Job'
+                    onBlur={(event) => {
+                      event.currentTarget.value.trim() !== "" &&
+                        setlinkvalid(true);
+                    }}
+                    error={!linkvalid}
+                    helperText={!linkvalid && "Please Provide Link"}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <FormControl fullWidth>
                     <label>Company Logo* </label>
                     <TextField
+                      required
                       onChange={onSelectLogo}
                       color='primary'
                       accept='image/*'
@@ -249,7 +295,10 @@ export const PostJob = () => {
                       id='logo'
                       size='small'
                       color='warning'
-                      required
+                      error={!imgvalid}
+                      helperText={
+                        !imgvalid && "Please Provide Only Image Files"
+                      }
                     />
                   </FormControl>
                 </Grid>

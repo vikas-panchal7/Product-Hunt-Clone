@@ -23,7 +23,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getUserDetails, logout } from "../redux/actions/userActions";
 
 const pages = ["Products", "Community", "Jobs", "About"];
-const settings = ["Profile", "MyHunts", "MyCollections", "MyTopics", "Account"];
+const settings = ["Profile", "MyJobs", "MyProducts"];
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -99,8 +99,9 @@ const Header = () => {
   };
 
   const handlelogout = () => {
-    var result = window.confirm("Do You Want to Logout ?");
-    dispatch(logout());
+    const result = window.confirm("Do You Want to Logout ?");
+    if (!result) return;
+    result && dispatch(logout());
     navigate("/");
   };
   return (
@@ -238,7 +239,13 @@ const Header = () => {
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar
                     alt={userInfo.user?.firstName}
-                    src={`http://192.168.200.122:5000/${user?.avtar}`}
+                    src={`http://192.168.200.122:5000/${
+                      user?.avtar || "uploads/avt1650979607692A861.png"
+                    } `}
+                    style={{
+                      border: "2px solid  #DC5425",
+                      alignSelf: "center",
+                    }}
                   />
                 </IconButton>
               </Tooltip>

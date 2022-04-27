@@ -37,6 +37,16 @@ export const Postproduct = () => {
   const theme = useTheme();
   const data = useSelector((state) => state.productCreate);
   const { loading, success, product, error } = data;
+
+  const [namevalid, setnamevalid] = React.useState(true);
+  const [taglinevalid, settaglinevalid] = React.useState(true);
+  const [descriptionvalid, setdescriptionvalid] = React.useState(true);
+  const [typevalid, settypevalid] = React.useState(true);
+  const [categoryvalid, setcategoryvalid] = React.useState(true);
+  const [videourlvalid, setvideourlvalid] = React.useState(true);
+  const [img1valid, setimg1valid] = React.useState(true);
+  const [imgvalid, setimgvalid] = React.useState(true);
+
   const [productdetail, setproductdetail] = React.useState({
     name: "",
     tagline: "",
@@ -44,7 +54,6 @@ export const Postproduct = () => {
     type: "",
     category: "",
     videourl: "",
-    img1: "",
   });
   // const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -65,16 +74,26 @@ export const Postproduct = () => {
   };
 
   const onSelectImage = (event) => {
-    formData.append("img1", event.target.files[0]);
+    if (event.target.files[0].type.match(/\/(jpe?g|png|gif|bmp)$/i)) {
+      setimg1valid(true);
+      formData.append("img1", event.target.files[0]);
+    } else {
+      setimg1valid(false);
+    }
   };
   const onSelectGif = (event) => {
-    formData.append("img", event.target.files[0]);
+    if (event.target.files[0].type.match(/\/(jpe?g|png|gif|bmp)$/i)) {
+      setimgvalid(true);
+      formData.append("img", event.target.files[0]);
+    } else {
+      setimgvalid(false);
+    }
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const { name, tagline, description, type, category, videourl, img1 } =
+    const { name, tagline, description, type, category, videourl } =
       productdetail;
     if (
       name === "" ||
@@ -82,9 +101,16 @@ export const Postproduct = () => {
       description === "" ||
       type === "" ||
       category === "" ||
-      videourl === ""
+      videourl === "" ||
+      !imgvalid ||
+      !img1valid
     ) {
-      console.log("Please provide all data");
+      if (name === "") return setnamevalid(false);
+      if (tagline === "") return settaglinevalid(false);
+      if (description === "") return setdescriptionvalid(false);
+      if (type === "") return settypevalid(false);
+      if (category === "") return setcategoryvalid(false);
+      if (videourl === "") return setvideourlvalid(false);
     } else {
       formData.append("name", name);
       formData.append("tagline", tagline);
@@ -93,7 +119,16 @@ export const Postproduct = () => {
       formData.append("category", category);
       formData.append("videourl", videourl);
       dispatch(createProduct(formData));
-      setOpen(false);
+      if (!error) {
+        setproductdetail({
+          name: "",
+          tagline: "",
+          description: "",
+          type: "",
+          category: "",
+          videourl: "",
+        });
+      }
     }
   };
   return (
@@ -134,6 +169,12 @@ export const Postproduct = () => {
         <DialogTitle id='responsive-dialog-title' align='center'>
           {"👋  Tell us More About Your Product"}
           {error && <Bar message={error} severity='warning' />}
+          {success && (
+            <Bar
+              message={"Product Created  Successfully "}
+              severity='success'
+            />
+          )}
           <Button onClick={handleClose}>
             <CloseIcon align='left'></CloseIcon>
           </Button>
@@ -144,7 +185,6 @@ export const Postproduct = () => {
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <TextField
-                    required
                     fullWidth
                     size='small'
                     color='warning'
@@ -159,12 +199,17 @@ export const Postproduct = () => {
                     placeholder='Name of a Product'
                     onChange={handleChange}
                     autoFocus
+                    onBlur={(event) => {
+                      event.currentTarget.value.trim() !== "" &&
+                        setnamevalid(true);
+                    }}
+                    error={!namevalid}
+                    helperText={!namevalid && "Please Provide ProductName"}
                   />
                 </Grid>
 
                 <Grid item xs={12}>
                   <TextField
-                    required
                     fullWidth
                     size='small'
                     color='warning'
@@ -178,11 +223,16 @@ export const Postproduct = () => {
                     autoComplete='given-name'
                     onChange={handleChange}
                     placeholder='Concise and Descriptive Tagline For a Product'
+                    onBlur={(event) => {
+                      event.currentTarget.value.trim() !== "" &&
+                        settaglinevalid(true);
+                    }}
+                    error={!taglinevalid}
+                    helperText={!taglinevalid && "Please Provide Tagline"}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    required
                     size='small'
                     color='warning'
                     fullWidth
@@ -197,6 +247,14 @@ export const Postproduct = () => {
                     value={productdetail.description}
                     onChange={handleChange}
                     placeholder='Impressive Description For a Product'
+                    onBlur={(event) => {
+                      event.currentTarget.value.trim() !== "" &&
+                        setdescriptionvalid(true);
+                    }}
+                    error={!descriptionvalid}
+                    helperText={
+                      !descriptionvalid && "Please Provide Description"
+                    }
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -211,6 +269,11 @@ export const Postproduct = () => {
                       label='Select Product Type'
                       onChange={handleChange}
                       value={productdetail.type ?? ""}
+                      onBlur={(event) => {
+                        event.currentTarget.value !== "" && settypevalid(true);
+                      }}
+                      error={!typevalid}
+                      helperText={!typevalid && "Please Select Product Type"}
                     >
                       <MenuItem value={"Launched"}>Launched</MenuItem>
                       <MenuItem value={"Upcoming"}>Upcoming</MenuItem>
@@ -229,6 +292,14 @@ export const Postproduct = () => {
                       label='Select Product Category'
                       onChange={handleChange}
                       value={productdetail.category ?? ""}
+                      onBlur={(event) => {
+                        event.currentTarget.value !== "" &&
+                          setcategoryvalid(true);
+                      }}
+                      error={!categoryvalid}
+                      helperText={
+                        !categoryvalid && "Please Select Product Category"
+                      }
                     >
                       <MenuItem value='Tech'>Tech</MenuItem>
                       <MenuItem value='Productivity'>Productivity</MenuItem>
@@ -245,32 +316,44 @@ export const Postproduct = () => {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    required
                     size='small'
                     color='warning'
                     fullWidth
                     multiline
                     maxRows={2}
                     id='videourl'
-                    label='Url'
+                    label='URL'
                     name='videourl'
                     value={productdetail.videourl}
                     onChange={handleChange}
                     placeholder='Provide Video Url For Product'
+                    onBlur={(event) => {
+                      event.currentTarget.value.trim() !== "" &&
+                        setvideourlvalid(true);
+                    }}
+                    error={!videourlvalid}
+                    helperText={
+                      !videourlvalid && "Please Provide Video Url For Product"
+                    }
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <FormControl fullWidth>
-                    <label>Product Gif</label>
+                    <label>Product Gif/Img</label>
                     <TextField
+                      required
+                      /* inputProps={{ accept: "image/*" }} */
                       onChange={onSelectGif}
                       color='primary'
-                      accept='image/*'
                       type='file'
                       name='img'
                       id='img'
                       size='small'
                       color='warning'
+                      error={!imgvalid}
+                      helperText={
+                        !imgvalid && "Please Provide Only Image Files"
+                      }
                     />
                   </FormControl>
                 </Grid>
@@ -278,14 +361,19 @@ export const Postproduct = () => {
                   <FormControl fullWidth>
                     <label>Products Img</label>
                     <TextField
+                      required
                       onChange={onSelectImage}
                       color='primary'
-                      accept='image/*'
+                      accept='image/png, image/jpeg'
                       type='file'
                       name='img1'
                       id='img1'
                       size='small'
                       color='warning'
+                      error={!img1valid}
+                      helperText={
+                        !img1valid && "Please Provide Only Image Files"
+                      }
                     />
                   </FormControl>
                 </Grid>

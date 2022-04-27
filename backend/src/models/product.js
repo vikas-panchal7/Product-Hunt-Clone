@@ -18,6 +18,7 @@ const commentSchema = mongoose.Schema(
   {
     name: { type: String, required: true },
     comment: { type: String, require: true },
+    avtar: { type: String },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
@@ -27,6 +28,7 @@ const commentSchema = mongoose.Schema(
       {
         name: { type: String, required: true },
         comment: { type: String, require: true },
+        avtar: { type: String },
         user: {
           type: mongoose.Schema.Types.ObjectId,
           required: true,
@@ -59,11 +61,6 @@ const productSchema = new mongoose.Schema(
       type: String,
       trim: true,
       required: true,
-      validate(value) {
-        if (!validator.isURL(value)) {
-          throw new Error("Please Provide Valid Url");
-        }
-      },
     },
     img: {
       type: String,

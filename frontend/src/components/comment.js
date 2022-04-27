@@ -99,7 +99,16 @@ export const Comments = (props) => {
             sx={{ flexDirection: "column", borderLeft: "1px solid grey" }}
           >
             <Grid item>
-              <Avatar />
+              <Avatar
+                alt={item?.name}
+                src={`http://192.168.200.122:5000/${
+                  item?.user.avtar || "uploads/avt1650979607692A861.png"
+                } `}
+                style={{
+                  border: "2px solid  #DC5425",
+                  alignSelf: "center",
+                }}
+              />
             </Grid>
             <Grid justifyContent='left' item xs zeroMinWidth>
               <h4 style={{ margin: 0, textAlign: "left" }}>{item?.name}</h4>
@@ -140,11 +149,20 @@ export const Comments = (props) => {
                   zeroMinWidth
                   sx={{
                     paddingLeft: 5,
-                    borderLeft: "1px solid",
+                    borderLeft: "1px solid #DC5425",
                   }}
                 >
                   <Grid item>
-                    <Avatar />
+                    <Avatar
+                      alt={rep?.name}
+                      src={`http://192.168.200.122:5000/${
+                        rep?.avtar || "uploads/avt1650979607692A861.png"
+                      } `}
+                      style={{
+                        border: "2px solid  #DC5425",
+                        alignSelf: "center",
+                      }}
+                    />
                   </Grid>
                   <h4 style={{ margin: 0, textAlign: "left" }}>{rep?.name}</h4>
                   <p style={{ textAlign: "left" }}>{rep?.comment}</p>

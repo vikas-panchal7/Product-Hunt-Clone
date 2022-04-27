@@ -31,11 +31,11 @@ const Login = async (req, res) => {
       req.body.email,
       req.body.password
     );
+    if (!user) throw new Error("Invalid Email or Password");
     const token = await user.generateAuthtoken();
     res.status(200).send({ user, token });
   } catch (e) {
-    console.error(e);
-    res.status(400).send({ error: e.toString() });
+    res.status(400).send({ error: e.message });
   }
 };
 
@@ -69,7 +69,7 @@ const Profile = async (req, res) => {
     }
 
     const user = await User.findByIdAndUpdate(filter, update, { new: true });
-    console.log(user);
+
     res.status(200).send(user);
   } catch (e) {
     res.status(400).send({ error: e.toString() });

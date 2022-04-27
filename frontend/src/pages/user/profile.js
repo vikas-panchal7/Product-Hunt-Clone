@@ -96,7 +96,9 @@ export const Profile = () => {
             <h3>Your Details</h3>
             <Avatar
               alt={user?.firstName}
-              src={`http://192.168.200.122:5000/${user?.avtar}`}
+              src={`http://192.168.200.122:5000/${
+                user?.avtar || "uploads/avt1650979607692A861.png"
+              }`}
               sx={{
                 width: 150,
                 height: 150,
@@ -104,6 +106,7 @@ export const Profile = () => {
               }}
               style={{
                 border: "2px solid  #DC5425",
+                alignSelf: "center",
               }}
             />
             &nbsp; &nbsp;

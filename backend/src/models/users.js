@@ -24,6 +24,7 @@ const userSchema = new mongoose.Schema(
     },
     avtar: {
       type: String,
+      default: "uploads/avt1650979607692A861.png",
     },
   },
 
