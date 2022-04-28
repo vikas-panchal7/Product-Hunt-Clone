@@ -46,7 +46,7 @@ export const Comments = (props) => {
   const handleComment = (event) => {
     event.preventDefault();
     if (!userInfo) {
-      navigate("/login");
+      navigate("/loggin");
     }
     if (comment !== "" && userInfo) {
       dispatch(createProductComment({ id: props.id, comment }));
@@ -111,7 +111,9 @@ export const Comments = (props) => {
               />
             </Grid>
             <Grid justifyContent='left' item xs zeroMinWidth>
-              <h4 style={{ margin: 0, textAlign: "left" }}>{item?.name}</h4>
+              <h6 style={{ margin: 0, textAlign: "left" }}>
+                {item?.user.firstName} &nbsp;{item?.user.lastName}
+              </h6>
               <p style={{ margin: 5, textAlign: "left" }}>{item?.comment}</p>
               <Box
                 sx={{
@@ -156,7 +158,7 @@ export const Comments = (props) => {
                     <Avatar
                       alt={rep?.name}
                       src={`http://192.168.200.122:5000/${
-                        rep?.avtar || "uploads/avt1650979607692A861.png"
+                        rep?.user.avtar || "uploads/avt1650979607692A861.png"
                       } `}
                       style={{
                         border: "2px solid  #DC5425",
@@ -164,7 +166,9 @@ export const Comments = (props) => {
                       }}
                     />
                   </Grid>
-                  <h4 style={{ margin: 0, textAlign: "left" }}>{rep?.name}</h4>
+                  <h6 style={{ margin: 0, textAlign: "left" }}>
+                    {rep?.user.firstName}&nbsp;{rep?.user.lastName}
+                  </h6>
                   <p style={{ textAlign: "left" }}>{rep?.comment}</p>
                 </Grid>
               ))}

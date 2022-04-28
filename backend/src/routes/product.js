@@ -4,13 +4,13 @@ const router = express.Router();
 var multer = require("multer");
 const {
   createProduct,
-  createProductcategory,
   commentProduct,
   likeProduct,
   viewProduct,
   viewProductById,
   getlikeProduct,
   viewUpcomingProduct,
+  getmyProducts,
 } = require("../controllers/productcontroller");
 const auth = require("../middleware/auth");
 
@@ -60,5 +60,8 @@ router.post("/product/like/:id", auth, likeProduct);
 
 //getlikes of Product
 router.post("/product/getlike/:id", getlikeProduct);
+
+//get my products
+router.get("/products/myproducts", auth, getmyProducts);
 
 module.exports = router;

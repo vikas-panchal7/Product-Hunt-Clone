@@ -1,6 +1,5 @@
 import React from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
-import Filters from "./components/filter";
 import { Popup } from "./components/popup";
 import {
   Home,
@@ -16,6 +15,7 @@ import {
   Profile,
   Register,
   Loggin,
+  MyProduct,
 } from "./pages/index";
 const App = () => {
   return (
@@ -34,6 +34,7 @@ const App = () => {
         <Route path='/SignUp' element={<SignUp />} />
         <Route path='/register' element={<Register />} />
         <Route path='/loggin' element={<Loggin />} />
+        <Route path='/MyProducts' element={<MyProduct />} />
 
         <Route path='/404' element={<NotFound />} />
         <Route path='*' element={<Navigate replace to='/404' />} />

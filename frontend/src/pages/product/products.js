@@ -56,7 +56,7 @@ export const Products = () => {
       )}
       {error && <Bar message={error} severity='warning' />}
       <Grid container spacing={2}>
-        <Grid item xs={7}>
+        <Grid item xs={6}>
           <Box
             sx={{ minWidth: 80 }}
             display={"flex"}
@@ -104,7 +104,7 @@ export const Products = () => {
           />
         </Grid>
 
-        <Grid item xs={5}>
+        <Grid item xs={6}>
           <UpcomingProducts />
           <Divider textAlign='left'>
             <b>New Products</b>

@@ -18,7 +18,6 @@ const commentSchema = mongoose.Schema(
   {
     name: { type: String, required: true },
     comment: { type: String, require: true },
-    avtar: { type: String },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
@@ -28,7 +27,6 @@ const commentSchema = mongoose.Schema(
       {
         name: { type: String, required: true },
         comment: { type: String, require: true },
-        avtar: { type: String },
         user: {
           type: mongoose.Schema.Types.ObjectId,
           required: true,

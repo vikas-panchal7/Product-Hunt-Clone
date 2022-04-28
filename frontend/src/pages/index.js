@@ -13,6 +13,7 @@ import { Profile } from "./user/profile";
 import { PostJob } from "./jobs/Postjobs";
 import { Register } from "./register/register";
 import { Loggin } from "./login/login1";
+import { MyProduct } from "./product/myproduct";
 export {
   Login,
   SignUp,
@@ -29,4 +30,5 @@ export {
   PostJob,
   Register,
   Loggin,
+  MyProduct,
 };

@@ -27,6 +27,9 @@ import {
   PRODUCT_GET_LIKE_SUCCESS,
   PRODUCT_GET_LIKE_REQUEST,
   PRODUCT_GET_LIKE_FAIL,
+  PRODUCT_MY_REQUEST,
+  PRODUCT_MY_SUCCESS,
+  PRODUCT_MY_FAIL,
   PRODUCT_TOP_REQUEST,
   PRODUCT_TOP_SUCCESS,
   PRODUCT_TOP_FAIL,
@@ -180,6 +183,19 @@ export const productTopRatedReducer = (state = { products: [] }, action) => {
     case PRODUCT_TOP_SUCCESS:
       return { loading: false, products: action.payload };
     case PRODUCT_TOP_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const listmyproductsReducer = (state = { products: [] }, action) => {
+  switch (action.type) {
+    case PRODUCT_MY_REQUEST:
+      return { loading: true, products: [] };
+    case PRODUCT_MY_SUCCESS:
+      return { loading: false, products: action.payload };
+    case PRODUCT_MY_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

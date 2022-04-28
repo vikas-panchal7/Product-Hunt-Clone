@@ -26,7 +26,7 @@ const Product = (props) => {
     if (userInfo) {
       dispatch(createProductLike({ id: props.id, type: props.liketype }));
     } else {
-      navigate("/login");
+      navigate("/loggin");
     }
   };
 

@@ -16,9 +16,9 @@ import {
   productCommentCreateReducer,
   productGetLikeReducer,
   upcomingProductReducer,
+  listmyproductsReducer,
 } from "./reducers/productReducer";
 import { jobsCreateReducer, jobsListReducer } from "./reducers/jobsReducer";
-
 
 const reducer = combineReducers({
   userRegister: userRegisterReducer,
@@ -26,6 +26,7 @@ const reducer = combineReducers({
   updateProfile: userUpdateProfileReducer,
   userDetails: userDetailsReducer,
   productList: productListReducer,
+  myproductList: listmyproductsReducer,
   productDetails: productDetailsReducer,
   productCreate: productCreateReducer,
   productLike: productCreateLikeReducer,

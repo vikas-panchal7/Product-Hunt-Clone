@@ -29,7 +29,6 @@ const commentProduct = async (req, res) => {
     name: req.user.firstName,
     comment: req.body.comment,
     user: req.user._id,
-    avtar: req.user.avtar,
   };
   try {
     const product = await Product.findById(req.params.id);
@@ -88,18 +87,25 @@ const viewProductById = async (req, res) => {
   //   result.comment.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1));
   //   return result;
   // });
-  const product = await Product.findById(req.params.id).populate({
-    path: "comment",
-    populate: {
-      path: "user",
-    },
-    populate: {
-      path: "reply",
-      populate: {
-        path: "user",
-      },
-    },
-  });
+  const product = await Product.findById(req.params.id)
+    .populate({
+      path: "comment",
+      populate: [
+        {
+          path: "user",
+        },
+        {
+          path: "reply",
+          populate: {
+            path: "user",
+          },
+        },
+      ],
+    })
+    .then((result) => {
+      result.comment.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1));
+      return result;
+    });
 
   try {
     if (!product) throw new Error("Product Not Found");
@@ -158,6 +164,16 @@ const getlikeProduct = async (req, res) => {
   }
 };
 
+const getmyProducts = async (req, res) => {
+  try {
+    const product = await Product.find({ owner: req.user._id });
+    if (!product) throw new Error("No Product Found");
+    res.send(product);
+  } catch (e) {
+    res.send({ error: e.message });
+  }
+};
+
 module.exports = {
   createProduct,
   commentProduct,
@@ -166,4 +182,5 @@ module.exports = {
   viewProductById,
   getlikeProduct,
   viewUpcomingProduct,
+  getmyProducts,
 };

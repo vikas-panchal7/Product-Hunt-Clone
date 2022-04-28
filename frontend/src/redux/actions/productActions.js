@@ -27,6 +27,9 @@ import {
   PRODUCT_TOP_REQUEST,
   PRODUCT_TOP_SUCCESS,
   PRODUCT_TOP_FAIL,
+  PRODUCT_MY_REQUEST,
+  PRODUCT_MY_SUCCESS,
+  PRODUCT_MY_FAIL,
   PRODUCT_UPCOMING_FAIL,
   PRODUCT_UPCOMING_REQUEST,
   PRODUCT_UPCOMING_SUCCESS,
@@ -294,6 +297,35 @@ export const listTopProducts = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: PRODUCT_TOP_FAIL,
+      payload: error.response.data.error
+        ? error.response.data.error
+        : error.response.data,
+    });
+  }
+};
+
+export const listmyProducts = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: PRODUCT_MY_REQUEST });
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await baseService.get(`/products/myproducts`, config);
+
+    dispatch({
+      type: PRODUCT_MY_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_MY_FAIL,
       payload: error.response.data.error
         ? error.response.data.error
         : error.response.data,
