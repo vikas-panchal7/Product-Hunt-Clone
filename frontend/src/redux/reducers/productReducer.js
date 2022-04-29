@@ -189,12 +189,19 @@ export const productTopRatedReducer = (state = { products: [] }, action) => {
   }
 };
 
-export const listmyproductsReducer = (state = { products: [] }, action) => {
+export const listmyproductsReducer = (
+  state = { products: [], count: 0 },
+  action
+) => {
   switch (action.type) {
     case PRODUCT_MY_REQUEST:
       return { loading: true, products: [] };
     case PRODUCT_MY_SUCCESS:
-      return { loading: false, products: action.payload };
+      return {
+        loading: false,
+        products: action.payload.product,
+        count: action.payload.count,
+      };
     case PRODUCT_MY_FAIL:
       return { loading: false, error: action.payload };
     default:

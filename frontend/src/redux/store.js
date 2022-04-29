@@ -17,6 +17,7 @@ import {
   productGetLikeReducer,
   upcomingProductReducer,
   listmyproductsReducer,
+  productUpdateReducer,
 } from "./reducers/productReducer";
 import { jobsCreateReducer, jobsListReducer } from "./reducers/jobsReducer";
 
@@ -29,6 +30,7 @@ const reducer = combineReducers({
   myproductList: listmyproductsReducer,
   productDetails: productDetailsReducer,
   productCreate: productCreateReducer,
+  productUpdate: productUpdateReducer,
   productLike: productCreateLikeReducer,
   productComment: productCommentCreateReducer,
   productgetLikes: productGetLikeReducer,

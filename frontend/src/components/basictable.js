@@ -11,7 +11,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import { Grid } from "@mui/material";
-import { Postproduct } from "../pages";
+import { Popup } from "./popup";
+import { Postproduct } from "../pages/index";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -102,8 +103,8 @@ export function BasicTable(props) {
           <TableContainer>
             <Table aria-label='simple table'>
               <TableHead>
-                <TableRow>
-                  <TableCell>
+                <TableRow key={Math.random() + 3}>
+                  <TableCell key={Math.random() + 2}>
                     <b>S.no</b>
                   </TableCell>
                   {props?.tableheader?.map((row, index) => (
@@ -114,13 +115,14 @@ export function BasicTable(props) {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.map((row, index) => (
-                  <TableRow>
-                    <TableCell>
+                {rows?.map((row, index) => (
+                  <TableRow key={index + 2}>
+                    <TableCell key={index + 1}>
                       <b>{index + 1}</b>
                     </TableCell>
                     {props?.tablerows?.map((r, subindex) => (
                       <TableCell
+                        key={Math.random() + subindex}
                         style={{
                           maxWidth: 100, // percentage also works
                           whiteSpace: "nowrap",
@@ -131,9 +133,17 @@ export function BasicTable(props) {
                         {Object.values(row)[subindex + 1]}
                       </TableCell>
                     ))}
-                    <TableCell>
-                      <Postproduct />
+                    <TableCell key={Math.random() + 1}>
+                      {props.type === "product" && (
+                        <Popup data={row} name={"View"} />
+                      )}
                     </TableCell>
+                    <TableCell key={Math.random() + 1}>
+                      {props.type === "product" && (
+                        <Postproduct data={row} name={"Edit"} type={"Edit"} />
+                      )}
+                    </TableCell>
+                    <TableCell key={Math.random() + 1}></TableCell>
                   </TableRow>
                 ))}
               </TableBody>

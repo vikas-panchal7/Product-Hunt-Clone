@@ -23,7 +23,7 @@ const Item = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(1),
 }));
 
-export const Popup = (props) => {
+export const JobView = (props) => {
   console.log("post", props);
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();

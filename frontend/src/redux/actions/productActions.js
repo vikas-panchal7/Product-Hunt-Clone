@@ -210,42 +210,45 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
   }
 };
 
-export const updateProduct = (product) => async (dispatch, getState) => {
-  try {
-    dispatch({
-      type: PRODUCT_UPDATE_REQUEST,
-    });
+export const updateProduct =
+  ({ formData, id }) =>
+  async (dispatch, getState) => {
+    try {
+      console.log(id);
+      dispatch({
+        type: PRODUCT_UPDATE_REQUEST,
+      });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
+      const {
+        userLogin: { userInfo },
+      } = getState();
 
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
 
-    const { data } = await baseService.put(
-      `/api/products/${product._id}`,
-      product,
-      config
-    );
+      const { data } = await baseService.put(
+        `/products/update/${id}`,
+        formData,
+        config
+      );
 
-    dispatch({
-      type: PRODUCT_UPDATE_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: PRODUCT_UPDATE_FAIL,
-      payload: error.response.data.error
-        ? error.response.data.error
-        : error.response.data,
-    });
-  }
-};
+      dispatch({
+        type: PRODUCT_UPDATE_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: PRODUCT_UPDATE_FAIL,
+        payload: error.response.data.error
+          ? error.response.data.error
+          : error.response.data,
+      });
+    }
+  };
 
 export const createProductComment =
   ({ id, comment, commentid }) =>
@@ -304,7 +307,10 @@ export const listTopProducts = () => async (dispatch) => {
   }
 };
 
-export const listmyProducts = () => async (dispatch, getState) => {
+export const listmyProducts = (props) => async (dispatch, getState) => {
+  const limit = props?.limit;
+  const skip = props?.skip;
+  const sort = props?.sort;
   try {
     dispatch({ type: PRODUCT_MY_REQUEST });
     const {
@@ -317,7 +323,12 @@ export const listmyProducts = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await baseService.get(`/products/myproducts`, config);
+    const { data } = await baseService.get(
+      `/products/myproducts?limit=${limit || 4}&skip=${skip || 0}&sort=${
+        sort || 1
+      }`,
+      config
+    );
 
     dispatch({
       type: PRODUCT_MY_SUCCESS,

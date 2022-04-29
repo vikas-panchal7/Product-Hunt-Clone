@@ -49,11 +49,6 @@ export const Products = () => {
   return (
     <div style={{ marginTop: 80 }}>
       <Header />
-      {userInfo && (
-        <div align='right'>
-          <Postproduct />
-        </div>
-      )}
       {error && <Bar message={error} severity='warning' />}
       <Grid container spacing={2}>
         <Grid item xs={6}>

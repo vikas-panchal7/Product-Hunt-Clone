@@ -16,6 +16,7 @@ export const MyProduct = () => {
   const navigate = useNavigate();
   const userLogin = useSelector((state) => state.userLogin);
   const productlist = useSelector((state) => state.myproductList);
+  const data = useSelector((state) => state.productCreate);
   const { loading, products, error, count } = productlist;
 
   const [productarr, setProductarr] = React.useState([]);
@@ -32,8 +33,8 @@ export const MyProduct = () => {
   }, [userInfo]);
 
   React.useEffect(() => {
-    dispatch(listmyProducts());
-  }, [dispatch]);
+    dispatch(listmyProducts({ limit, skip, sort }));
+  }, [dispatch, limit, skip, sort, data]);
 
   // React.useEffect(() => {
   //   //setProductarr(products);
@@ -45,31 +46,24 @@ export const MyProduct = () => {
     "Description",
     "Product Type",
     "Product Category",
-    "Product URL",
-    "Product Gif/Img",
-    "Product Img",
     "View",
     "Edit",
     "Delete",
   ];
 
-  const rows = [
-    "name",
-    "tagline",
-    "description",
-    "type",
-    "category",
-    "videourl",
-    "img",
-    "img1",
-  ];
+  const rows = ["name", "tagline", "description", "type", "category"];
   return (
     <div style={{ marginTop: 80 }}>
       <Header />
       <div align='right'>
         <Postproduct />
       </div>
-      <BasicTable tableheader={header} tablerows={rows} data={products} />
+      <BasicTable
+        tableheader={header}
+        tablerows={rows}
+        data={products}
+        type={"product"}
+      />
       <Paginate
         limit={limit}
         count={count}

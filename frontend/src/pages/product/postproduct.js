@@ -21,8 +21,12 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useDispatch, useSelector } from "react-redux";
 
 //
-import { createProduct } from "../../redux/actions/productActions";
+import {
+  createProduct,
+  updateProduct,
+} from "../../redux/actions/productActions";
 import Bar from "../../components/snackbar";
+import { PRODUCT_CREATE_RESET } from "../../constants/productconstants";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#f7f6f2",
@@ -30,7 +34,7 @@ const Item = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(1),
 }));
 
-export const Postproduct = () => {
+export const Postproduct = (props) => {
   const dispatch = useDispatch();
   const formData = new FormData();
   const [open, setOpen] = React.useState(false);
@@ -46,14 +50,18 @@ export const Postproduct = () => {
   const [videourlvalid, setvideourlvalid] = React.useState(true);
   const [img1valid, setimg1valid] = React.useState(true);
   const [imgvalid, setimgvalid] = React.useState(true);
+  const [img1, setimg1] = React.useState("");
+  const [img, setimg] = React.useState("");
+  const [imge, setimge] = React.useState({});
+  const [gif, setgif] = React.useState({});
 
   const [productdetail, setproductdetail] = React.useState({
-    name: "",
-    tagline: "",
-    description: "",
-    type: "",
-    category: "",
-    videourl: "",
+    name: props.data?.name || "",
+    tagline: props.data?.tagline || "",
+    description: props.data?.description || "",
+    type: props.data?.type || "",
+    category: props.data?.category || "",
+    videourl: props.data?.videourl || "",
   });
   // const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -74,20 +82,14 @@ export const Postproduct = () => {
   };
 
   const onSelectImage = (event) => {
-    if (event.target.files[0].type.match(/\/(jpe?g|png|gif|bmp)$/i)) {
-      setimg1valid(true);
-      formData.append("img1", event.target.files[0]);
-    } else {
-      setimg1valid(false);
-    }
+    setimge(event.target.files[0]);
+    const objectUrl = URL.createObjectURL(event.target.files[0]);
+    setimg1(objectUrl);
   };
   const onSelectGif = (event) => {
-    if (event.target.files[0].type.match(/\/(jpe?g|png|gif|bmp)$/i)) {
-      setimgvalid(true);
-      formData.append("img", event.target.files[0]);
-    } else {
-      setimgvalid(false);
-    }
+    setgif(event.target.files[0]);
+    const objectUrl = URL.createObjectURL(event.target.files[0]);
+    setimg(objectUrl);
   };
 
   const handleSubmit = (event) => {
@@ -101,9 +103,9 @@ export const Postproduct = () => {
       description === "" ||
       type === "" ||
       category === "" ||
-      videourl === "" ||
-      !imgvalid ||
-      !img1valid
+      videourl === ""
+      // Object.keys(imge).length === 0 ||
+      // Object.keys(gif).length === 0
     ) {
       if (name === "") return setnamevalid(false);
       if (tagline === "") return settaglinevalid(false);
@@ -111,6 +113,8 @@ export const Postproduct = () => {
       if (type === "") return settypevalid(false);
       if (category === "") return setcategoryvalid(false);
       if (videourl === "") return setvideourlvalid(false);
+      // if (Object.keys(imge).length === 0) return;
+      // if (Object.keys(gif).length === 0) return;
     } else {
       formData.append("name", name);
       formData.append("tagline", tagline);
@@ -118,7 +122,10 @@ export const Postproduct = () => {
       formData.append("type", type);
       formData.append("category", category);
       formData.append("videourl", videourl);
-      dispatch(createProduct(formData));
+      formData.append("img", imge);
+      formData.append("img1", gif);
+      !props.type && dispatch(createProduct(formData));
+      props.type && dispatch(updateProduct({ formData, id: props.data?._id }));
       if (!error) {
         setproductdetail({
           name: "",
@@ -134,6 +141,9 @@ export const Postproduct = () => {
   return (
     <div>
       <Button
+        variant='outlined'
+        color='warning'
+        size='small'
         onClick={handleClickOpen}
         sx={{
           my: 2,
@@ -142,7 +152,7 @@ export const Postproduct = () => {
           alignSelf: "right",
         }}
       >
-        POST PRODUCT
+        {props.name || "POST PRODUCT"}
       </Button>
       <Dialog
         sx={{
@@ -167,14 +177,16 @@ export const Postproduct = () => {
         aria-labelledby='responsive-dialog-title'
       >
         <DialogTitle id='responsive-dialog-title' align='center'>
-          {"👋  Tell us More About Your Product"}
+          {!props.type && "👋  Tell us More About Your Product"}
+          {props.type && "👋  Update Your Product"}
           {error && <Bar message={error} severity='warning' />}
           {success && (
-            <Bar
-              message={"Product Created  Successfully "}
-              severity='success'
-            />
-          )}
+              <Bar
+                message={"Product Created  Successfully "}
+                severity='success'
+              />
+            ) &&
+            dispatch({ type: PRODUCT_CREATE_RESET })}
           <Button onClick={handleClose}>
             <CloseIcon align='left'></CloseIcon>
           </Button>
@@ -198,7 +210,7 @@ export const Postproduct = () => {
                     autoComplete='given-name'
                     placeholder='Name of a Product'
                     onChange={handleChange}
-                    autoFocus
+                    // autoFocus
                     onBlur={(event) => {
                       event.currentTarget.value.trim() !== "" &&
                         setnamevalid(true);
@@ -340,12 +352,32 @@ export const Postproduct = () => {
                 <Grid item xs={12} sm={6}>
                   <FormControl fullWidth>
                     <label>Product Gif/Img</label>
+                    {props.data && !img && (
+                      <img
+                        style={{
+                          height: "60px",
+                          width: "100px",
+                        }}
+                        src={`http://192.168.200.122:5000/${props.data.img} `}
+                        alt='img'
+                      />
+                    )}
+                    {img && (
+                      <img
+                        style={{
+                          height: "60px",
+                          width: "100px",
+                        }}
+                        src={`${img}`}
+                        alt='img'
+                      />
+                    )}
+
                     <TextField
-                      required
-                      /* inputProps={{ accept: "image/*" }} */
                       onChange={onSelectGif}
                       color='primary'
                       type='file'
+                      inputProps={{ accept: "image/*" }}
                       name='img'
                       id='img'
                       size='small'
@@ -360,11 +392,30 @@ export const Postproduct = () => {
                 <Grid item xs={12} sm={6}>
                   <FormControl fullWidth>
                     <label>Products Img</label>
+                    {props.data && !img1 && (
+                      <img
+                        style={{
+                          height: "60px",
+                          width: "100px",
+                        }}
+                        src={`http://192.168.200.122:5000/${props.data.img1} `}
+                        alt='img'
+                      />
+                    )}
+                    {img1 && (
+                      <img
+                        style={{
+                          height: "60px",
+                          width: "100px",
+                        }}
+                        src={`${img1}`}
+                        alt='img'
+                      />
+                    )}
                     <TextField
-                      required
                       onChange={onSelectImage}
                       color='primary'
-                      accept='image/png, image/jpeg'
+                      inputProps={{ accept: "image/*" }}
                       type='file'
                       name='img1'
                       id='img1'
@@ -384,7 +435,8 @@ export const Postproduct = () => {
                 variant='contained'
                 sx={{ mt: 3, mb: 2 }}
               >
-                POST
+                {props.type && "UPDATE"}
+                {!props.type && "POST"}
               </Button>
             </Box>
           </DialogContentText>
