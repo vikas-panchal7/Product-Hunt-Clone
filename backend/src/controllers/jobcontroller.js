@@ -27,6 +27,14 @@ const viewjobs = async (req, res) => {
   try {
     const { skip, limit, sort } = req.query;
     if (Object.keys(req.body).length !== 0) {
+      const count = await Job.aggregate([
+        {
+          $match: { category: { $in: [...req.body] } },
+        },
+        {
+          $count: "count",
+        },
+      ]);
       const jobs = await Job.aggregate([
         {
           $match: { category: { $in: [...req.body] } },
@@ -36,7 +44,7 @@ const viewjobs = async (req, res) => {
         { $limit: parseInt(limit) },
       ]);
 
-      return res.status(201).send({ jobs, count: 10 });
+      return res.status(201).send({ jobs, count });
     }
     const count = await Job.find().count();
     const jobs = await Job.find()

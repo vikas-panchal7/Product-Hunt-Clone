@@ -166,11 +166,53 @@ const getlikeProduct = async (req, res) => {
 
 const getmyProducts = async (req, res) => {
   try {
-    const product = await Product.find({ owner: req.user._id });
+    const count = await Product.find({ owner: req.user._id }).count();
+    const product = await Product.find({ owner: req.user._id })
+      .limit(parseInt(req.query.limit))
+      .skip(parseInt(req.query.skip))
+      .sort({ _id: parseInt(req.query.sort) });
     if (!product) throw new Error("No Product Found");
-    res.send(product);
+    res.send({ product, count });
   } catch (e) {
     res.send({ error: e.message });
+  }
+};
+
+const updateProduct = async (req, res) => {
+  try {
+    console.log(req.body);
+    if (!validator.isURL(req.body.videourl)) {
+      throw new Error("Please Provide Valid URL");
+    }
+    const filter = { _id: req.params.id };
+    let updateproduct = { ...req.body };
+    if (req.files?.img[0].path) {
+      updateproduct = {
+        ...req.body,
+        img: req.files?.img[0].path,
+      };
+    }
+    if (req.files?.img1[0].path) {
+      updateproduct = {
+        ...req.body,
+        img1: req.files?.img1[0].path,
+      };
+    }
+    if (req.files?.img[0].path && req.files?.img1[0].path) {
+      updateproduct = {
+        ...req.body,
+        img: req.files?.img[0].path,
+        img1: req.files?.img1[0].path,
+      };
+    }
+    const product = await Product.findOneAndUpdate(filter, updateproduct, {
+      new: true,
+    });
+    console.log(product);
+    res.status(201).send(product);
+  } catch (e) {
+    console.log(e);
+    res.status(500).send({ error: e.message });
   }
 };
 
@@ -183,4 +225,5 @@ module.exports = {
   getlikeProduct,
   viewUpcomingProduct,
   getmyProducts,
+  updateProduct,
 };

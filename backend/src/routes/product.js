@@ -11,6 +11,7 @@ const {
   getlikeProduct,
   viewUpcomingProduct,
   getmyProducts,
+  updateProduct,
 } = require("../controllers/productcontroller");
 const auth = require("../middleware/auth");
 
@@ -51,6 +52,8 @@ const imges = img.fields([
   { name: "img1", maxCount: 1 },
 ]);
 router.post("/product/create", auth, imges, createProduct);
+
+router.put("/products/update/:id", auth, imges, updateProduct);
 
 //comment Product
 router.post("/product/comment/:id", auth, commentProduct);
