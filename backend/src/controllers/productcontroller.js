@@ -9,6 +9,13 @@ const createProduct = async (req, res) => {
     if (!validator.isURL(req.body.videourl)) {
       throw new Error("Please Provide Valid URL");
     }
+
+    const images = req.files?.img;
+    const images2 = req.files?.img1;
+    const files = Object.keys(req.files).length;
+    if (files <= 1) {
+      throw new Error("Please Provide Image");
+    }
     const addproduct = new Product({
       ...req.body,
       img: req.files?.img[0].path,
@@ -181,38 +188,57 @@ const getmyProducts = async (req, res) => {
 const updateProduct = async (req, res) => {
   try {
     console.log(req.body);
+    console.log(req.files);
     if (!validator.isURL(req.body.videourl)) {
       throw new Error("Please Provide Valid URL");
     }
     const filter = { _id: req.params.id };
     let updateproduct = { ...req.body };
-    if (req.files?.img[0].path) {
+    const images = req.files?.img;
+    const images2 = req.files?.img1;
+    if (images) {
       updateproduct = {
         ...req.body,
-        img: req.files?.img[0].path,
+        img: req.files?.img[0]?.path,
       };
     }
-    if (req.files?.img1[0].path) {
+    if (images2) {
       updateproduct = {
         ...req.body,
-        img1: req.files?.img1[0].path,
+        img1: req.files?.img1[0]?.path,
       };
     }
-    if (req.files?.img[0].path && req.files?.img1[0].path) {
+    if (images && images2) {
       updateproduct = {
         ...req.body,
-        img: req.files?.img[0].path,
-        img1: req.files?.img1[0].path,
+        img: req.files?.img[0]?.path,
+        img1: req.files?.img1[0]?.path,
       };
     }
-    const product = await Product.findOneAndUpdate(filter, updateproduct, {
+    console.log("SSS", updateproduct);
+    const product = await Product.findByIdAndUpdate(filter, updateproduct, {
       new: true,
     });
-    console.log(product);
+
     res.status(201).send(product);
   } catch (e) {
     console.log(e);
     res.status(500).send({ error: e.message });
+  }
+};
+
+const   deleteProduct = async (req, res) => {
+  const product = await Product.findById(req.params.id);
+  try {
+    if (product) {
+      await product.remove();
+      res.status(200).send();
+    } else {
+      throw new Error("Product not found");
+    }
+  } catch (e) {
+    console.error(e);
+    res.send({ error: e.message });
   }
 };
 
@@ -226,4 +252,5 @@ module.exports = {
   viewUpcomingProduct,
   getmyProducts,
   updateProduct,
+  deleteProduct,
 };

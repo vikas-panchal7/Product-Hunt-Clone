@@ -17,13 +17,14 @@ export const MyProduct = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const productlist = useSelector((state) => state.myproductList);
   const data = useSelector((state) => state.productCreate);
+  const update = useSelector((state) => state.productDelete);
   const { loading, products, error, count } = productlist;
 
   const [productarr, setProductarr] = React.useState([]);
   const [sort, setsort] = React.useState(1);
   const [page, setPage] = React.useState(1);
   const [skip, setSkip] = React.useState(0);
-  const [limit, setlimit] = React.useState(2);
+  const [limit, setlimit] = React.useState(5);
 
   const { userInfo } = userLogin;
   React.useEffect(() => {
@@ -34,11 +35,7 @@ export const MyProduct = () => {
 
   React.useEffect(() => {
     dispatch(listmyProducts({ limit, skip, sort }));
-  }, [dispatch, limit, skip, sort, data]);
-
-  // React.useEffect(() => {
-  //   //setProductarr(products);
-  // }, [products]);
+  }, [dispatch, limit, skip, sort, data, update]);
 
   const header = [
     "Name",

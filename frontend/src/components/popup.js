@@ -24,7 +24,6 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export const Popup = (props) => {
-  console.log("post", props);
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
 

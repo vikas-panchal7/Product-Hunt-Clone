@@ -12,6 +12,7 @@ const {
   viewUpcomingProduct,
   getmyProducts,
   updateProduct,
+  deleteProduct,
 } = require("../controllers/productcontroller");
 const auth = require("../middleware/auth");
 
@@ -66,5 +67,7 @@ router.post("/product/getlike/:id", getlikeProduct);
 
 //get my products
 router.get("/products/myproducts", auth, getmyProducts);
+
+router.delete("/product/delete/:id", auth, deleteProduct);
 
 module.exports = router;

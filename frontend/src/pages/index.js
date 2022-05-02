@@ -14,6 +14,8 @@ import { PostJob } from "./jobs/Postjobs";
 import { Register } from "./register/register";
 import { Loggin } from "./login/login1";
 import { MyProduct } from "./product/myproduct";
+import { MyJobs } from "./jobs/myjobs";
+
 export {
   Login,
   SignUp,
@@ -31,4 +33,5 @@ export {
   Register,
   Loggin,
   MyProduct,
+  MyJobs,
 };

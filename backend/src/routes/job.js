@@ -2,7 +2,11 @@ const express = require("express");
 const path = require("path");
 const router = express.Router();
 var multer = require("multer");
-const { createJob, viewjobs } = require("../controllers/jobcontroller");
+const {
+  createJob,
+  viewjobs,
+  getmyjobs,
+} = require("../controllers/jobcontroller");
 const auth = require("../middleware/auth");
 
 //create Job
@@ -33,5 +37,8 @@ router.post("/jobs/create", auth, img.single("logo"), createJob);
 
 //for all jobs
 router.post("/jobs", viewjobs);
+
+//for my jobs
+router.get("/jobs/myjobs", auth, getmyjobs);
 
 module.exports = router;

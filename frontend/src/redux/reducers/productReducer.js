@@ -9,6 +9,7 @@ import {
   PRODUCT_DELETE_REQUEST,
   PRODUCT_DELETE_SUCCESS,
   PRODUCT_DELETE_FAIL,
+  PRODUCT_DELETE_RESET,
   PRODUCT_CREATE_RESET,
   PRODUCT_CREATE_FAIL,
   PRODUCT_CREATE_SUCCESS,
@@ -44,7 +45,11 @@ export const productCreateReducer = (state = {}, action) => {
     case PRODUCT_CREATE_REQUEST:
       return { loading: true };
     case PRODUCT_CREATE_SUCCESS:
-      return { loading: false, success: true, product: action.payload };
+      return {
+        loading: false,
+        success: "Product Created  Successfully",
+        product: action.payload,
+      };
     case PRODUCT_CREATE_FAIL:
       return { loading: false, error: action.payload };
     case PRODUCT_CREATE_RESET:
@@ -138,9 +143,12 @@ export const productDeleteReducer = (state = {}, action) => {
     case PRODUCT_DELETE_REQUEST:
       return { loading: true };
     case PRODUCT_DELETE_SUCCESS:
-      return { loading: false, success: true };
+      return { loading: false, success: "Product Deleted SuccessFully" };
     case PRODUCT_DELETE_FAIL:
       return { loading: false, error: action.payload };
+    case PRODUCT_DELETE_RESET:
+      return {};
+
     default:
       return state;
   }

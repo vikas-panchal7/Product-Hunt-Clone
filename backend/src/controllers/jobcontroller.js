@@ -58,4 +58,19 @@ const viewjobs = async (req, res) => {
   }
 };
 
-module.exports = { createJob, viewjobs };
+//
+
+const getmyjobs = async (req, res) => {
+  try {
+    const count = await Job.find({ owner: req.user._id }).count();
+    const jobs = await Job.find({ owner: req.user._id })
+      .limit(parseInt(req.query.limit))
+      .skip(parseInt(req.query.skip))
+      .sort({ _id: parseInt(req.query.sort) });
+    if (!jobs) throw new Error("No Job Found");
+    res.send({ jobs, count });
+  } catch (e) {
+    res.send({ error: e.message });
+  }
+};
+module.exports = { createJob, viewjobs, getmyjobs };

@@ -195,7 +195,7 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
       },
     };
 
-    await baseService.delete(`/api/products/${id}`, config);
+    await baseService.delete(`/product/delete/${id}`, config);
 
     dispatch({
       type: PRODUCT_DELETE_SUCCESS,

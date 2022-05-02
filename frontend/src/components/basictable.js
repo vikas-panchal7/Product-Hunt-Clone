@@ -10,10 +10,12 @@ import Paper from "@mui/material/Paper";
 import SearchIcon from "@mui/icons-material/Search";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
-import { Grid } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import { Popup } from "./popup";
 import { Postproduct } from "../pages/index";
-
+import { deleteProduct } from "../redux/actions/productActions";
+import { useSelector, useDispatch } from "react-redux";
+import Bar from "./snackbar";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -67,9 +69,10 @@ const originalRows = [
 ];
 
 export function BasicTable(props) {
+  const dispatch = useDispatch();
   const [rows, setRows] = useState([]);
   const [searched, setSearched] = useState("");
-
+  const { success } = useSelector((state) => state.productDelete);
   React.useEffect(() => {
     setRows(props.data);
   }, [props]);
@@ -80,11 +83,15 @@ export function BasicTable(props) {
     });
     setRows(filteredRows);
   };
+  const handleclick = (e) => {
+    dispatch(deleteProduct(e._id));
+  };
 
   return (
     <>
       <Grid margin='20px'>
         <Paper>
+          {success && <Bar message={success} severity='success' />}
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
@@ -143,7 +150,23 @@ export function BasicTable(props) {
                         <Postproduct data={row} name={"Edit"} type={"Edit"} />
                       )}
                     </TableCell>
-                    <TableCell key={Math.random() + 1}></TableCell>
+                    <TableCell key={Math.random() + 1}>
+                      <Button
+                        key={Math.random() + 1}
+                        variant='outlined'
+                        color='warning'
+                        size='small'
+                        onClick={() => handleclick(row)}
+                        sx={{
+                          my: 2,
+                          color: "black",
+                          display: "block",
+                          alignSelf: "right",
+                        }}
+                      >
+                        DELETE
+                      </Button>
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>

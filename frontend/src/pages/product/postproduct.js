@@ -71,6 +71,7 @@ export const Postproduct = (props) => {
 
   const handleClose = () => {
     setOpen(false);
+    dispatch({ type: PRODUCT_CREATE_RESET });
   };
 
   const handleChange = (event) => {
@@ -85,11 +86,13 @@ export const Postproduct = (props) => {
     setimge(event.target.files[0]);
     const objectUrl = URL.createObjectURL(event.target.files[0]);
     setimg1(objectUrl);
+    setimg1valid(true);
   };
   const onSelectGif = (event) => {
     setgif(event.target.files[0]);
     const objectUrl = URL.createObjectURL(event.target.files[0]);
     setimg(objectUrl);
+    setimgvalid(true);
   };
 
   const handleSubmit = (event) => {
@@ -104,8 +107,6 @@ export const Postproduct = (props) => {
       type === "" ||
       category === "" ||
       videourl === ""
-      // Object.keys(imge).length === 0 ||
-      // Object.keys(gif).length === 0
     ) {
       if (name === "") return setnamevalid(false);
       if (tagline === "") return settaglinevalid(false);
@@ -113,8 +114,6 @@ export const Postproduct = (props) => {
       if (type === "") return settypevalid(false);
       if (category === "") return setcategoryvalid(false);
       if (videourl === "") return setvideourlvalid(false);
-      // if (Object.keys(imge).length === 0) return;
-      // if (Object.keys(gif).length === 0) return;
     } else {
       formData.append("name", name);
       formData.append("tagline", tagline);
@@ -122,11 +121,13 @@ export const Postproduct = (props) => {
       formData.append("type", type);
       formData.append("category", category);
       formData.append("videourl", videourl);
-      formData.append("img", imge);
-      formData.append("img1", gif);
+      formData.append("img", gif);
+      formData.append("img1", imge);
       !props.type && dispatch(createProduct(formData));
       props.type && dispatch(updateProduct({ formData, id: props.data?._id }));
       if (!error) {
+        setimge({});
+        setgif({});
         setproductdetail({
           name: "",
           tagline: "",
@@ -162,8 +163,8 @@ export const Postproduct = (props) => {
         }}
         PaperProps={{
           sx: {
-            minHeight: "90%",
-            maxHeight: "90%",
+            minHeight: "200",
+            maxHeight: "95%",
             minWidth: "45%",
             maxWidth: "50%",
             backgroundColor: "#F0F0F0",
@@ -180,13 +181,7 @@ export const Postproduct = (props) => {
           {!props.type && "👋  Tell us More About Your Product"}
           {props.type && "👋  Update Your Product"}
           {error && <Bar message={error} severity='warning' />}
-          {success && (
-              <Bar
-                message={"Product Created  Successfully "}
-                severity='success'
-              />
-            ) &&
-            dispatch({ type: PRODUCT_CREATE_RESET })}
+          {success && <Bar message={success} severity='success' />}
           <Button onClick={handleClose}>
             <CloseIcon align='left'></CloseIcon>
           </Button>
@@ -383,9 +378,7 @@ export const Postproduct = (props) => {
                       size='small'
                       color='warning'
                       error={!imgvalid}
-                      helperText={
-                        !imgvalid && "Please Provide Only Image Files"
-                      }
+                      helperText={!imgvalid && "Please Provide  Image/GIF"}
                     />
                   </FormControl>
                 </Grid>
@@ -422,9 +415,7 @@ export const Postproduct = (props) => {
                       size='small'
                       color='warning'
                       error={!img1valid}
-                      helperText={
-                        !img1valid && "Please Provide Only Image Files"
-                      }
+                      helperText={!img1valid && "Please Provide Image "}
                     />
                   </FormControl>
                 </Grid>

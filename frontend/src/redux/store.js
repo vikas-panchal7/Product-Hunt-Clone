@@ -18,8 +18,13 @@ import {
   upcomingProductReducer,
   listmyproductsReducer,
   productUpdateReducer,
+  productDeleteReducer,
 } from "./reducers/productReducer";
-import { jobsCreateReducer, jobsListReducer } from "./reducers/jobsReducer";
+import {
+  jobsCreateReducer,
+  jobsListReducer,
+  listmyjobsReducer,
+} from "./reducers/jobsReducer";
 
 const reducer = combineReducers({
   userRegister: userRegisterReducer,
@@ -33,10 +38,12 @@ const reducer = combineReducers({
   productUpdate: productUpdateReducer,
   productLike: productCreateLikeReducer,
   productComment: productCommentCreateReducer,
+  productDelete: productDeleteReducer,
   productgetLikes: productGetLikeReducer,
   productUpcominglist: upcomingProductReducer,
   jobCreate: jobsCreateReducer,
   jobList: jobsListReducer,
+  myjobsList: listmyjobsReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")
