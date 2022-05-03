@@ -84,9 +84,9 @@ export const createProductLike =
   ({ id, type }) =>
   async (dispatch, getState) => {
     try {
-      // dispatch({
-      //   type: PRODUCT_CREATE_LIKE_REQUEST,
-      // });
+      dispatch({
+        type: PRODUCT_CREATE_LIKE_REQUEST,
+      });
       const {
         userLogin: { userInfo },
       } = getState();

@@ -73,7 +73,7 @@ const originalRows = [
 ];
 
 export function BasicTable(props) {
-  console.log(props);
+  console.log("pfpe", props);
   const dispatch = useDispatch();
   const [rows, setRows] = useState([]);
   const [searched, setSearched] = useState("");
@@ -84,13 +84,27 @@ export function BasicTable(props) {
   }, [props]);
 
   const requestSearch = (event) => {
-    const filteredRows = props.data.filter((row) => {
-      return (
-        row.name?.toLowerCase().includes(event.target.value.toLowerCase()),
-        row.type?.toLowerCase().includes(event.target.value.toLowerCase()),
-        row.title?.toLowerCase().includes(event.target.value.toLowerCase())
-      );
-    });
+    let filteredRows = [];
+    if (props.type === "product") {
+      filteredRows = props.data.filter((row) => {
+        return (
+          row.name.toLowerCase().includes(event.target.value.toLowerCase()),
+          row.category.toLowerCase().includes(event.target.value.toLowerCase()),
+          row.type.toLowerCase().includes(event.target.value.toLowerCase())
+        );
+      });
+    }
+    if (props.type === "jobs") {
+      filteredRows = props.data.filter((row) => {
+        return (
+          row.companyname
+            .toLowerCase()
+            .includes(event.target.value.toLowerCase()),
+          row.jobtitle.toLowerCase().includes(event.target.value.toLowerCase()),
+          row.category.toLowerCase().includes(event.target.value.toLowerCase())
+        );
+      });
+    }
     setRows(filteredRows);
   };
   const handleclick = (e) => {
