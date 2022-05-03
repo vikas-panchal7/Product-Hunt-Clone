@@ -22,7 +22,11 @@ import { useDispatch, useSelector } from "react-redux";
 
 //
 import Bar from "../../components/snackbar";
-import { createJobs } from "../../redux/actions/jobsActions";
+import { createJobs, updateJob } from "../../redux/actions/jobsActions";
+import {
+  JOBS_CREATE_RESET,
+  JOBS_UPDATE_RESET,
+} from "../../constants/jobsconstants";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#f7f6f2",
@@ -30,13 +34,16 @@ const Item = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(1),
 }));
 
-export const PostJob = () => {
+export const PostJob = (props) => {
+  console.log("edit jobs", props);
   const dispatch = useDispatch();
   const formData = new FormData();
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
   const data = useSelector((state) => state.jobCreate);
   const { loading, success, job, error } = data;
+  const update = useSelector((state) => state.jobUpdate);
+  const { success: jobupdatesuccess, error: jobupdateerr } = update;
 
   const [namevalid, setnamevalid] = React.useState(true);
   const [taglinevalid, settaglinevalid] = React.useState(true);
@@ -44,12 +51,15 @@ export const PostJob = () => {
   const [categoryvalid, setcategoryvalid] = React.useState(true);
   const [linkvalid, setlinkvalid] = React.useState(true);
   const [imgvalid, setimgvalid] = React.useState(true);
+  const [img, setimg] = React.useState("");
+  const [logo, setlogo] = React.useState({});
+  const [status, setstatus] = React.useState(false);
   const [jobdetail, setjobdetail] = React.useState({
-    companyname: "",
-    companytagline: "",
-    jobtitle: "",
-    category: "",
-    joblink: "",
+    companyname: props.data?.companyname || "",
+    companytagline: props.data?.companytagline || "",
+    jobtitle: props.data?.jobtitle || "",
+    category: props.data?.category || "",
+    joblink: props.data?.joblink || "",
   });
   // const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -59,6 +69,7 @@ export const PostJob = () => {
 
   const handleClose = () => {
     setOpen(false);
+    dispatch({ type: JOBS_CREATE_RESET });
   };
 
   const handleChange = (event) => {
@@ -70,16 +81,16 @@ export const PostJob = () => {
   };
 
   const onSelectLogo = (event) => {
-    if (event.target.files[0].type.match(/\/(jpe?g|png|gif|bmp)$/i)) {
-      setimgvalid(true);
-      formData.append("logo", event.target.files[0]);
-    } else {
-      setimgvalid(false);
-    }
+    const objectUrl = URL.createObjectURL(event.target.files[0]);
+    setimg(objectUrl);
+    setimgvalid(true);
+    setstatus(true);
+    setlogo(event.target.files[0]);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setOpen(true);
 
     const { companyname, companytagline, jobtitle, category, joblink } =
       jobdetail;
@@ -102,20 +113,27 @@ export const PostJob = () => {
       formData.append("jobtitle", jobtitle);
       formData.append("category", category);
       formData.append("joblink", joblink);
-      dispatch(createJobs(formData));
-
-      setjobdetail({
-        companyname: "",
-        companytagline: "",
-        jobtitle: "",
-        category: "",
-        joblink: "",
-      });
+      if (status) {
+        formData.append("logo", logo);
+      }
+      !props.type && dispatch(createJobs(formData));
+      props.type && dispatch(updateJob({ formData, id: props.data?._id }));
+      !error &&
+        setjobdetail({
+          companyname: "",
+          companytagline: "",
+          jobtitle: "",
+          category: "",
+          joblink: "",
+        });
     }
   };
   return (
     <div>
       <Button
+        variant='outlined'
+        color='warning'
+        size='small'
         onClick={handleClickOpen}
         sx={{
           my: 2,
@@ -124,7 +142,7 @@ export const PostJob = () => {
           alignSelf: "right",
         }}
       >
-        POST JOB
+        {props.name || "POST JOB"}
       </Button>
       <Dialog
         sx={{
@@ -134,7 +152,7 @@ export const PostJob = () => {
         }}
         PaperProps={{
           sx: {
-            minHeight: "90%",
+            minHeight: "200",
             maxHeight: "90%",
             minWidth: "45%",
             maxWidth: "50%",
@@ -146,11 +164,11 @@ export const PostJob = () => {
         aria-labelledby='responsive-dialog-title'
       >
         <DialogTitle id='responsive-dialog-title' align='center'>
-          {"👋  Tell us More About Your Job & Company"}
+          {props.type
+            ? " 👋 Update Your Job"
+            : " 👋  Tell us More About Your Job & Company"}
           {error && <Bar message={error} severity='warning' />}
-          {success && (
-            <Bar message={"Job Created  Successfully "} severity='success' />
-          )}
+
           <Button onClick={handleClose}>
             <CloseIcon align='left'></CloseIcon>
           </Button>
@@ -285,11 +303,31 @@ export const PostJob = () => {
                 <Grid item xs={12}>
                   <FormControl fullWidth>
                     <label>Company Logo* </label>
+                    {props.data && !img && (
+                      <img
+                        style={{
+                          height: "60px",
+                          width: "100px",
+                        }}
+                        src={`http://192.168.200.122:5000/${props.data?.logo} `}
+                        alt='img'
+                      />
+                    )}
+                    {img && (
+                      <img
+                        style={{
+                          height: "60px",
+                          width: "100px",
+                        }}
+                        src={`${img}`}
+                        alt='img'
+                      />
+                    )}
+
                     <TextField
-                      required
                       onChange={onSelectLogo}
                       color='primary'
-                      accept='image/*'
+                      inputProps={{ accept: "image/*" }}
                       type='file'
                       name='logo'
                       id='logo'

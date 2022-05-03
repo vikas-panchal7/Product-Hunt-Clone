@@ -178,7 +178,7 @@ const getmyProducts = async (req, res) => {
       .limit(parseInt(req.query.limit))
       .skip(parseInt(req.query.skip))
       .sort({ _id: parseInt(req.query.sort) });
-    if (!product) throw new Error("No Product Found");
+    if (product.length === 0) throw new Error("No Product Found");
     res.send({ product, count });
   } catch (e) {
     res.send({ error: e.message });
@@ -227,7 +227,7 @@ const updateProduct = async (req, res) => {
   }
 };
 
-const   deleteProduct = async (req, res) => {
+const deleteProduct = async (req, res) => {
   const product = await Product.findById(req.params.id);
   try {
     if (product) {

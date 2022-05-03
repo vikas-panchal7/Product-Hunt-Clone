@@ -12,10 +12,14 @@ import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import { Button, Grid } from "@mui/material";
 import { Popup } from "./popup";
-import { Postproduct } from "../pages/index";
+import { PostJob, Postproduct } from "../pages/index";
 import { deleteProduct } from "../redux/actions/productActions";
 import { useSelector, useDispatch } from "react-redux";
 import Bar from "./snackbar";
+import { JobView } from "./jobview";
+import { deleteJob } from "../redux/actions/jobsActions";
+import { PRODUCT_DELETE_RESET } from "../constants/productconstants";
+import { JOBS_DELETE_RESET } from "../constants/jobsconstants";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -69,29 +73,39 @@ const originalRows = [
 ];
 
 export function BasicTable(props) {
+  console.log(props);
   const dispatch = useDispatch();
   const [rows, setRows] = useState([]);
   const [searched, setSearched] = useState("");
   const { success } = useSelector((state) => state.productDelete);
+
   React.useEffect(() => {
     setRows(props.data);
   }, [props]);
 
   const requestSearch = (event) => {
     const filteredRows = props.data.filter((row) => {
-      return row.name.toLowerCase().includes(event.target.value.toLowerCase());
+      return (
+        row.name?.toLowerCase().includes(event.target.value.toLowerCase()),
+        row.type?.toLowerCase().includes(event.target.value.toLowerCase()),
+        row.title?.toLowerCase().includes(event.target.value.toLowerCase())
+      );
     });
     setRows(filteredRows);
   };
   const handleclick = (e) => {
-    dispatch(deleteProduct(e._id));
+    const result = window.confirm("Are You Sure Want To Delete ?");
+    if (!result) return;
+    props.type === "product" && dispatch(deleteProduct(e._id));
+    props.type === "jobs" && dispatch(deleteJob(e._id));
+    dispatch({ type: PRODUCT_DELETE_RESET });
+    dispatch({ type: JOBS_DELETE_RESET });
   };
 
   return (
     <>
       <Grid margin='20px'>
         <Paper>
-          {success && <Bar message={success} severity='success' />}
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
@@ -144,10 +158,16 @@ export function BasicTable(props) {
                       {props.type === "product" && (
                         <Popup data={row} name={"View"} />
                       )}
+                      {props.type === "jobs" && (
+                        <JobView data={row} name={"View"} />
+                      )}
                     </TableCell>
                     <TableCell key={Math.random() + 1}>
                       {props.type === "product" && (
                         <Postproduct data={row} name={"Edit"} type={"Edit"} />
+                      )}
+                      {props.type === "jobs" && (
+                        <PostJob data={row} name={"Edit"} type={"Edit"} />
                       )}
                     </TableCell>
                     <TableCell key={Math.random() + 1}>

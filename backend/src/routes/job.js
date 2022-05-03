@@ -6,6 +6,8 @@ const {
   createJob,
   viewjobs,
   getmyjobs,
+  updateJob,
+  deleteJob,
 } = require("../controllers/jobcontroller");
 const auth = require("../middleware/auth");
 
@@ -40,5 +42,11 @@ router.post("/jobs", viewjobs);
 
 //for my jobs
 router.get("/jobs/myjobs", auth, getmyjobs);
+
+//for my jobs
+router.put("/jobs/update/:id", auth, img.single("logo"), updateJob);
+
+//delete job
+router.delete("/job/delete/:id", auth, deleteJob);
 
 module.exports = router;

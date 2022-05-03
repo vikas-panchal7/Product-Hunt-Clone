@@ -31,7 +31,7 @@ export const Jobs = () => {
   const [page, setPage] = React.useState(1);
   const [skip, setSkip] = React.useState(0);
   const [search, setSearch] = React.useState({ filter: [] });
-  const [limit, setlimit] = React.useState(2);
+  const [limit, setlimit] = React.useState(3);
   const [jobsarr, setjobarr] = React.useState([]);
 
   React.useEffect(() => {
@@ -45,7 +45,7 @@ export const Jobs = () => {
   const handleChange = (event) => {
     setSkip(0);
     setPage(1);
-    setlimit(4);
+    setlimit(3);
     setsort(event.target.value);
   };
 
@@ -111,16 +111,14 @@ export const Jobs = () => {
                 display={"flex"}
                 flexDirection={"row"}
                 justifyContent='right'
-              >
-                {userInfo && <PostJob />}
-              </Box>
+              ></Box>
               <Divider textAlign='center'>
                 <b>Job Filters</b>
               </Divider>
               <Filters
                 onGetData={(val) => {
                   setPage(1);
-                  setlimit(2);
+                  setlimit(3);
                   setSkip(0);
                   setSearch({ filters: val });
                 }}

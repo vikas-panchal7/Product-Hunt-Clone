@@ -33,7 +33,7 @@ const Bar = (props) => {
         }}
         anchorOrigin={{ vertical, horizontal }}
         open={open}
-        autoHideDuration={props.timeout ? props.timeout : 3000}
+        autoHideDuration={props.timeout ? props.timeout : 2000}
         onClose={handleClose}
         key={vertical + horizontal}
       >

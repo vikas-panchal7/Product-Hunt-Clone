@@ -26,7 +26,10 @@ import {
   updateProduct,
 } from "../../redux/actions/productActions";
 import Bar from "../../components/snackbar";
-import { PRODUCT_CREATE_RESET } from "../../constants/productconstants";
+import {
+  PRODUCT_CREATE_RESET,
+  PRODUCT_UPDATE_RESET,
+} from "../../constants/productconstants";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#f7f6f2",
@@ -41,7 +44,13 @@ export const Postproduct = (props) => {
   const theme = useTheme();
   const data = useSelector((state) => state.productCreate);
   const { loading, success, product, error } = data;
+  const update = useSelector((state) => state.productCreate);
 
+  const {
+    success: productupdatesuccess,
+    product: productupdate,
+    error: productupdaterror,
+  } = update;
   const [namevalid, setnamevalid] = React.useState(true);
   const [taglinevalid, settaglinevalid] = React.useState(true);
   const [descriptionvalid, setdescriptionvalid] = React.useState(true);
@@ -54,6 +63,8 @@ export const Postproduct = (props) => {
   const [img, setimg] = React.useState("");
   const [imge, setimge] = React.useState({});
   const [gif, setgif] = React.useState({});
+  const [status, setstatus] = React.useState(false);
+  const [status1, setstatus1] = React.useState(false);
 
   const [productdetail, setproductdetail] = React.useState({
     name: props.data?.name || "",
@@ -71,7 +82,7 @@ export const Postproduct = (props) => {
 
   const handleClose = () => {
     setOpen(false);
-    dispatch({ type: PRODUCT_CREATE_RESET });
+    
   };
 
   const handleChange = (event) => {
@@ -83,12 +94,14 @@ export const Postproduct = (props) => {
   };
 
   const onSelectImage = (event) => {
+    setstatus1(true);
     setimge(event.target.files[0]);
     const objectUrl = URL.createObjectURL(event.target.files[0]);
     setimg1(objectUrl);
     setimg1valid(true);
   };
   const onSelectGif = (event) => {
+    setstatus(true);
     setgif(event.target.files[0]);
     const objectUrl = URL.createObjectURL(event.target.files[0]);
     setimg(objectUrl);
@@ -121,22 +134,24 @@ export const Postproduct = (props) => {
       formData.append("type", type);
       formData.append("category", category);
       formData.append("videourl", videourl);
-      formData.append("img", gif);
-      formData.append("img1", imge);
+
+      if (status) {
+        console.log(status);
+        formData.append("img", gif);
+      }
+      if (status1) {
+        formData.append("img1", imge);
+      }
       !props.type && dispatch(createProduct(formData));
       props.type && dispatch(updateProduct({ formData, id: props.data?._id }));
-      if (!error) {
-        setimge({});
-        setgif({});
-        setproductdetail({
-          name: "",
-          tagline: "",
-          description: "",
-          type: "",
-          category: "",
-          videourl: "",
-        });
-      }
+      setproductdetail({
+        name: "",
+        tagline: "",
+        description: "",
+        type: "",
+        category: "",
+        videourl: "",
+      });
     }
   };
   return (
@@ -181,6 +196,9 @@ export const Postproduct = (props) => {
           {!props.type && "👋  Tell us More About Your Product"}
           {props.type && "👋  Update Your Product"}
           {error && <Bar message={error} severity='warning' />}
+          {productupdaterror && (
+            <Bar message={productupdaterror} severity='warning' />
+          )}
           {success && <Bar message={success} severity='success' />}
           <Button onClick={handleClose}>
             <CloseIcon align='left'></CloseIcon>

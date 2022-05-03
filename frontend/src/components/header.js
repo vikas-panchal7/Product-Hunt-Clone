@@ -22,7 +22,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { getUserDetails, logout } from "../redux/actions/userActions";
 
-const pages = ["Products", "Community", "Jobs", "About"];
+const pages = ["Products", "Jobs", "About"];
 const settings = ["Profile", "MyJobs", "MyProducts"];
 
 const Search = styled("div")(({ theme }) => ({

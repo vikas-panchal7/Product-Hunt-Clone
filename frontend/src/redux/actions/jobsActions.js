@@ -9,6 +9,14 @@ import {
   JOB_MY_FAIL,
   JOB_MY_REQUEST,
   JOB_MY_SUCCESS,
+  JOBS_UPDATE_REQUEST,
+  JOBS_UPDATE_RESET,
+  JOBS_UPDATE_SUCCESS,
+  JOBS_UPDATE_FAIL,
+  JOBS_DELETE_FAIL,
+  JOBS_DELETE_REQUEST,
+  JOBS_DELETE_SUCCESS,
+  JOBS_DELETE_RESET,
 } from "../../constants/jobsconstants";
 import baseService from "../../redux/service/baseService";
 
@@ -98,6 +106,77 @@ export const createJobs = (formdata) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: JOBS_CREATE_FAIL,
+      payload: error.response.data.error
+        ? error.response.data.error
+        : error.response.data,
+    });
+  }
+};
+
+export const updateJob =
+  ({ formData, id }) =>
+  async (dispatch, getState) => {
+    try {
+      console.log(id);
+      dispatch({
+        type: JOBS_UPDATE_REQUEST,
+      });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      const { data } = await baseService.put(
+        `/jobs/update/${id}`,
+        formData,
+        config
+      );
+
+      dispatch({
+        type: JOBS_UPDATE_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: JOBS_UPDATE_FAIL,
+        payload: error.response.data.error
+          ? error.response.data.error
+          : error.response.data,
+      });
+    }
+  };
+
+export const deleteJob = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: JOBS_DELETE_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    await baseService.delete(`/job/delete/${id}`, config);
+
+    dispatch({
+      type: JOBS_DELETE_SUCCESS,
+    });
+  } catch (error) {
+    dispatch({
+      type: JOBS_DELETE_FAIL,
       payload: error.response.data.error
         ? error.response.data.error
         : error.response.data,

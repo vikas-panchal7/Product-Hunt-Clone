@@ -9,6 +9,10 @@ const createJob = async (req, res) => {
     if (!validator.isURL(req.body.joblink)) {
       throw new Error("Please Provide Valid Job Apply Link");
     }
+    const files = req.file?.path;
+    if (!files) {
+      throw new Error("Please Provide Image");
+    }
     const addjob = new Job({
       ...req.body,
       logo: req.file.path,
@@ -27,7 +31,7 @@ const viewjobs = async (req, res) => {
   try {
     const { skip, limit, sort } = req.query;
     if (Object.keys(req.body).length !== 0) {
-      const count = await Job.aggregate([
+      const c = await Job.aggregate([
         {
           $match: { category: { $in: [...req.body] } },
         },
@@ -35,6 +39,7 @@ const viewjobs = async (req, res) => {
           $count: "count",
         },
       ]);
+
       const jobs = await Job.aggregate([
         {
           $match: { category: { $in: [...req.body] } },
@@ -44,7 +49,7 @@ const viewjobs = async (req, res) => {
         { $limit: parseInt(limit) },
       ]);
 
-      return res.status(201).send({ jobs, count });
+      return res.status(201).send({ jobs, count: c[0].count });
     }
     const count = await Job.find().count();
     const jobs = await Job.find()
@@ -67,10 +72,46 @@ const getmyjobs = async (req, res) => {
       .limit(parseInt(req.query.limit))
       .skip(parseInt(req.query.skip))
       .sort({ _id: parseInt(req.query.sort) });
-    if (!jobs) throw new Error("No Job Found");
+    if (jobs.length === 0) throw new Error("No Job Found");
     res.send({ jobs, count });
   } catch (e) {
     res.send({ error: e.message });
   }
 };
-module.exports = { createJob, viewjobs, getmyjobs };
+
+const updateJob = async (req, res) => {
+  try {
+    const filter = { _id: req.params.id };
+    const img = req.file?.path;
+    let update = {};
+    if (img) {
+      update = {
+        ...req.body,
+        logo: img,
+      };
+    } else {
+      update = { ...req.body };
+    }
+
+    const job = await Job.findByIdAndUpdate(filter, update, { new: true });
+
+    res.status(200).send(job);
+  } catch (e) {
+    res.status(400).send({ error: e.toString() });
+  }
+};
+
+const deleteJob = async (req, res) => {
+  const job = await Job.findById(req.params.id);
+  try {
+    if (job) {
+      await job.remove();
+      res.status(200).send();
+    } else {
+      throw new Error("JOB not found");
+    }
+  } catch (e) {
+    res.send({ error: e.message });
+  }
+};
+module.exports = { createJob, viewjobs, getmyjobs, updateJob, deleteJob };

@@ -14,6 +14,7 @@ import LinkButton from "@mui/material/Link";
 //
 import Product from "./product";
 import { Link } from "@mui/material";
+import Job from "./Job";
 
 //
 
@@ -24,7 +25,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export const JobView = (props) => {
-  console.log("post", props);
+  console.log("job view", props);
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
 
@@ -75,7 +76,7 @@ export const JobView = (props) => {
         aria-labelledby='responsive-dialog-title'
       >
         <DialogTitle id='responsive-dialog-title' align='center'>
-          {" Your Product View"}
+          {" 👋 Your Job View"}
 
           <Button onClick={handleClose}>
             <CloseIcon align='left'></CloseIcon>
@@ -85,19 +86,19 @@ export const JobView = (props) => {
           <DialogContentText>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <Product
+                <Job
                   key={props.data._id}
-                  id={props.data._id}
-                  title={props.data.name}
-                  tagline={props.data.tagline}
-                  img={props.data.img}
-                  likes={props.data.likes.length}
+                  title={props.data.jobtitle}
+                  tagline={props.data.companytagline}
+                  company={props.data.companyname}
+                  logo={props.data.logo}
+                  link={props.data.joblink}
                 />
               </Grid>
 
               <Grid item xs={12} marginLeft='7px'>
-                <div>Description</div>
-                <div>{props.data.description}</div>
+                <div>Tagline</div>
+                <div>{props.data.companytagline}</div>
               </Grid>
 
               <Grid
@@ -109,11 +110,11 @@ export const JobView = (props) => {
                 justifyContent={"space-between"}
               >
                 <div>
-                  Total Likes : <b>{props.data.likes?.length}</b>
+                  Company Name: <b>{props.data.companyname}</b>
                 </div>
-                <div>For Live View Click on Product</div>
+
                 <div>
-                  Total Comments : <b>{props.data.comment?.length}</b>
+                  Job Title : <b>{props.data.jobtitle}</b>
                 </div>
               </Grid>
 
@@ -132,21 +133,9 @@ export const JobView = (props) => {
                       width: "150px",
                     }}
                     src={`http://192.168.200.122:5000/${
-                      props.data.img || "uploads/avt1650979607692A861.png"
+                      props.data?.logo || "uploads/avt1650979607692A861.png"
                     } `}
                     alt='A'
-                  />
-                </div>
-                <div>
-                  <img
-                    style={{
-                      height: "150px",
-                      width: "150px",
-                    }}
-                    src={`http://192.168.200.122:5000/${
-                      props.data.img1 || "uploads/avt1650979607692A861.png"
-                    } `}
-                    alt='B'
                   />
                 </div>
               </Grid>
