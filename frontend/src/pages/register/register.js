@@ -58,7 +58,7 @@ export const Register = () => {
 
   React.useEffect(() => {
     if (userInfo) {
-      navigate("/login");
+      navigate("/loggin");
     }
   }, [userInfo, navigate]);
   const handleChange = (event) => {

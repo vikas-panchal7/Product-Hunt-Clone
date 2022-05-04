@@ -15,7 +15,7 @@ import { Register } from "./register/register";
 import { Loggin } from "./login/login1";
 import { MyProduct } from "./product/myproduct";
 import { MyJobs } from "./jobs/myjobs";
-
+import { Mentors } from "./about/mentors";
 export {
   Login,
   SignUp,
@@ -34,4 +34,5 @@ export {
   Loggin,
   MyProduct,
   MyJobs,
+  Mentors,
 };

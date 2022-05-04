@@ -17,6 +17,7 @@ import {
   Loggin,
   MyProduct,
   MyJobs,
+  Mentors,
 } from "./pages/index";
 const App = () => {
   return (
@@ -37,6 +38,7 @@ const App = () => {
         <Route path='/loggin' element={<Loggin />} />
         <Route path='/MyProducts' element={<MyProduct />} />
         <Route path='/MyJobs' element={<MyJobs />} />
+        <Route path='/Mentors' element={<Mentors />} />
         <Route path='/404' element={<NotFound />} />
         <Route path='*' element={<Navigate replace to='/404' />} />
       </Routes>
