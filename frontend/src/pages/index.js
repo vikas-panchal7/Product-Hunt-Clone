@@ -1,5 +1,5 @@
-import { Login } from "./login/login";
-import { SignUp } from "./register/signup";
+import { Login } from "./login/demopage";
+import { SignUp } from "./register/demopage";
 import { About } from "./about/about";
 import { Community } from "./community/community";
 import { NotFound } from "./error/notfound";
@@ -16,6 +16,9 @@ import { Loggin } from "./login/login1";
 import { MyProduct } from "./product/myproduct";
 import { MyJobs } from "./jobs/myjobs";
 import { Mentors } from "./about/mentors";
+import { ForgotPassword } from "./forgotpass/forgotpassword";
+import { ChangePassword } from "./forgotpass/changepassword";
+
 export {
   Login,
   SignUp,
@@ -35,4 +38,6 @@ export {
   MyProduct,
   MyJobs,
   Mentors,
+  ForgotPassword,
+  ChangePassword,
 };

@@ -82,7 +82,6 @@ export const Postproduct = (props) => {
 
   const handleClose = () => {
     setOpen(false);
-    
   };
 
   const handleChange = (event) => {
@@ -92,6 +91,7 @@ export const Postproduct = (props) => {
       [name]: value,
     });
   };
+  
 
   const onSelectImage = (event) => {
     setstatus1(true);

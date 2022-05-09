@@ -12,6 +12,9 @@ import {
   USER_DETAILS_REQUEST,
   USER_DETAILS_SUCCESS,
   USER_DETAILS_FAIL,
+  USER_PASSWORD_REST_REQUEST,
+  USER_PASSWORD_REST_FAIL,
+  USER_PASSWORD_REST_SUCCESS,
 } from "../../constants/userconstants";
 
 export const userRegisterReducer = (state = {}, action) => {
@@ -37,6 +40,19 @@ export const userLoginReducer = (state = {}, action) => {
       return { loading: false, error: action.payload };
     case USER_LOGOUT:
       return {};
+    default:
+      return state;
+  }
+};
+
+export const forgotPasswordReducer = (state = {}, action) => {
+  switch (action.type) {
+    case USER_PASSWORD_REST_REQUEST:
+      return { loading: true };
+    case USER_PASSWORD_REST_SUCCESS:
+      return { loading: false, userInfo: action.payload };
+    case USER_PASSWORD_REST_FAIL:
+      return { loading: false, error: action.payload };
     default:
       return state;
   }

@@ -1,4 +1,5 @@
 const User = require("../models/users");
+const sendEmail = require("../middleware/mailer");
 
 // @desc    Register a new user
 // @route   /users/signUp
@@ -84,4 +85,15 @@ const userInfos = async (req, res) => {
     res.status(400).send({ error: e.toString() });
   }
 };
-module.exports = { signUp, Login, Logout, Profile, userInfos };
+
+const resetpassword = async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) throw new Error(" Email is not Registred");
+    await sendEmail(req.body.email, user._id);
+  } catch (e) {
+    console.log(e);
+    res.status(404).send({ error: e.message });
+  }
+};
+module.exports = { signUp, Login, Logout, Profile, userInfos, resetpassword };

@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+var multer = require("multer");
+const { userInfo } = require("os");
 const auth = require("../middleware/auth");
 const path = require("path");
 const {
@@ -8,9 +10,8 @@ const {
   Logout,
   Profile,
   userInfos,
+  resetpassword,
 } = require("../controllers/usercontroller");
-var multer = require("multer");
-const { userInfo } = require("os");
 
 //for signup
 router.post("/users/signUp", signUp);
@@ -48,5 +49,7 @@ router.patch("/users/profile", auth, img.single("avtar"), Profile);
 
 //FOR USER DETAILS
 router.get("/users/me", auth, userInfos);
+
+router.post("/users/reset", resetpassword);
 
 module.exports = router;

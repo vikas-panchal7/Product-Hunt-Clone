@@ -108,7 +108,7 @@ export const Register = () => {
         <Grid
           item
           xs={false}
-          sm={4}
+          sm={false}
           md={6}
           sx={{
             backgroundImage: `url(${sign})`,

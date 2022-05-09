@@ -96,7 +96,7 @@ export const Loggin = () => {
         <Grid
           item
           xs={false}
-          sm={4}
+          sm={false}
           md={6}
           sx={{
             backgroundImage: `url(${logingif})`,
@@ -191,6 +191,11 @@ export const Loggin = () => {
                 {!loading && "Sign In"}
               </Button>
               <Grid container justifyContent='flex-end'>
+                <Grid item xs>
+                  <LinkButton component={Link} to='/forgot' variant='body2'>
+                    {" Forgot password ?"}
+                  </LinkButton>
+                </Grid>
                 <Grid item>
                   <LinkButton component={Link} to='/register' variant='body2'>
                     {"Don't have an account? Sign Up"}

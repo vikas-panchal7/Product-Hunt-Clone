@@ -12,6 +12,12 @@ import {
   USER_DETAILS_REQUEST,
   USER_DETAILS_SUCCESS,
   USER_DETAILS_FAIL,
+  USER_PASSWORD_REST_REQUEST,
+  USER_PASSWORD_REST_FAIL,
+  USER_PASSWORD_REST_SUCCESS,
+  USER_APPROVAL_REQUEST,
+  USER_APPROVAL_FAIL,
+  USER_APPROVAL_SUCCESS,
 } from "../../constants/userconstants";
 import baseService from "../service/baseService";
 
@@ -90,6 +96,29 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: USER_UPDATE_PROFILE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const forgotPassword = (user) => async (dispatch) => {
+  try {
+    dispatch({
+      type: USER_PASSWORD_REST_REQUEST,
+    });
+
+    const { data } = await baseService.post(`/users/reset`, user);
+
+    dispatch({
+      type: USER_PASSWORD_REST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: USER_PASSWORD_REST_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
