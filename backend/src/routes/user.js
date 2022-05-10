@@ -11,6 +11,7 @@ const {
   Profile,
   userInfos,
   resetpassword,
+  changepassword,
 } = require("../controllers/usercontroller");
 
 //for signup
@@ -51,5 +52,7 @@ router.patch("/users/profile", auth, img.single("avtar"), Profile);
 router.get("/users/me", auth, userInfos);
 
 router.post("/users/reset", resetpassword);
+//
+router.post("/users/change", changepassword);
 
 module.exports = router;

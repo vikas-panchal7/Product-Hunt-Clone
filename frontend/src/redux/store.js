@@ -7,6 +7,8 @@ import {
   userLoginReducer,
   userUpdateProfileReducer,
   userDetailsReducer,
+  forgotPasswordReducer,
+  UserChangePasswordReducer,
 } from "./reducers/userReducer";
 import {
   productListReducer,
@@ -48,6 +50,8 @@ const reducer = combineReducers({
   myjobsList: listmyjobsReducer,
   jobUpdate: jobUpdateReducer,
   jobDelete: jobDeleteReducer,
+  forgotpassword: forgotPasswordReducer,
+  ChangePassword: UserChangePasswordReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")

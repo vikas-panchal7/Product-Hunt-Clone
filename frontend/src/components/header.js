@@ -191,7 +191,7 @@ const Header = () => {
               </Button>
             ))}
           </Box>
-          <Box sx={{ flexGrow: 0.1 }}>
+          {/* <Box sx={{ flexGrow: 0.1 }}>
             <Search>
               <SearchIconWrapper>
                 <SearchIcon />
@@ -206,7 +206,7 @@ const Header = () => {
                 inputProps={{ "aria-label": "search" }}
               />
             </Search>
-          </Box>
+          </Box> */}
           {!userInfo && (
             <Box sx={{ flexGrow: 0.2, display: "flex", flexDirection: "row" }}>
               <Box sx={{ flexGrow: 0.1 }}>

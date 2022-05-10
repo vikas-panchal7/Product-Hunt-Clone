@@ -48,7 +48,7 @@ userSchema.methods.toJSON = function () {
 // for generating auth token
 userSchema.methods.generateAuthtoken = async function () {
   const user = this;
-  const token = jwt.sign({ _id: user._id.toString() }, "nodejs");
+  const token = jwt.sign({ _id: user._id.toString() }, process.env.TOKEN);
   return token;
 };
 
@@ -74,6 +74,5 @@ userSchema.pre("save", async function (next) {
   }
   next();
 });
-
 const User = mongoose.model("User", userSchema);
 module.exports = User;

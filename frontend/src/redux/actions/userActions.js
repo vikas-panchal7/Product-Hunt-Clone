@@ -18,6 +18,9 @@ import {
   USER_APPROVAL_REQUEST,
   USER_APPROVAL_FAIL,
   USER_APPROVAL_SUCCESS,
+  USER_PASSWORD_CHANGE_SUCCESS,
+  USER_PASSWORD_CHANGE_REQUEST,
+  USER_PASSWORD_CHANGE_FAIL,
 } from "../../constants/userconstants";
 import baseService from "../service/baseService";
 
@@ -104,13 +107,13 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
   }
 };
 
-export const forgotPassword = (user) => async (dispatch) => {
+export const forgotPassword = (email) => async (dispatch) => {
   try {
     dispatch({
       type: USER_PASSWORD_REST_REQUEST,
     });
 
-    const { data } = await baseService.post(`/users/reset`, user);
+    const { data } = await baseService.post(`/users/reset`, email);
 
     dispatch({
       type: USER_PASSWORD_REST_SUCCESS,
@@ -119,6 +122,29 @@ export const forgotPassword = (user) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: USER_PASSWORD_REST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const UserChangePassword = (user) => async (dispatch) => {
+  try {
+    dispatch({
+      type: USER_PASSWORD_CHANGE_REQUEST,
+    });
+
+    const { data } = await baseService.post(`/users/change`, user);
+    console.log("action called");
+    dispatch({
+      type: USER_PASSWORD_CHANGE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: USER_PASSWORD_CHANGE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

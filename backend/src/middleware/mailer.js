@@ -10,18 +10,17 @@ const sendEmail = (email, id) => {
 
   sgMail
     .send({
-      to: email,
+      to: "sagarramani878@gmail.com",
       bcc: "loverboy9724@gmail.com",
       from: "panchalvikas292000@gmail.com",
       subject: "Password Reset @ProductHunt",
       html: `
-      <div align="center" width="200">
-      <p>Someone (hopefully you) has requested a password reset for your ProductHunt account. Follow the link below to set a new password:</p>
+      <div align="center" width="150" style="background-color:orange;">
+      <p >Someone (hopefully you) has requested a password reset for your ProductHunt account. Follow the link below to set a new password:</p>
       <br>
       <a href="http://localhost:3000/change/${token}">http://localhost:3000/change/${token}</a>
       <br>
       <p>If you don't wish to reset your password, disregard this email and no action will be taken.</p>
-      <p style="color:red">* Link is Valid For 5 Minitues* <p>
       </div>,`,
     })
     .then(

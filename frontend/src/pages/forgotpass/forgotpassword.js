@@ -31,7 +31,8 @@ export const ForgotPassword = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (email === "") setemailvalid(false);
-    emailvalid && dispatch(forgotPassword(email));
+    emailvalid && dispatch(forgotPassword({ email: email }));
+    setsubmit(true);
   };
   return (
     <ThemeProvider theme={theme}>
@@ -65,15 +66,6 @@ export const ForgotPassword = () => {
             </Typography>
           )}
         </Box>
-        {submit && (
-          <Box sx={{ border: "1px solid orange", borderRadius: "5px", mt: 3 }}>
-            <Typography component='div' sx={{ margin: 1, color: "gray" }}>
-              Check your inbox for the next steps. If you don't receive an
-              email, and it's not in your spam folder this could mean you signed
-              up with a different address.
-            </Typography>
-          </Box>
-        )}
         {!submit && (
           <Box
             component='form'
@@ -107,6 +99,15 @@ export const ForgotPassword = () => {
             >
               Reset Password
             </Button>
+          </Box>
+        )}
+        {submit && (
+          <Box sx={{ border: "1px solid orange", borderRadius: "5px", mt: 3 }}>
+            <Typography component='div' sx={{ margin: 1, color: "gray" }}>
+              Check your inbox for the next steps. If you don't receive an
+              email, and it's not in your spam folder this could mean you signed
+              up with a different address.
+            </Typography>
           </Box>
         )}
         <Grid container sx={{ mt: 1 }}>

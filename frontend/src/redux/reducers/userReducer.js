@@ -15,6 +15,9 @@ import {
   USER_PASSWORD_REST_REQUEST,
   USER_PASSWORD_REST_FAIL,
   USER_PASSWORD_REST_SUCCESS,
+  USER_PASSWORD_CHANGE_REQUEST,
+  USER_PASSWORD_CHANGE_SUCCESS,
+  USER_PASSWORD_CHANGE_FAIL,
 } from "../../constants/userconstants";
 
 export const userRegisterReducer = (state = {}, action) => {
@@ -50,8 +53,21 @@ export const forgotPasswordReducer = (state = {}, action) => {
     case USER_PASSWORD_REST_REQUEST:
       return { loading: true };
     case USER_PASSWORD_REST_SUCCESS:
-      return { loading: false, userInfo: action.payload };
+      return { loading: false, success: true };
     case USER_PASSWORD_REST_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const UserChangePasswordReducer = (state = {}, action) => {
+  switch (action.type) {
+    case USER_PASSWORD_CHANGE_REQUEST:
+      return { loading: true };
+    case USER_PASSWORD_CHANGE_SUCCESS:
+      return { loading: false, success: true };
+    case USER_PASSWORD_CHANGE_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;
