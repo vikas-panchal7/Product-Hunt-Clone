@@ -50,25 +50,26 @@ export const Products = () => {
     <div style={{ marginTop: 80 }}>
       <Header />
       {error && <Bar message={error} severity='warning' />}
-      <Grid container spacing={2}>
-        <Grid item xs={6}>
+      <Grid container spacing={2} padding={"30px"}>
+        <Grid item xs={7}>
           <Box
             sx={{ minWidth: 80 }}
             display={"flex"}
             flexDirection={"row"}
             justifyContent={"space-between"}
+            marginBottom='1.5em'
           >
-            <Divider textAlign='right'>
+            <Divider textAlign='right' style={{ fontSize: "30px" }}>
               <b>Your Next Favourite Things</b>
             </Divider>
-            <FormControl variant='standard' size='small'>
+            <FormControl variant='outlined' size='small'>
               <Select
                 labelId='demo-simple-select-label'
                 id='demo-simple-select'
                 value={sort}
+                color={"warning"}
                 defaultValue={sort}
                 onChange={handleChange}
-                disableUnderline
               >
                 <MenuItem value={1}>Featured</MenuItem>
                 <MenuItem value={-1}>Newest</MenuItem>
@@ -99,13 +100,15 @@ export const Products = () => {
           />
         </Grid>
 
-        <Grid item xs={6}>
+        <Grid item xs={5}>
           <UpcomingProducts />
-          <Divider textAlign='left'>
-            <b>New Products</b>
-          </Divider>
+          <div style={{ marginTop: "30px" }}>
+            <Divider textAlign='left' style={{ fontSize: "30px" }}>
+              <b>New Products</b>
+            </Divider>
+          </div>
           {loading && <CircularProgress />}
-          {productarr.map((product, index) => (
+          {productarr.sort().map((product, index) => (
             <Product
               key={product._id + index}
               id={product._id}
@@ -113,6 +116,7 @@ export const Products = () => {
               tagline={product.tagline}
               img={product.img}
               likes={product.likes.length}
+              liketype={type}
             />
           ))}
         </Grid>

@@ -18,7 +18,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export const UpcomingProducts = () => {
-  let limit = 2;
+  let limit = 3;
   const type = "upcoming";
   const dispatch = useDispatch();
   const productUpcominglist = useSelector((state) => state.productUpcominglist);
@@ -34,7 +34,7 @@ export const UpcomingProducts = () => {
   React.useEffect(() => {
     setProductarr(products);
   }, [products]);
-  const   handlepage = (event) => {
+  const handlepage = (event) => {
     if (pages === 1 && event.currentTarget.value == -1) {
       this.disabled = true;
     }
@@ -57,7 +57,7 @@ export const UpcomingProducts = () => {
   return (
     <div>
       <Item justifycontent='flex-end'>
-        <Divider textAlign='left'>
+        <Divider textAlign='left' style={{ fontSize: "25px" }}>
           <b>Upcoming Products</b>
         </Divider>
         {loading && <CircularProgress />}

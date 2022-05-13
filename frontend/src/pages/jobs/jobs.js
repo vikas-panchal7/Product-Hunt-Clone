@@ -53,7 +53,7 @@ export const Jobs = () => {
     <div>
       <Header />
       <div style={{ marginTop: 80 }}>
-        <Grid>
+        <Grid padding={"3em"}>
           <Grid container spacing={2}>
             <Grid item xs={7} borderRadius={"10px"} bgcolor='#fcfaf2'>
               <Box

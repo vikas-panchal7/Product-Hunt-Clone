@@ -15,7 +15,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 
-import product from "../assets/images/product.png";
+import product from "../assets/images/pp.png";
 import { NavLink } from "react-router-dom";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -105,7 +105,13 @@ const Header = () => {
     navigate("/");
   };
   return (
-    <AppBar position='fixed' style={{ background: "#ffffff" }}>
+    <AppBar
+      position='fixed'
+      style={{
+        background: "#FFFEFC",
+        backdropFilter: "blur(5px)",
+      }}
+    >
       <Container maxWidth='xl'>
         <Toolbar disableGutters>
           <Typography
@@ -208,7 +214,7 @@ const Header = () => {
             </Search>
           </Box> */}
           {!userInfo && (
-            <Box sx={{ flexGrow: 0.2, display: "flex", flexDirection: "row" }}>
+            <Box sx={{ flexGrow: 0.1, display: "flex", flexDirection: "row" }}>
               <Box sx={{ flexGrow: 0.1 }}>
                 <Button
                   variant='contained'

@@ -4,12 +4,12 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import ButtonBase from "@mui/material/ButtonBase";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 
 import { createProductLike } from "../redux/actions/productActions";
+import { Stack } from "@mui/material";
 const Img = styled("img")({
   margin: "auto",
   display: "block",
@@ -36,8 +36,9 @@ const Product = (props) => {
   return (
     <div onClick={clickHandler}>
       <Paper
+        elevation={0}
         sx={{
-          p: 2,
+          p: 3,
           margin: "4px",
           maxWidth: "93%",
           flexGrow: 1,
@@ -70,13 +71,41 @@ const Product = (props) => {
                 </Typography>
               </Grid>
             </Grid>
+
             <Grid item>
-              <Typography variant='subtitle1' component='div'>
-                <ButtonBase sx={{ width: 50, height: 50 }} onClick={handlelike}>
-                  <FavoriteIcon style={{ color: "#ff4000", fontSize: 30 }} />
+              <Paper variant='outlined'>
+                <ButtonBase
+                  sx={{
+                    width: 50,
+                    height: 50,
+                    // p: "32px",
+                    // border: "1px solid grey",
+                    // borderRadius: "0.5em",
+                  }}
+                  onClick={handlelike}
+                >
+                  <Stack
+                    direction={"column"}
+                    display={"flex"}
+                    marginTop={"-15px"}
+                    justifyContent={"space-between"}
+                  >
+                    <ArrowDropUpIcon
+                      style={{
+                        color: "#ff4000",
+                        fontSize: 50,
+                      }}
+                    />
+                    <Typography
+                      component='div'
+                      marginTop={"-15px"}
+                      style={{ color: "#ff4000" }}
+                    >
+                      {props.likes}
+                    </Typography>
+                  </Stack>
                 </ButtonBase>
-                {props.likes}
-              </Typography>
+              </Paper>
             </Grid>
           </Grid>
         </Grid>

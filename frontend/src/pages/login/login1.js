@@ -25,6 +25,7 @@ import Header from "../../components/header";
 import Bar from "../../components/snackbar";
 
 import logingif from "../../assets/images/loggin.gif";
+import { Divider } from "@mui/material";
 
 const theme = createTheme();
 
@@ -132,15 +133,9 @@ export const Loggin = () => {
 
             <Avatar sx={{ m: 1, bgcolor: "warning.main" }}></Avatar>
             <Typography component='h1' variant='h5'>
-              Login
+              SIGN IN
             </Typography>
-            <GoogleLogin
-              clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-              buttonText='Log In With Google'
-              onSuccess={handleLogin}
-              onFailure={handleFailure}
-              cookiePolicy={"single_host_origin"}
-            ></GoogleLogin>
+
             <Box
               component='form'
               onSubmit={handleSubmit}
@@ -190,6 +185,7 @@ export const Loggin = () => {
                 {loading && <CircularProgress color='warning' />}
                 {!loading && "Sign In"}
               </Button>
+
               <Grid container justifyContent='flex-end'>
                 <Grid item xs>
                   <LinkButton component={Link} to='/forgot' variant='body2'>
@@ -202,6 +198,18 @@ export const Loggin = () => {
                   </LinkButton>
                 </Grid>
               </Grid>
+              <Divider> OR</Divider>
+              <div align='center'>
+                <GoogleLogin
+                  clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                  buttonText='Log In With Google'
+                  onSuccess={handleLogin}
+                  onFailure={handleFailure}
+                  cookiePolicy={"single_host_origin"}
+                >
+                  <b>Sign In With Google</b>
+                </GoogleLogin>
+              </div>
             </Box>
           </Box>
         </Grid>
