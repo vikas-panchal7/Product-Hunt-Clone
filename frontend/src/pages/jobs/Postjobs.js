@@ -15,6 +15,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { useTheme } from "@mui/material/styles";
 import CloseIcon from "@mui/icons-material/Close";
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
 
 import {
   JOBS_CREATE_RESET,
@@ -127,20 +128,33 @@ export const PostJob = (props) => {
   };
   return (
     <div>
-      <Button
-        variant='outlined'
-        color='warning'
-        size='small'
-        onClick={handleClickOpen}
-        sx={{
-          my: 2,
-          color: "black",
-          display: "block",
-          alignSelf: "right",
-        }}
-      >
-        {props.name || "POST JOB"}
-      </Button>
+      {!props.type && (
+        <Button
+          variant='outlined'
+          color='warning'
+          size='small'
+          onClick={handleClickOpen}
+          sx={{
+            my: 2,
+            color: "black",
+            display: "block",
+            alignSelf: "right",
+          }}
+        >
+          {props.name || "POST JOB"}
+        </Button>
+      )}
+      {props.type && (
+        <Button
+          onClick={handleClickOpen}
+          sx={{
+            color: "grey",
+            alignSelf: "right",
+          }}
+        >
+          <ModeEditIcon />
+        </Button>
+      )}
       <Dialog
         sx={{
           backdropFilter: "blur(1px)",

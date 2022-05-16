@@ -9,6 +9,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
 import { useTheme } from "@mui/material/styles";
 import CloseIcon from "@mui/icons-material/Close";
+import PreviewIcon from "@mui/icons-material/Preview";
 //
 import Product from "./product";
 
@@ -33,18 +34,14 @@ export const Popup = (props) => {
   return (
     <div>
       <Button
-        variant='outlined'
-        color='warning'
-        size='small'
         onClick={handleClickOpen}
         sx={{
           my: 2,
-          color: "black",
-          display: "block",
+          color: "green",
           alignSelf: "right",
         }}
       >
-        {props.name}
+        <PreviewIcon />
       </Button>
       <Dialog
         sx={{

@@ -6,6 +6,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import PreviewIcon from "@mui/icons-material/Preview";
 import Grid from "@mui/material/Grid";
 import { useTheme } from "@mui/material/styles";
 import CloseIcon from "@mui/icons-material/Close";
@@ -20,7 +21,6 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export const JobView = (props) => {
-  console.log("job view", props);
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
 
@@ -35,18 +35,14 @@ export const JobView = (props) => {
   return (
     <div>
       <Button
-        variant='outlined'
-        color='warning'
-        size='small'
         onClick={handleClickOpen}
         sx={{
           my: 2,
-          color: "black",
-          display: "block",
+          color: "green",
           alignSelf: "right",
         }}
       >
-        {props.name}
+        <PreviewIcon />
       </Button>
       <Dialog
         sx={{

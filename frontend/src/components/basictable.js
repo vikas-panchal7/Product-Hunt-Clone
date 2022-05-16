@@ -8,6 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import SearchIcon from "@mui/icons-material/Search";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import { Button, Grid } from "@mui/material";
@@ -180,18 +181,13 @@ export function BasicTable(props) {
                     <TableCell key={Math.random() + 1}>
                       <Button
                         key={Math.random() + 1}
-                        variant='outlined'
-                        color='warning'
-                        size='small'
                         onClick={() => handleclick(row)}
                         sx={{
-                          my: 2,
-                          color: "black",
-                          display: "block",
+                          color: "red",
                           alignSelf: "right",
                         }}
                       >
-                        DELETE
+                        <DeleteForeverIcon />
                       </Button>
                     </TableCell>
                   </TableRow>
