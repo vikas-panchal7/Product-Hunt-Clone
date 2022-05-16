@@ -44,7 +44,6 @@ export const Profile = () => {
     if (!data) {
       navigate("/");
     }
-
     dispatch(getUserDetails());
   }, [updateProfile, data, navigate]);
 

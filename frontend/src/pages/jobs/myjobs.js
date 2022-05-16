@@ -2,17 +2,18 @@ import React from "react";
 import { BasicTable } from "../../components/basictable";
 import Header from "../../components/header";
 import Job from "../../components/Job";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import Paginate from "../../components/pagination";
 import { PostJob } from "../index";
-import { listmyJobs } from "../../redux/actions/jobsActions";
 import Bar from "../../components/snackbar";
 import {
   JOBS_CREATE_RESET,
   JOBS_UPDATE_RESET,
   JOBS_DELETE_RESET,
 } from "../../constants/jobsconstants";
+
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { listmyJobs } from "../../redux/actions/jobsActions";
 
 export const MyJobs = () => {
   const dispatch = useDispatch();

@@ -1,7 +1,6 @@
 import { Login } from "./login/demopage";
 import { SignUp } from "./register/demopage";
 import { About } from "./about/about";
-import { Community } from "./community/community";
 import { NotFound } from "./error/notfound";
 import { Home } from "./home/home";
 import { Jobs } from "./jobs/jobs";
@@ -23,7 +22,6 @@ export {
   Login,
   SignUp,
   About,
-  Community,
   Home,
   Jobs,
   NotFound,

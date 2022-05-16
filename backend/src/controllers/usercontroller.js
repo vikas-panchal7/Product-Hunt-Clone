@@ -1,6 +1,7 @@
 const User = require("../models/users");
 const sendEmail = require("../middleware/nodemailer");
 const jwt = require("jsonwebtoken");
+
 // @desc    Register a new user
 // @route   /users/signUp
 const signUp = async (req, res) => {
@@ -55,6 +56,8 @@ const Logout = async (req, res) => {
   }
 };
 
+// @desc    Change Profile
+// @route   /users/profile
 const Profile = async (req, res) => {
   try {
     const filter = { _id: req.user._id };
@@ -77,6 +80,9 @@ const Profile = async (req, res) => {
   }
 };
 
+// @desc   //FOR USER DETAILS
+// @route   /users/me
+
 const userInfos = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
@@ -86,6 +92,8 @@ const userInfos = async (req, res) => {
   }
 };
 
+// @desc   Reset Password
+// @route  /users/reset
 const resetpassword = async (req, res) => {
   try {
     console.log(req.body);
@@ -99,6 +107,8 @@ const resetpassword = async (req, res) => {
   }
 };
 
+// @desc   Change Password
+// @route  /users/change
 const changepassword = async (req, res) => {
   try {
     const decoded = jwt.verify(req.body.id, "nodejs");

@@ -3,19 +3,18 @@ import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
-
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
 import { useDispatch, useSelector } from "react-redux";
 
+import Bar from "../../components/snackbar";
+import Paginate from "../../components/pagination";
 import Header from "../../components/header";
 import Product from "../../components/product";
 import { Postproduct, UpcomingProducts } from "../index";
 import { listProducts } from "../../redux/actions/productActions";
-import Bar from "../../components/snackbar";
-import Paginate from "../../components/pagination";
 
 export const Products = () => {
   const type = "list";
@@ -50,8 +49,8 @@ export const Products = () => {
     <div style={{ marginTop: 80 }}>
       <Header />
       {error && <Bar message={error} severity='warning' />}
-      <Grid container spacing={2} padding={"30px"}>
-        <Grid item xs={7}>
+      <Grid container spacing={2} padding={"40px"}>
+        <Grid item xs={12} md={7} sm={12}>
           <Box
             sx={{ minWidth: 80 }}
             display={"flex"}
@@ -60,7 +59,7 @@ export const Products = () => {
             marginBottom='1.5em'
           >
             <Divider textAlign='right' style={{ fontSize: "30px" }}>
-              <b>Your Next Favourite Things</b>
+              <b>Your Next Favourite Things </b>
             </Divider>
             <FormControl variant='outlined' size='small'>
               <Select
@@ -100,7 +99,7 @@ export const Products = () => {
           />
         </Grid>
 
-        <Grid item xs={5}>
+        <Grid item xs={12} md={5} sm={12}>
           <UpcomingProducts />
           <div style={{ marginTop: "30px" }}>
             <Divider textAlign='left' style={{ fontSize: "30px" }}>

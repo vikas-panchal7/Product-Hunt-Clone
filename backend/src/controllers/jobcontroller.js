@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Job = require("../models/job");
 const validator = require("validator");
 
-// @desc     Create a new job
+// @desc   Create a new job
 // @route   /jobs/create
 const createJob = async (req, res) => {
   try {
@@ -63,7 +63,8 @@ const viewjobs = async (req, res) => {
   }
 };
 
-//
+// @desc    myjobs
+// @route   /jobs/myjobs
 
 const getmyjobs = async (req, res) => {
   try {
@@ -79,6 +80,8 @@ const getmyjobs = async (req, res) => {
   }
 };
 
+// @desc    update job
+// @route   /jobs/update/:id
 const updateJob = async (req, res) => {
   try {
     const filter = { _id: req.params.id };
@@ -101,6 +104,8 @@ const updateJob = async (req, res) => {
   }
 };
 
+// @desc    delete job
+// @route  /job/delete/:id
 const deleteJob = async (req, res) => {
   const job = await Job.findById(req.params.id);
   try {

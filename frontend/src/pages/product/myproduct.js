@@ -1,21 +1,19 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-
-import { BasicTable } from "../../components/basictable";
-import Header from "../../components/header";
-import { Postproduct } from "../index";
-import { useNavigate } from "react-router-dom";
-import {
-  listmyProducts,
-  listProducts,
-} from "../../redux/actions/productActions";
-import Paginate from "../../components/pagination";
-import Bar from "../../components/snackbar";
 import {
   PRODUCT_CREATE_RESET,
   PRODUCT_DELETE_RESET,
   PRODUCT_UPDATE_RESET,
 } from "../../constants/productconstants";
+
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+import { BasicTable } from "../../components/basictable";
+import Header from "../../components/header";
+import { Postproduct } from "../index";
+import Paginate from "../../components/pagination";
+import Bar from "../../components/snackbar";
+import { listmyProducts } from "../../redux/actions/productActions";
 
 export const MyProduct = () => {
   const dispatch = useDispatch();

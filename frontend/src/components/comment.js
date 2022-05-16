@@ -3,7 +3,7 @@ import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import Paper from "@mui/material/Paper";
-import { Avatar } from "@mui/material";
+import { Avatar, Typography } from "@mui/material";
 import { borderLeft, Box } from "@mui/system";
 import { Button } from "@mui/material";
 
@@ -11,11 +11,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { createProductComment } from "../redux/actions/productActions";
+
 const imgLink =
   "https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260";
 
 export const Comments = (props) => {
-  let ns = [];
+  //
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
@@ -43,6 +44,7 @@ export const Comments = (props) => {
       document.getElementById(event.currentTarget.value).value = "";
     }
   };
+
   const handleComment = (event) => {
     event.preventDefault();
     if (!userInfo) {
@@ -104,6 +106,7 @@ export const Comments = (props) => {
                 src={`http://192.168.200.122:5000/${
                   item?.user.avtar || "uploads/avt1650979607692A861.png"
                 } `}
+                sx={{ width: 30, height: 30 }}
                 style={{
                   border: "2px solid  #DC5425",
                   alignSelf: "center",
@@ -111,10 +114,28 @@ export const Comments = (props) => {
               />
             </Grid>
             <Grid justifyContent='left' item xs zeroMinWidth>
-              <h6 style={{ margin: 0, textAlign: "left" }}>
-                {item?.user.firstName} &nbsp;{item?.user.lastName}
-              </h6>
-              <p style={{ margin: 5, textAlign: "left" }}>{item?.comment}</p>
+              <Typography
+                component='div'
+                style={{
+                  margin: 0,
+                  fontSize: "12px",
+                  textAlign: "left",
+                  fontFamily: "cursive",
+                }}
+              >
+                {item?.user.firstName}&nbsp;{item?.user.lastName}
+              </Typography>
+              <Typography
+                component='div'
+                style={{
+                  margin: 10,
+                  textAlign: "left",
+                  fontFamily: "sans-serif",
+                  color: "#4f4f4c",
+                }}
+              >
+                {item?.comment}
+              </Typography>
               <Box
                 sx={{
                   display: "flex",
@@ -160,16 +181,35 @@ export const Comments = (props) => {
                       src={`http://192.168.200.122:5000/${
                         rep?.user.avtar || "uploads/avt1650979607692A861.png"
                       } `}
+                      sx={{ width: 30, height: 30 }}
                       style={{
                         border: "2px solid  #DC5425",
                         alignSelf: "center",
                       }}
                     />
                   </Grid>
-                  <h6 style={{ margin: 0, textAlign: "left" }}>
+                  <Typography
+                    component='div'
+                    style={{
+                      margin: 0,
+                      fontSize: "12px",
+                      textAlign: "left",
+                      fontFamily: "cursive",
+                    }}
+                  >
                     {rep?.user.firstName}&nbsp;{rep?.user.lastName}
-                  </h6>
-                  <p style={{ textAlign: "left" }}>{rep?.comment}</p>
+                  </Typography>
+                  <Typography
+                    component='div'
+                    style={{
+                      margin: 10,
+                      textAlign: "left",
+                      fontFamily: "sans-serif",
+                      color: "#4f4f4c",
+                    }}
+                  >
+                    {rep?.comment}
+                  </Typography>
                 </Grid>
               ))}
             </Grid>

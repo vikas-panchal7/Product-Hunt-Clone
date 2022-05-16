@@ -13,20 +13,18 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-//import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import CloseIcon from "@mui/icons-material/Close";
 
-//
-import { useDispatch, useSelector } from "react-redux";
-
-//
-import Bar from "../../components/snackbar";
-import { createJobs, updateJob } from "../../redux/actions/jobsActions";
 import {
   JOBS_CREATE_RESET,
   JOBS_UPDATE_RESET,
 } from "../../constants/jobsconstants";
+//
+
+import Bar from "../../components/snackbar";
+import { useDispatch, useSelector } from "react-redux";
+import { createJobs, updateJob } from "../../redux/actions/jobsActions";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#f7f6f2",
@@ -61,7 +59,6 @@ export const PostJob = (props) => {
     category: props.data?.category || "",
     joblink: props.data?.joblink || "",
   });
-  // const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
 
   const handleClickOpen = () => {
     setOpen(true);

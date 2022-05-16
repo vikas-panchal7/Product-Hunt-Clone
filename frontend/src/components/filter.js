@@ -2,20 +2,8 @@ import * as React from "react";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import { Box } from "@mui/material";
+import { Box, Divider, Grid } from "@mui/material";
 
-const filter = [
-  "Tech",
-  "Productivity",
-  "Marketing",
-  "Education",
-  "Entertainment",
-  "Finance",
-  "Development",
-  "Photography",
-  "Design",
-  "Other",
-];
 export default function Filters(props) {
   const [checked, setChecked] = React.useState([]);
 
@@ -27,22 +15,154 @@ export default function Filters(props) {
     props.onGetData(checked);
   };
   return (
-    <Box display='flex' justifyContent='center'>
-      <FormGroup>
-        {filter.map((filter, index) => (
+    <Grid
+      item
+      xs={12}
+      sx={{
+        display: "flex",
+        flexDirection: "row",
+      }}
+    >
+      <Grid item xs={4}>
+        <FormGroup
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
           <FormControlLabel
             control={
               <Checkbox
-                value={filter}
+                value='Entertainment'
                 onChange={handlechek}
                 sx={{ "& .MuiSvgIcon-root": { fontSize: 20 } }}
               />
             }
-            key={index}
-            label={filter}
+            key='Entertainment'
+            label='Entertainment'
           />
-        ))}
-      </FormGroup>
-    </Box>
+          <FormControlLabel
+            control={
+              <Checkbox
+                value='Finance'
+                onChange={handlechek}
+                sx={{ "& .MuiSvgIcon-root": { fontSize: 20 } }}
+              />
+            }
+            key='Finance'
+            label='Finance'
+          />
+
+          <FormControlLabel
+            control={
+              <Checkbox
+                value='Marketing'
+                onChange={handlechek}
+                sx={{ "& .MuiSvgIcon-root": { fontSize: 20 } }}
+              />
+            }
+            key='Marketing'
+            label='Marketing'
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                value='Other'
+                onChange={handlechek}
+                sx={{ "& .MuiSvgIcon-root": { fontSize: 20 } }}
+              />
+            }
+            key='Other'
+            label='Other'
+          />
+        </FormGroup>
+      </Grid>
+      <Grid item xs={4}>
+        <FormGroup
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <FormControlLabel
+            control={
+              <Checkbox
+                value='Tech'
+                onChange={handlechek}
+                sx={{ "& .MuiSvgIcon-root": { fontSize: 20 } }}
+              />
+            }
+            key='Tech'
+            label='Tech'
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                value='Development'
+                onChange={handlechek}
+                sx={{ "& .MuiSvgIcon-root": { fontSize: 20 } }}
+              />
+            }
+            key='Development'
+            label='Development'
+          />
+
+          <FormControlLabel
+            control={
+              <Checkbox
+                value='Photography'
+                onChange={handlechek}
+                sx={{ "& .MuiSvgIcon-root": { fontSize: 20 } }}
+              />
+            }
+            key='Photography'
+            label='Photography'
+          />
+        </FormGroup>
+      </Grid>
+      <Grid item xs={4}>
+        <FormGroup
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <FormControlLabel
+            control={
+              <Checkbox
+                value='Design'
+                onChange={handlechek}
+                sx={{ "& .MuiSvgIcon-root": { fontSize: 20 } }}
+              />
+            }
+            key='Design'
+            label='Design'
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                value='Education'
+                onChange={handlechek}
+                sx={{ "& .MuiSvgIcon-root": { fontSize: 20 } }}
+              />
+            }
+            key='Education'
+            label='Education'
+          />
+
+          <FormControlLabel
+            control={
+              <Checkbox
+                value='Productivity'
+                onChange={handlechek}
+                sx={{ "& .MuiSvgIcon-root": { fontSize: 20 } }}
+              />
+            }
+            label='Productivity'
+            key='Productivity'
+          />
+        </FormGroup>
+      </Grid>
+    </Grid>
   );
 }

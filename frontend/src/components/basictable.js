@@ -11,15 +11,17 @@ import SearchIcon from "@mui/icons-material/Search";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import { Button, Grid } from "@mui/material";
+
+import { useSelector, useDispatch } from "react-redux";
 import { Popup } from "./popup";
 import { PostJob, Postproduct } from "../pages/index";
-import { deleteProduct } from "../redux/actions/productActions";
-import { useSelector, useDispatch } from "react-redux";
-import Bar from "./snackbar";
 import { JobView } from "./jobview";
+
+import { deleteProduct } from "../redux/actions/productActions";
 import { deleteJob } from "../redux/actions/jobsActions";
 import { PRODUCT_DELETE_RESET } from "../constants/productconstants";
 import { JOBS_DELETE_RESET } from "../constants/jobsconstants";
+
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -63,17 +65,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const originalRows = [
-  { name: "Pizza", calories: 200, fat: 6.0, carbs: 24, protein: 4.0 },
-  { name: "Hot Dog", calories: 300, fat: 6.0, carbs: 24, protein: 4.0 },
-  { name: "Burger", calories: 400, fat: 6.0, carbs: 24, protein: 4.0 },
-  { name: "Hamburger", calories: 500, fat: 6.0, carbs: 24, protein: 4.0 },
-  { name: "Fries", calories: 600, fat: 6.0, carbs: 24, protein: 4.0 },
-  { name: "Ice Cream", calories: 700, fat: 6.0, carbs: 24, protein: 4.0 },
-];
-
 export function BasicTable(props) {
-  console.log("pfpe", props);
   const dispatch = useDispatch();
   const [rows, setRows] = useState([]);
   const [searched, setSearched] = useState("");
@@ -107,6 +99,7 @@ export function BasicTable(props) {
     }
     setRows(filteredRows);
   };
+
   const handleclick = (e) => {
     const result = window.confirm("Are You Sure Want To Delete ?");
     if (!result) return;

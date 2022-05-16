@@ -4,18 +4,22 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import ButtonBase from "@mui/material/ButtonBase";
+import { Stack } from "@mui/material";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { createProductLike } from "../redux/actions/productActions";
+
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 
-import { createProductLike } from "../redux/actions/productActions";
-import { Stack } from "@mui/material";
+//
 const Img = styled("img")({
   margin: "auto",
   display: "block",
   maxWidth: "100%",
   maxHeight: "100%",
 });
+//
+
 const Product = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -63,10 +67,16 @@ const Product = (props) => {
                   variant='subtitle1'
                   component='div'
                   color={"CaptionText "}
+                  sx={{ fontSize: "20px" }}
                 >
                   {props.title}
                 </Typography>
-                <Typography variant='body2' component='div' gutterBottom>
+                <Typography
+                  variant='body2'
+                  component='div'
+                  sx={{ fontSize: "17px" }}
+                  gutterBottom
+                >
                   {props.tagline}
                 </Typography>
               </Grid>

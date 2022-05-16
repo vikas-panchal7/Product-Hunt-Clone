@@ -90,7 +90,6 @@ const Header = () => {
   };
 
   const handleCloseNavMenu = (event) => {
-    // const value = event.currentTarget.value;
     setAnchorElNav(null);
   };
 

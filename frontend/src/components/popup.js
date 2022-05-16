@@ -7,15 +7,10 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
-//import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import CloseIcon from "@mui/icons-material/Close";
-import LinkButton from "@mui/material/Link";
 //
 import Product from "./product";
-import { Link } from "@mui/material";
-
-//
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#f7f6f2",
@@ -66,9 +61,6 @@ export const Popup = (props) => {
             backgroundColor: "#F0F0F0",
           },
         }}
-        //fullWidth={true}
-        //maxWidth={"md"}
-        //fullScreen={fullScreen}
         open={open}
         onClose={handleClose}
         aria-labelledby='responsive-dialog-title'

@@ -10,12 +10,14 @@ import LockResetIcon from "@mui/icons-material/LockReset";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Container from "@mui/material/Container";
-import { useNavigate, useParams } from "react-router-dom";
-import { UserChangePassword } from "../../redux/actions/userActions";
-import { useDispatch, useSelector } from "react-redux";
 import { IconButton, InputAdornment } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+//
+import { useNavigate, useParams } from "react-router-dom";
+import { UserChangePassword } from "../../redux/actions/userActions";
+import { useDispatch, useSelector } from "react-redux";
+
 const theme = createTheme();
 
 export const ChangePassword = () => {

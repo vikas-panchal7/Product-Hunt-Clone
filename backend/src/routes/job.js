@@ -11,7 +11,6 @@ const {
 } = require("../controllers/jobcontroller");
 const auth = require("../middleware/auth");
 
-//create Job
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads/jobs/");
@@ -43,7 +42,7 @@ router.post("/jobs", viewjobs);
 //for my jobs
 router.get("/jobs/myjobs", auth, getmyjobs);
 
-//for my jobs
+//for update jobs
 router.put("/jobs/update/:id", auth, img.single("logo"), updateJob);
 
 //delete job

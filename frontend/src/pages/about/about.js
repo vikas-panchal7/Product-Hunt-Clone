@@ -1,10 +1,12 @@
 import React from "react";
-import Header from "../../components/header";
 import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Container from "@mui/material/Container";
 import { Avatar } from "@mui/material";
+
+import Header from "../../components/header";
 import cat from "../../assets/images/cat.png";
+
 const theme = createTheme();
 export const About = () => {
   return (

@@ -4,15 +4,19 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import ButtonBase from "@mui/material/ButtonBase";
+import { Button } from "@mui/material";
+
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Button } from "@mui/material";
+
 const Img = styled("img")({
   margin: "auto",
   display: "block",
   maxWidth: "100%",
   maxHeight: "100%",
 });
+
+//
 const Job = (props) => {
   const navigate = useNavigate();
   const userLogin = useSelector((state) => state.userLogin);
@@ -21,7 +25,7 @@ const Job = (props) => {
     if (userInfo) {
       window.open(p, "_blank");
     } else {
-      navigate("/login");
+      navigate("/loggin");
     }
   };
 

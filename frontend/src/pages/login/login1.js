@@ -6,26 +6,24 @@ import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import LinkButton from "@mui/material/Link";
-import { Link } from "react-router-dom";
+
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
+import { Divider } from "@mui/material";
 import GoogleLogin from "react-google-login";
+import logingif from "../../assets/images/loggin.gif";
 
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 //
-import { login } from "../../redux/actions/userActions";
-import Header from "../../components/header";
 import Bar from "../../components/snackbar";
-
-import logingif from "../../assets/images/loggin.gif";
-import { Divider } from "@mui/material";
+import { login } from "../../redux/actions/userActions";
 
 const theme = createTheme();
 
@@ -198,18 +196,17 @@ export const Loggin = () => {
                   </LinkButton>
                 </Grid>
               </Grid>
-              <Divider> OR</Divider>
-              <div align='center'>
+              <Divider>OR</Divider>
+              <Paper variant='outlined' align='center'>
                 <GoogleLogin
                   clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-                  buttonText='Log In With Google'
                   onSuccess={handleLogin}
                   onFailure={handleFailure}
                   cookiePolicy={"single_host_origin"}
                 >
                   <b>Sign In With Google</b>
                 </GoogleLogin>
-              </div>
+              </Paper>
             </Box>
           </Box>
         </Grid>

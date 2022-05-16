@@ -14,16 +14,6 @@ const {
   changepassword,
 } = require("../controllers/usercontroller");
 
-//for signup
-router.post("/users/signUp", signUp);
-
-//for login
-router.post("/users/login", Login);
-
-//for logout
-router.post("/users/logout", Logout);
-
-//change profile
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads/");
@@ -40,19 +30,30 @@ const fileFilter = (req, file, cb) => {
   }
   cb(undefined, true);
 };
-
 const img = multer({
   storage: storage,
   fileFilter: fileFilter,
 });
 
+//for signup
+router.post("/users/signUp", signUp);
+
+//for login
+router.post("/users/login", Login);
+
+//for logout
+router.post("/users/logout", Logout);
+
+//change profile
 router.patch("/users/profile", auth, img.single("avtar"), Profile);
 
 //FOR USER DETAILS
 router.get("/users/me", auth, userInfos);
 
+//reset password
 router.post("/users/reset", resetpassword);
-//
+
+//change password
 router.post("/users/change", changepassword);
 
 module.exports = router;

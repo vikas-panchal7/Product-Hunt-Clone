@@ -16,16 +16,6 @@ const {
 } = require("../controllers/productcontroller");
 const auth = require("../middleware/auth");
 
-// view  all products
-router.post("/products/", viewProduct);
-
-// view  upcoming products
-router.post("/products/upcomings", viewUpcomingProduct);
-
-// view   product by id
-router.post("/products/details/:id", viewProductById);
-
-//create product
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads/");
@@ -52,8 +42,20 @@ const imges = img.fields([
   { name: "img", maxCount: 1 },
   { name: "img1", maxCount: 1 },
 ]);
+
+// view  all products
+router.post("/products/", viewProduct);
+
+// view  upcoming products
+router.post("/products/upcomings", viewUpcomingProduct);
+
+// view  product details
+router.post("/products/details/:id", viewProductById);
+
+//create product
 router.post("/product/create", auth, imges, createProduct);
 
+//update product
 router.put("/products/update/:id", auth, imges, updateProduct);
 
 //comment Product
@@ -68,6 +70,7 @@ router.post("/product/getlike/:id", getlikeProduct);
 //get my products
 router.get("/products/myproducts", auth, getmyProducts);
 
+// delete product
 router.delete("/product/delete/:id", auth, deleteProduct);
 
 module.exports = router;

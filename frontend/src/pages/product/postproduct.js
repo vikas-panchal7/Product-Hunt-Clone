@@ -13,23 +13,16 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-//import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import CloseIcon from "@mui/icons-material/Close";
 
 //
 import { useDispatch, useSelector } from "react-redux";
-
-//
 import {
   createProduct,
   updateProduct,
 } from "../../redux/actions/productActions";
 import Bar from "../../components/snackbar";
-import {
-  PRODUCT_CREATE_RESET,
-  PRODUCT_UPDATE_RESET,
-} from "../../constants/productconstants";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#f7f6f2",
@@ -74,7 +67,6 @@ export const Postproduct = (props) => {
     category: props.data?.category || "",
     videourl: props.data?.videourl || "",
   });
-  // const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -91,7 +83,6 @@ export const Postproduct = (props) => {
       [name]: value,
     });
   };
-  
 
   const onSelectImage = (event) => {
     setstatus1(true);

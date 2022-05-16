@@ -1,9 +1,7 @@
 const sgMail = require("@sendgrid/mail");
 const jwt = require("jsonwebtoken");
 
-sgMail.setApiKey(
-  "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"
-);
+sgMail.setApiKey(process.env.APISENDGRID);
 
 const sendEmail = (email, id) => {
   const token = jwt.sign({ _id: id.toString() }, "nodejs");

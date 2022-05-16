@@ -11,9 +11,11 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Container from "@mui/material/Container";
 import LinkButton from "@mui/material/Link";
+
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import catimg from "../../assets/images/cat.png";
+
 import { forgotPassword } from "../../redux/actions/userActions";
 const theme = createTheme();
 

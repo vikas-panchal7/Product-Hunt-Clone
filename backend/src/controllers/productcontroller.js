@@ -31,6 +31,7 @@ const createProduct = async (req, res) => {
 
 //@desc  Comment on product
 //@route  /product/comment/:id
+
 const commentProduct = async (req, res) => {
   const comment = {
     name: req.user.firstName,
@@ -57,7 +58,7 @@ const commentProduct = async (req, res) => {
 };
 
 //@desc  view  upcomings products
-//@route  /products/
+//@route  /products/upcomings
 const viewUpcomingProduct = async (req, res) => {
   try {
     const product = await Product.find({ type: "Upcoming" })
@@ -90,10 +91,6 @@ const viewProduct = async (req, res) => {
 //@desc  view  product details
 //@route /products/details/:id
 const viewProductById = async (req, res) => {
-  // const product = await Product.findById(req.params.id).then((result) => {
-  //   result.comment.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1));
-  //   return result;
-  // });
   const product = await Product.findById(req.params.id)
     .populate({
       path: "comment",
@@ -121,18 +118,6 @@ const viewProductById = async (req, res) => {
     res.send({ error: e.toString() });
   }
 };
-//   const product = await Product.aggregateOne([
-//     { $unwind: "$comment" },
-//     {
-//       $match: {
-//         _id: mongoose.Types.ObjectId(req.params.id),
-//       },
-//     },
-//     {
-//       $sort: { "comment.createdAt": -1 },
-//     },
-//     { $group: { _id: "$_id", answers: { $push: "$comment" } } },
-//   ]);
 
 //@desc  like on product
 //@route  /product/like/:id
@@ -159,7 +144,7 @@ const likeProduct = async (req, res) => {
 };
 
 //@desc  like on product
-//@route  /product/like/:id]
+//@route  /product/like/:id
 const getlikeProduct = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
@@ -171,6 +156,8 @@ const getlikeProduct = async (req, res) => {
   }
 };
 
+//@desc  get my product
+//@route  /products/myproducts
 const getmyProducts = async (req, res) => {
   try {
     const count = await Product.find({ owner: req.user._id }).count();
@@ -185,6 +172,8 @@ const getmyProducts = async (req, res) => {
   }
 };
 
+// @desc     update a new product
+// @route   /products/update/:id
 const updateProduct = async (req, res) => {
   try {
     console.log(req.body);
@@ -215,7 +204,6 @@ const updateProduct = async (req, res) => {
         img1: req.files?.img1[0]?.path,
       };
     }
-    console.log("SSS", updateproduct);
     const product = await Product.findByIdAndUpdate(filter, updateproduct, {
       new: true,
     });
@@ -227,6 +215,8 @@ const updateProduct = async (req, res) => {
   }
 };
 
+// @desc     update a new product
+// @route   /product/delete/:id
 const deleteProduct = async (req, res) => {
   const product = await Product.findById(req.params.id);
   try {

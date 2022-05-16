@@ -18,6 +18,7 @@ import Header from "../../components/header";
 import Bar from "../../components/snackbar";
 import { register } from "../../redux/actions/userActions";
 import sign from "../../assets/images/singup.gif";
+
 function Copyright(props) {
   return (
     <Typography
