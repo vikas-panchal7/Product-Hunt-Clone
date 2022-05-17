@@ -8,7 +8,7 @@ import Header from "../../components/header";
 import cat from "../../assets/images/cat.png";
 
 const theme = createTheme();
-export const About = () => {
+export const About = (props) => {
   return (
     <div>
       <Header />
@@ -28,6 +28,7 @@ export const About = () => {
               sx={{ width: 100, height: 100 }}
             />
             <h1>About Product Hunt</h1>
+
             <p>Product Hunt surfaces the best new products, every day.</p>
             <p>
               It's a place for product-loving enthusiasts to share and geek out

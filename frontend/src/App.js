@@ -24,7 +24,7 @@ import {
 const App = () => {
   return (
     <Routes>
-      <Route path='/' element={<Products />} />
+      <Route path='/' element={<Home />} />
       <Route path='/Products' element={<Products />} />
       <Route path='/product/details/:id' element={<ProductsDetails />} />
       <Route path='/products/post' element={<Postproduct />} />
