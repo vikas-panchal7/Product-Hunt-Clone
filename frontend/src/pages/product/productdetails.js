@@ -28,6 +28,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export const ProductsDetails = () => {
   const { id } = useParams();
+  const type = "list";
   const dispatch = useDispatch();
 
   const [imgopen, setimgopen] = React.useState(false);
@@ -104,6 +105,7 @@ export const ProductsDetails = () => {
               url={product.url}
               img={product.img}
               likes={product.likes.length || 0}
+              liketype={type}
             />
           ))}
         </Grid>
