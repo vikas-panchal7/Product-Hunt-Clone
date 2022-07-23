@@ -56,24 +56,28 @@ const Product = (props) => {
         <Grid container spacing={2}>
           <Grid item>
             <ButtonBase sx={{ width: 50, height: 50 }}>
-              <Img alt='A' src={`http://192.168.200.122:5000/${props.img}`} />
+              <Img
+                alt="A"
+                src={`${process.env
+                        .REACT_APP_URL}/${props.img}`}
+              />
             </ButtonBase>
           </Grid>
           <Grid item xs={8} sm container>
-            <Grid item xs container direction='column' spacing={2}>
+            <Grid item xs container direction="column" spacing={2}>
               <Grid item xs>
                 <Typography
                   gutterBottom
-                  variant='subtitle1'
-                  component='div'
+                  variant="subtitle1"
+                  component="div"
                   color={"CaptionText "}
                   sx={{ fontSize: "20px" }}
                 >
                   {props.title}
                 </Typography>
                 <Typography
-                  variant='body2'
-                  component='div'
+                  variant="body2"
+                  component="div"
                   sx={{ fontSize: "17px" }}
                   gutterBottom
                 >
@@ -83,7 +87,7 @@ const Product = (props) => {
             </Grid>
 
             <Grid item>
-              <Paper variant='outlined'>
+              <Paper variant="outlined">
                 <ButtonBase
                   sx={{
                     width: 50,
@@ -107,7 +111,7 @@ const Product = (props) => {
                       }}
                     />
                     <Typography
-                      component='div'
+                      component="div"
                       marginTop={"-15px"}
                       style={{ color: "#ff4000" }}
                     >

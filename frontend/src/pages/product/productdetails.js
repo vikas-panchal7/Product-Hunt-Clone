@@ -70,7 +70,8 @@ export const ProductsDetails = () => {
           <Grid>
             <Item justifycontent='flex-right'>
               <img
-                src={`http://192.168.200.122:5000/${details.img1}`}
+                src={`${process.env
+                        .REACT_APP_URL}/${details.img1}`}
                 alt='A'
                 width='100%'
                 height='100%'

@@ -39,7 +39,8 @@ const ViewImage = (props) => {
       >
         <DialogContentText>
           <img
-            src={`http://192.168.200.122:5000/${props.img}`}
+            src={`${process.env
+                        .REACT_APP_URL}/${props.img}`}
             width='100%'
             height='100%'
             alt='A'

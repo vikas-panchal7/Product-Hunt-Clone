@@ -244,7 +244,8 @@ const Header = () => {
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar
                     alt={userInfo.user?.firstName}
-                    src={`http://192.168.200.122:5000/${
+                    src={`${process.env
+                        .REACT_APP_URL}/${
                       user?.avtar || "uploads/avt1650979607692A861.png"
                     } `}
                     style={{
