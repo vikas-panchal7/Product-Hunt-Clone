@@ -1,0 +1,6 @@
+APISENDGRID=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
+TOKEN=nodejs
+MONGODB=mongodb+srv://vikaspanchal:12345@cluster0.jjtmp.mongodb.net/ProductHuntMaster?retryWrites=true&w=majority
+PORT=5000
+Email=sagarramani878@gmail.com
+Pass=mwcakvriwfmsjsxg
