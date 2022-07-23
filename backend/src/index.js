@@ -15,5 +15,8 @@ app.use(cors());
 app.use(userRouter);
 app.use(productRouter);
 app.use(jobRouter);
+app.get('/',(req,res)=>{
+    res.send("welcome to backend");
+})
 
-app.listen(port, () => console.log(`backend listening on port ${port}!`));
+app.listen(port, () => console.log(`backend listening on port http://localhost:${port}`));
