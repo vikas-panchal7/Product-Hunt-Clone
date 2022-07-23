@@ -1,5 +1,14 @@
+# Steps to Get started for frontend
+
+step 1 dwnload repo run npm i
+step 2 create .env add code from sample env
+step 3 run npm start
+see live http://localhost:3000
+
+
+
+
 # Getting Started with Create React App
-changesadasd
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
