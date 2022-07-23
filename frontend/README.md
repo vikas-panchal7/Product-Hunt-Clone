@@ -3,7 +3,7 @@
 step 1 dwnload repo run npm i
 step 2 create .env add code from sample env
 step 3 run npm start
-see live http://localhost:3000
+open chrome =  http://localhost:3000
 
 
 
