@@ -1,6 +1,7 @@
 import axios from "axios";
+const URL = process.env.REACT_APP_URL;
 const baseService = axios.create({
-  baseURL: "http://192.168.200.122:5000",
+  baseURL: URL,
   withCredentials: false,
   headers: {
     "Access-Control-Allow-Origin": "*",

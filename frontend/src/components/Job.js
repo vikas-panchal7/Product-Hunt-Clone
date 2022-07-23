@@ -47,7 +47,8 @@ const Job = (props) => {
         <Grid container spacing={2}>
           <Grid item>
             <ButtonBase sx={{ width: 100, height: 100 }}>
-              <Img alt='A' src={`http://192.168.200.122:5000/${props?.logo}`} />
+              <Img alt='A' src={`${process.env
+                        .REACT_APP_URL}/${props?.logo}`} />
             </ButtonBase>
           </Grid>
           <Grid item xs={8} sm container>

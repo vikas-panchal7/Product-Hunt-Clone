@@ -378,7 +378,8 @@ export const Postproduct = (props) => {
                           height: "60px",
                           width: "100px",
                         }}
-                        src={`http://192.168.200.122:5000/${props.data.img} `}
+                        src={`${process.env
+                        .REACT_APP_URL}/${props.data.img} `}
                         alt='img'
                       />
                     )}
@@ -416,7 +417,8 @@ export const Postproduct = (props) => {
                           height: "60px",
                           width: "100px",
                         }}
-                        src={`http://192.168.200.122:5000/${props.data.img1} `}
+                        src={`${process.env
+                        .REACT_APP_URL}/${props.data.img1} `}
                         alt='img'
                       />
                     )}

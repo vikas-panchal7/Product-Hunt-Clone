@@ -320,7 +320,8 @@ export const PostJob = (props) => {
                           height: "60px",
                           width: "100px",
                         }}
-                        src={`http://192.168.200.122:5000/${props.data?.logo} `}
+                        src={`${process.env
+                        .REACT_APP_URL}/${props.data?.logo} `}
                         alt='img'
                       />
                     )}

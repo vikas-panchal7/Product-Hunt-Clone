@@ -119,7 +119,8 @@ export const Popup = (props) => {
                       height: "150px",
                       width: "150px",
                     }}
-                    src={`http://192.168.200.122:5000/${
+                    src={`${process.env
+                        .REACT_APP_URL}/${
                       props.data.img || "uploads/avt1650979607692A861.png"
                     } `}
                     alt='A'
@@ -131,7 +132,8 @@ export const Popup = (props) => {
                       height: "150px",
                       width: "150px",
                     }}
-                    src={`http://192.168.200.122:5000/${
+                    src={`${process.env
+                        .REACT_APP_URL}/${
                       props.data.img1 || "uploads/avt1650979607692A861.png"
                     } `}
                     alt='B'

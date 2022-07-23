@@ -103,7 +103,8 @@ export const Comments = (props) => {
             <Grid item>
               <Avatar
                 alt={item?.name}
-                src={`http://192.168.200.122:5000/${
+                src={`${process.env
+                        .REACT_APP_URL}/${
                   item?.user.avtar || "uploads/avt1650979607692A861.png"
                 } `}
                 sx={{ width: 30, height: 30 }}
@@ -178,7 +179,8 @@ export const Comments = (props) => {
                   <Grid item>
                     <Avatar
                       alt={rep?.name}
-                      src={`http://192.168.200.122:5000/${
+                      src={`${process.env
+                        .REACT_APP_URL}/${
                         rep?.user.avtar || "uploads/avt1650979607692A861.png"
                       } `}
                       sx={{ width: 30, height: 30 }}

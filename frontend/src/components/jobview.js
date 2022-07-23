@@ -123,7 +123,8 @@ export const JobView = (props) => {
                       height: "150px",
                       width: "150px",
                     }}
-                    src={`http://192.168.200.122:5000/${
+                    src={`${process.env
+                        .REACT_APP_URL}/${
                       props.data?.logo || "uploads/avt1650979607692A861.png"
                     } `}
                     alt='A'
