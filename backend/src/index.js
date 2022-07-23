@@ -7,7 +7,7 @@ const userRouter = require("./routes/user");
 const productRouter = require("./routes/product");
 const jobRouter = require("./routes/job");
 
-const port = 5000 || process.env.PORT;
+const port = process.env.PORT || 3000;
 const app = express();
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 app.use(express.json());
